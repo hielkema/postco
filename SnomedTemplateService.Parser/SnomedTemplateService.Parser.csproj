@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Antlr4" Version="4.6.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Antlr4.Runtime" Version="4.6.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SnomedTemplateService.Core\SnomedTemplateService.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Antlr4 Update="Generated\ExpressionTemplate.g4">
+      <Visitor>false</Visitor>
+    </Antlr4>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Generated\ExpressionTemplate.g4">
+      <DefaultCustomToolNamespace>$([MSBuild]::ValueOrDefault('$(RootNamespace).%(DefaultCustomToolNamespace)', '').TrimEnd('.'))</DefaultCustomToolNamespace>
+      <CustomToolNamespace>$([MSBuild]::ValueOrDefault(%(CustomToolNamespace), %(DefaultCustomToolNamespace)))</CustomToolNamespace>
+      <Visitor>false</Visitor>
+      <Listener>true</Listener>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,6 @@
+﻿[[+tok (=== <<<) @DefStatus(]] 71388002 |Procedure (procedure)| : 
+         {  260686004 |Method (attribute)|   =  [[+id (< 360037004 |beeldvorming (kwalificatiewaarde)|) @ImagingMethod]],
+            405813007 |Procedure site - Direct (attribute)|   =  [[+id (<  27658006 |Amoxicillin| :
+         411116001 |Has dose form|  = <<  385055001 |Tablet dose form| ,
+        {  179999999100 |Has basis of strength|  = (  219999999102 |Amoxicillin only| :
+             189999999103 |Has strength magnitude|  >= #-#200,  199999999101 |Has strength unit|  =  258684004 |mg| )}) @Site]] }

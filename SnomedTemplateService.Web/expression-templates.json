@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "Fractuur",
+    "template": "[[+tok (=== <<<) @DefStatus)]] 64572001 |Disease| : { 363698007 |Finding site| = [[+id (<< 272673000 |Bone structure| ) @Site]], 116676008 |Associated morphology| = [[+id (<< 72704001 |Fracture| ) @FractureType]] }"
+  },
+  {
+    "id": 2,
+    "name": "Allergische reactie door substantie",
+    "template": "[[+tok (=== <<<) @DefStatus)]] 281647001 |Adverse reaction (disorder)| : { 246075003 |Causative agent (attribute)| = [[+id (< 105590001 |Substance (substance)| ) @Substance]], 370135005 |Pathological process (attribute)| = 472964009 |Allergic process (qualifier value)| }"
+  },
+  {
+    "id": 3,
+    "name": "Congenitale/verworven misvorming van lichaamsstructuur",
+    "template": "[[+tok (=== <<<) @DefStatus)]] 64572001 |Disease| : { 363698007 |Finding site| = [[+id (< 442083009 |Anatomical or acquired body structure (body structure)| ) @Site]], 116676008 |Associated morphology| = [[+id (<< 6081001 |deformiteit (afwijkende morfologie)| ) @Morphology]],246454002 |levensperiode (attribuut)| = 767023003 |levensperiode tussen geboorte en dood (kwalificatiewaarde)| }",
+  },
+  {
+    "id": 4,
+    "name": "Beeldvormende verrichting van lichaamsstructuur",
+    "template": "[[+tok (=== <<<) @DefStatus)]] 71388002 |Procedure (procedure)| : { 260686004 |Method (attribute)| = [[+id (< 360037004 |beeldvorming (kwalificatiewaarde)| ) @ImagingMethod]], 405813007 |Procedure site - Direct (attribute)| = [[+id (< 442083009 |Anatomical or acquired body structure (body structure)| ) @Site]] }"
+  },
+  {
+    "id": 5,
+    "name": "CT-geleide operatie van lichaamsstructuur",
+    "template": "[[+tok (=== <<<) @DefStatus)]] 71388002 |Procedure (procedure)| : [[1..1 @GuidanceGroup]] { 260686004 |Method (attribute)| = 312251004 |Computed tomography imaging - action (qualifier value)|, 405813007 |Procedure site - Direct (attribute)| = [[+id (< 442083009 |Anatomical or acquired body structure (body structure)| ) @Site]],363703001 |Has intent (attribute)| = 429892002 |Guidance intent (qualifier value)| }[[1..1 @SurgeryGroup]] { 260686004 |Method (attribute)| = [[+id (<< 129284003 |Surgical action (qualifier value)| ) @Method]], [[+id (<< 363704007 |Procedure site (attribute)|) @SiteType]] = [[+id (< 442083009 |Anatomical or acquired body structure (body structure)| ) @Site]] }"
+  }
+]
+
+
