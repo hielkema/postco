@@ -1,6 +1,6 @@
-﻿[[+tok (=== <<<) @DefStatus(]] 71388002 |Procedure (procedure)| : 
-         {  260686004 |Method (attribute)|   =  [[+id (< 360037004 |beeldvorming (kwalificatiewaarde)|) @ImagingMethod]],
-            405813007 |Procedure site - Direct (attribute)|   =  [[+id (<  27658006 |Amoxicillin| :
-         411116001 |Has dose form|  = <<  385055001 |Tablet dose form| ,
-        {  179999999100 |Has basis of strength|  = (  219999999102 |Amoxicillin only| :
-             189999999103 |Has strength magnitude|  >= #-#200,  199999999101 |Has strength unit|  =  258684004 |mg| )}) @Site]] }
+﻿[[+tok (=== <<<) @DefStatus]] 71388002 |Procedure (procedure)| : 
+        [[1..1 @GuidanceGroup]] {  260686004 |Method (attribute)|   =  312251004 |Computed tomography imaging - action (qualifier value)|,
+                      405813007 |Procedure site - Direct (attribute)|   =  [[+id (< 442083009 |Anatomical or acquired body structure (body structure)|  ) @Site]],
+363703001 |Has intent (attribute)| = 429892002 |Guidance intent (qualifier value)|  }
+[[1..1 @SurgeryGroup]] { 260686004 |Method (attribute)| = [[+id (<< 129284003 |Surgical action (qualifier value)| ) @Method]], 
+[[+id (<< 363704007 |Procedure site (attribute)|) @SiteType]]  = [[+id (< 442083009 |Anatomical or acquired body structure (body structure)| ) @Site]] }

@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnomedTemplateService.Core"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnomedTemplateService.Parser", "SnomedTemplateService.Parser\SnomedTemplateService.Parser.csproj", "{48D84765-C51D-4403-BD03-39D2CA01D094}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnomedTemplateService.Util", "SnomedTemplateService.Util\SnomedTemplateService.Util.csproj", "{8DF6760F-0894-4A31-B7B7-4F1ED6A6049C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnomedTemplateService.Util", "SnomedTemplateService.Util\SnomedTemplateService.Util.csproj", "{8DF6760F-0894-4A31-B7B7-4F1ED6A6049C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnomedTemplateService.Data", "SnomedTemplateService.Data\SnomedTemplateService.Data.csproj", "{D97DA696-5B07-4C2D-AA8B-FC0270EF614E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{8DF6760F-0894-4A31-B7B7-4F1ED6A6049C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DF6760F-0894-4A31-B7B7-4F1ED6A6049C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DF6760F-0894-4A31-B7B7-4F1ED6A6049C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D97DA696-5B07-4C2D-AA8B-FC0270EF614E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D97DA696-5B07-4C2D-AA8B-FC0270EF614E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D97DA696-5B07-4C2D-AA8B-FC0270EF614E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D97DA696-5B07-4C2D-AA8B-FC0270EF614E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

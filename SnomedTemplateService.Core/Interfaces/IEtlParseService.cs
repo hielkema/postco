@@ -5,8 +5,8 @@ using System.Text;
 
 namespace SnomedTemplateService.Core.Interfaces
 {
-    public interface IEtlParserService
+    public interface IEtlParseService
     {
-        EtlExpressionTemplate ParseEtlString(string template);
+        EtlExpressionTemplate ParseExpressionTemplate(string template);
     }
 }
