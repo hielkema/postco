@@ -1,7 +1,6 @@
 version: '2.1'
 services:
     nginx:
-        # image: nginx
         build:
             context: ./nginx
             dockerfile: Dockerfile
