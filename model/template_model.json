@@ -17,7 +17,7 @@
                 'title' : str, 
                 'description' : str,    // Beschrijving: hoe moet het vak gebruikt worden?
                 'attribute' : str,      // SNOMED ID van het attribuut
-                'value' : str / array,  // ECL query met valide attribute values
+                'value' : str,          // ECL query met valide attribute values
             ]
         ]
     }
