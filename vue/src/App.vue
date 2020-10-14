@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" data-app>
     <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
     <v-navigation-drawer
       v-model="drawer"
@@ -36,19 +36,10 @@
 
     <v-main>
       <v-container
-        class="fill-height"
+        class="fill-height fill-width"
         fluid
       >
-        <v-row>
-          <v-col class="text-center">
-            App.vue
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-flex>
-            <router-view/>
-          </v-flex>
-        </v-row>
+        <router-view/>
       </v-container>
     </v-main>
 

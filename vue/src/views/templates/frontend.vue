@@ -1,60 +1,86 @@
 <template>
-  <div class="app">
-    
-    <v-container>
-        <v-row>
-            <v-col cols=12>
-                <v-card class="ma-2">
-                    <v-card-title>
-                        <strong>frontend.vue</strong>
-                    </v-card-title>
-                </v-card>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col cols=4>
-                <h3>Root concept</h3>
-                <rootConcept />
-            </v-col>
-            <v-col cols=8>
-                <h3>Beschrijving van template</h3>
-                <templateDescription />
-            </v-col>
-        </v-row>
-    </v-container>
-  </div>
+<div class="app">
+	<v-row>
+		<v-col cols=12>
+			<v-card class="ma-2">
+				<v-card-title>
+					<strong>PoC frontend.vue</strong>
+				</v-card-title>
+			</v-card>
+		</v-col>
+	</v-row>
+	<v-row>
+		<v-col cols=4>
+			<v-row>
+				<v-col>
+					<templateMetadata />
+				</v-col>
+			</v-row>
+			<v-row>
+				<v-col>
+					<rootConcept />
+				</v-col>
+			</v-row>
+		</v-col>
+		<v-col cols=8>
+			<v-row>
+				<v-col cols=12>
+					<templateDescription />
+				</v-col>
+			</v-row>
+		</v-col>
+	</v-row>
+	<v-row>
+		<v-col cols=12>
+			<v-card class="ma-2">
+				<v-card-title>
+					<strong>Template</strong>
+				</v-card-title>
+				<v-card-text>
+					<div v-for="(group, key) in selectedTemplate.template.groups" :key="key">
+						<templateGroup v-bind:groupData="group" v-bind:groupKey="key" />
+					</div>
+				</v-card-text>
+			</v-card>
+		</v-col>
+	</v-row>
+	<v-row>
+		<v-col cols=12>
+			<v-card class="ma-2">
+				<v-card-title>
+					<strong>Postco data</strong>
+				</v-card-title>
+				<v-card-text>
+					data
+				</v-card-text>
+			</v-card>
+		</v-col>
+	</v-row>
+</div>
 </template>
 
 <script>
 import rootConcept from '@/components/templateFrontend/rootConcept.vue'
 import templateDescription from '@/components/templateFrontend/templateDescription.vue'
+import templateMetadata from '@/components/templateFrontend/templateMetadata.vue'
+import templateGroup from '@/components/templateFrontend/templateGroup.vue'
 export default {
-    components: {
-        rootConcept,
-        templateDescription
-    },
-    computed: {
-        
-    },
-    mounted() {
-        
-    }
+	components: {
+		rootConcept,
+		templateDescription,
+		templateMetadata,
+		templateGroup,
+	},
+	computed: {
+		selectedTemplate(){
+			return this.$store.state.templates.requestedTemplate
+		},
+	},
+	mounted() {
+		// TODO Retrieve template
+	}
 }
 </script>
 
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 </style>
