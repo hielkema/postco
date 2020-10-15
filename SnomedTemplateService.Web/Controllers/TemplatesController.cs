@@ -69,17 +69,24 @@ namespace SnomedTemplateService.Web.Controllers
                 );
 
             var group = attributes.Select(
-                            a => a.attr.AttributeValue.Handle(
-                                exp => exp.Value.Handle(
-                                    sub => throw new Exception("Subexpressions are not supported"),
-                                    conceptRef => conceptRef.ConceptReference.Handle<object>(
-                                        concept => new { title = concept.Term, value = concept.SctId },
-                                        conceptReplacement => new { title = conceptReplacement.SlotName, value = conceptReplacement.ExpressionConstraint },
-                                        exprReplacement => throw new Exception("Expression replacement slots are not supported")
-                                    )
-                                ),
-                                concrete => throw new Exception("Concrete slots/values are not supported")
-                            )
+                            a => {
+                                var attrName = a.attr.AttributeName.ConceptReference.Handle(
+                                    constRef => constRef.SctId,
+                                    conceptSlot => throw new Exception("Replacement slots are not supported for attribute names."),
+                                    exprSlot => throw new Exception("Replacement slots are not supported for attribute names.")
+                                );
+                                return a.attr.AttributeValue.Handle(
+                                    exp => exp.Value.Handle(
+                                        sub => throw new Exception("Subexpressions are not supported"),
+                                        conceptRef => conceptRef.ConceptReference.Handle<object>(
+                                            concept => new { title = concept.Term, attribute=attrName, value = concept.SctId },
+                                            conceptReplacement => new { title = conceptReplacement.SlotName, attribute = attrName, value = conceptReplacement.ExpressionConstraint },
+                                            exprReplacement => throw new Exception("Expression replacement slots are not supported")
+                                        )
+                                    ),
+                                    concrete => throw new Exception("Concrete slots/values are not supported")
+                                );
+                            }
                         ).ToArray();            
 
             return new
