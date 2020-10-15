@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security;
 using System.Xml;
 using Microsoft.Extensions.FileProviders;
 using SnomedTemplateService.Core.Domain;
@@ -12,8 +13,12 @@ namespace SnomedTemplateService.Data
         public XmlFileTemplateRepository(IFileInfo fileInfo)
         {
             sourceDoc = new XmlDocument();
-            sourceDoc.Load(fileInfo.CreateReadStream());
+            using (var stream = fileInfo.CreateReadStream())
+            {
+                sourceDoc.Load(stream);
+            }
         }
+
         public string GetById(int id)
         {
             return sourceDoc.SelectSingleNode($"//template[id={id}]/etl").InnerText;
