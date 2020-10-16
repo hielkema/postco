@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
-using System.Net.Http;
-using System.IO;
-using SnomedTemplateService.Parser.Generated;
-using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
 using SnomedTemplateService.Parser;
-using SnomedTemplateService.Core.Interfaces;
 using SnomedTemplateService.Core.Domain;
 using SnomedTemplateService.Data;
-using Newtonsoft.Json.Linq;
-using System.Runtime.InteropServices;
+using System.Dynamic;
 
 namespace SnomedTemplateService.Web.Controllers
 {
@@ -39,13 +31,13 @@ namespace SnomedTemplateService.Web.Controllers
             var templateRepository = new XmlFileTemplateRepository(_hostEnvironment.ContentRootFileProvider.GetFileInfo("expressionTemplates.xml"));
             var parseService = new AntlrEtlParseService();
             
-            var strTemplate = templateRepository.GetById(id);
+            var templateData = templateRepository.GetById(id);
 
-            var parseResult = parseService.ParseExpressionTemplate(strTemplate);
+            var parseResult = parseService.ParseExpressionTemplate(templateData.Etl);
 
             var subExpression = parseResult.SubExpression;
-            
-            var root = subExpression.FocusConcepts.First().Item2.ConceptReference.Handle(
+
+            var root = subExpression.FocusConcepts.First().focus.ConceptReference.Handle(
                 constReference  => constReference.SctId,
                 slot => throw new Exception("slots are not supported for focus concepts"),
                 slot => throw new Exception("slots are not supported for focus concepts")).ToString();
@@ -68,38 +60,74 @@ namespace SnomedTemplateService.Web.Controllers
                 attrInfo => (attrInfo.attr, optional: attrInfo.info.Cardinality.MinCardinality == 0)
                 );
 
-            var group = attributes.Select(
+            var group = attributes.Select<(EtlAttribute attr, bool optional), object>(
                             a => {
+                                dynamic result = new ExpandoObject();
                                 var attrName = a.attr.AttributeName.ConceptReference.Handle(
-                                    constRef => constRef.SctId,
+                                    constRef => constRef.SctId.ToString(),
                                     conceptSlot => throw new Exception("Replacement slots are not supported for attribute names."),
                                     exprSlot => throw new Exception("Replacement slots are not supported for attribute names.")
                                 );
-                                return a.attr.AttributeValue.Handle(
+                                var attrValue = a.attr.AttributeValue.Handle(
                                     exp => exp.Value.Handle(
                                         sub => throw new Exception("Subexpressions are not supported"),
-                                        conceptRef => conceptRef.ConceptReference.Handle<object>(
-                                            concept => new { title = concept.Term, attribute=attrName, value = concept.SctId },
-                                            conceptReplacement => new { title = conceptReplacement.SlotName, attribute = attrName, value = conceptReplacement.ExpressionConstraint },
+                                        conceptRef => conceptRef.ConceptReference.Handle(
+                                            concept => (
+                                                title: concept.Term, 
+                                                description: null,
+                                                attribute: attrName, 
+                                                value: concept.SctId.ToString()
+                                            ),
+                                            conceptReplacement => (
+                                                title: templateData.SlotTitles.ContainsKey(conceptReplacement.SlotName) ? 
+                                                    templateData.SlotTitles[conceptReplacement.SlotName] : 
+                                                    conceptReplacement.SlotName,
+                                                description: templateData.SlotDescriptions.ContainsKey(conceptReplacement.SlotName) ?
+                                                    templateData.SlotDescriptions[conceptReplacement.SlotName] :
+                                                    null,
+                                                attribute: attrName, 
+                                                value: conceptReplacement.ExpressionConstraint
+                                            ),
                                             exprReplacement => throw new Exception("Expression replacement slots are not supported")
                                         )
                                     ),
                                     concrete => throw new Exception("Concrete slots/values are not supported")
                                 );
-                            }
-                        ).ToArray();            
 
-            return new
+                                result.title = attrValue.title;
+                                if (attrValue.description != null)
+                                    result.description = attrValue.description;
+                                result.attribute = attrName;
+                                result.value = attrValue.value;
+
+                                return result;
+                            }
+                        ).ToArray();
+            dynamic result = new ExpandoObject();
+
+            result.id = templateData.Id;
+            result.time = templateData.Time;
+            if (templateData.Authors.Count != 0)
             {
-                id,
-                template = new
-                {
-                    root,
-                    groups = new object[][] {
-                        group    
+                result.authors = templateData.Authors.Select(a => !string.IsNullOrEmpty(a.Contact) ? (object) new { name = a.Name, contact = a.Contact } : new { name = a.Name }).ToArray();
+            }
+            result.title = templateData.Title;
+            if (!string.IsNullOrEmpty(templateData.Description))
+            {
+                result.description = templateData.Description;
+            }
+            result.snomedVersion = templateData.SnomedVersion;
+            result.snomedBranch = templateData.SnomedBranch;
+            
+            result.template = new
+            {
+                root,
+                groups = new object[][] {
+                        group
                     }
-                }
             };
+
+            return result;
         }
     }
 }

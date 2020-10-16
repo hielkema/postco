@@ -1,8 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <templates>
-  <template>
-    <id>1</id>
-    <name>Fractuur</name>
+  <template id="1">
+    <time>2020-10-15T17:52:00Z</time>
+    <authors>
+      <author>
+        <name>Alice</name>
+      </author>
+      <author>
+        <name>Bob</name>
+        <contact>bob@example.org</contact>
+      </author>
+    </authors>
+    <title>Fractuur</title>
+    <description>Beschrijving Fractuur Template</description>
+    <snomedVersion>20200731</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
     <etl>
       <![CDATA[
 [[+tok (=== <<<) @DefStatus]] 64572001 |Disease| :
@@ -10,10 +22,31 @@
            116676008 |Associated morphology|   =  [[+id (<<  72704001 |Fracture|  ) @FractureType]] }
       ]]>
     </etl>
+    <slots>
+      <slot name="Site">
+        <title>SiteTitle</title>
+        <description>SiteDescription</description>
+      </slot>
+      <slot name="FractureType">
+        <description>DescNoTitle</description>
+      </slot>
+    </slots>
   </template>
-  <template>
-    <id>2</id>
-    <name>Allergische reactie door substantie</name>
+  <template id="2">
+    <time>2020-10-16T16:13:00Z</time>
+    <authors>
+      <author>
+        <name>John Doe</name>
+        <contact>j.doe@example.org</contact>
+      </author>
+      <author>
+        <name>Richard Roe</name>
+        <contact>richard@example.net</contact>
+      </author>
+    </authors>
+    <title>Allergische reactie door substantie</title>
+    <snomedVersion>20200731</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
     <etl>
       <![CDATA[
 [[+tok (=== <<<) @DefStatus]]  281647001 |Adverse reaction (disorder)| :
@@ -22,9 +55,11 @@
       ]]>
     </etl>
   </template>
-  <template>
-    <id>3</id>
-    <name>Congenitale/verworven misvorming van lichaamsstructuur</name>
+  <template id="3">
+    <time>2020-10-16T16:15:00Z</time>
+    <title>Congenitale/verworven misvorming van lichaamsstructuur</title>
+    <snomedVersion>20200731</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
     <etl>
       <![CDATA[
 [[+tok (=== <<<) @DefStatus]]  64572001 |Disease| :
@@ -33,10 +68,35 @@
 246454002 |levensperiode (attribuut)| = 767023003 |levensperiode tussen geboorte en dood (kwalificatiewaarde)| }
       ]]>
     </etl>
+    <slots>
+      <slot  name="Site">
+        <title>SiteTitle</title>
+        <description>SiteDescription</description>
+      </slot>
+      <slot name="Morphology">
+        <title>TitleNoDesc</title>
+      </slot>
+      <slot name="NoMatch">
+        <title>NoMatch</title>
+        <description>NoMatch</description>
+      </slot>
+    </slots>
   </template>
-  <template>
-    <id>4</id>
-    <name>Beeldvormende verrichting van lichaamsstructuur</name>
+  <template id="4">
+    <time>2020-10-16T16:20:00Z</time>
+    <authors>
+      <author>
+        <name>John Doe</name>
+        <contact>j.doe@example.org</contact>
+      </author>
+      <author>
+        <name>Bob</name>
+        <contact>bob@example.org</contact>
+      </author>
+    </authors>
+    <title>Beeldvormende verrichting van lichaamsstructuur</title>
+    <snomedVersion>20200731</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
     <etl>
       <![CDATA[
 [[+tok (=== <<<) @DefStatus]] 71388002 |Procedure (procedure)| :
@@ -45,9 +105,20 @@
       ]]>
     </etl>
   </template>
-  <template>
-    <id>5</id>
-    <name>CT-geleide operatie van lichaamsstructuur</name>
+  <template id="5">
+    <time>2020-10-16T16:22:00Z</time>
+    <authors>
+      <author>
+        <name>Alice</name>
+      </author>
+      <author>
+        <name>John Doe</name>
+        <contact>j.doe@example.org</contact>
+      </author>
+    </authors>
+    <title>CT-geleide operatie van lichaamsstructuur</title>
+    <snomedVersion>20200731</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
     <etl>
       <![CDATA[
 [[+tok (=== <<<) @DefStatus]] 71388002 |Procedure (procedure)| :
@@ -56,17 +127,6 @@
 363703001 |Has intent (attribute)| = 429892002 |Guidance intent (qualifier value)|  }
 [[1..1 @SurgeryGroup]] { 260686004 |Method (attribute)| = [[+id (<< 129284003 |Surgical action (qualifier value)| ) @Method]],
 [[+id (<< 363704007 |Procedure site (attribute)|) @SiteType]]  = [[+id (< 442083009 |Anatomical or acquired body structure (body structure)| ) @Site]] }
-      ]]>
-    </etl>
-  </template>
-  <template>
-    <id>6</id>
-    <name>Fractuur</name>
-    <etl>
-      <![CDATA[
-[[+tok (=== <<<) @DefStatus]] 64572001 |Disease| :
-  {  363698007 |Finding site|   =   272673000 |Bone structure|,
-     116676008 |Associated morphology|   =  [[+id (<<  72704001 |Fracture|  ) @FractureType]] }
       ]]>
     </etl>
   </template>
