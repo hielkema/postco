@@ -2,6 +2,8 @@
 
 namespace SnomedTemplateService.Util
 {
+    // Sum type for .NET (see: https://en.wikipedia.org/wiki/Tagged_union)
+
     public abstract class OneOf<T1, T2>
     {
         public abstract R Handle<R>(Func<T1, R> handleFirst, Func<T2, R> handleSecond);

@@ -1,12 +1,9 @@
-﻿using SnomedTemplateService.Core.Domain;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SnomedTemplateService.Core.Domain.Etl;
 
 namespace SnomedTemplateService.Core.Interfaces
 {
     public interface IEtlParseService
     {
-        EtlExpressionTemplate ParseExpressionTemplate(string template);
+        ExpressionTemplate ParseExpressionTemplate(string template);
     }
 }

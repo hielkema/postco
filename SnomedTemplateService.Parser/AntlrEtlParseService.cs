@@ -1,6 +1,6 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
-using SnomedTemplateService.Core.Domain;
+using SnomedTemplateService.Core.Domain.Etl;
 using SnomedTemplateService.Core.Exceptions;
 using SnomedTemplateService.Core.Interfaces;
 using SnomedTemplateService.Parser.Generated;
@@ -15,7 +15,7 @@ namespace SnomedTemplateService.Parser
 {
     public class AntlrEtlParseService : IEtlParseService
     {
-        public EtlExpressionTemplate ParseExpressionTemplate(string s)
+        public ExpressionTemplate ParseExpressionTemplate(string s)
         {
             var lexer = new ExpressionTemplateLexer(new AntlrInputStream(s));
             var tokens = new CommonTokenStream(lexer);
@@ -41,39 +41,39 @@ namespace SnomedTemplateService.Parser
             return ConvertExpressiontemplate(template);
         }
 
-        private EtlExpressionTemplate ConvertExpressiontemplate(ExpressiontemplateContext context)
+        private ExpressionTemplate ConvertExpressiontemplate(ExpressiontemplateContext context)
         {
             var constDefStatus = context.definitionstatus();
             var tokenSlot = context.tokenreplacementslot();
-            var subExpression = context.subexpression();
+            var subexpression = context.subexpression();
 
-            OneOf<DefinitionStatusEnum, EtlTokenReplacementSlot> defStatus;
+           IDefinitionStatusOrSlot defStatus;
             if ((new object[] { constDefStatus, tokenSlot }).Count(s => s != null) > 1)
             {
                 throw new ParserException();
             }
             if (constDefStatus != null)
             {
-                defStatus = new FirstOf<DefinitionStatusEnum, EtlTokenReplacementSlot>(ConvertDefinitionstatus(constDefStatus));
+                defStatus = ConvertDefinitionstatus(constDefStatus);
             }
             else if (tokenSlot != null)
             {
-                defStatus = new SecondOf<DefinitionStatusEnum, EtlTokenReplacementSlot>(ConvertTokenreplacementslot(tokenSlot));
+                defStatus = ConvertTokenreplacementslot(tokenSlot);
             }
             else
             {
                 throw new ParserException();
             }
-            return subExpression switch 
+            return subexpression switch 
             {
                 null => throw new ParserException(), 
-                var su => new EtlExpressionTemplate(defStatus, ConvertSubexpression(su)) 
+                var su => new ExpressionTemplate(defStatus, ConvertSubexpression(su)) 
             };
         }
 
-        private EtlSubExpression ConvertSubexpression(SubexpressionContext context)
+        private Subexpression ConvertSubexpression(SubexpressionContext context)
         {
-            return new EtlSubExpression(
+            return new Subexpression(
                 ConvertFocusconcept(context.focusconcept()),
                 context.refinement() switch
                 {
@@ -82,22 +82,22 @@ namespace SnomedTemplateService.Parser
                 });
         }
 
-        private DefinitionStatusEnum ConvertDefinitionstatus(DefinitionstatusContext context)
+        private DefinitionStatusLiteral ConvertDefinitionstatus(DefinitionstatusContext context)
         {
             switch (context.GetText())
             {
                 case "===":
-                    return DefinitionStatusEnum.equivalentTo;
+                    return new DefinitionStatusLiteral(DefinitionStatusEnum.equivalentTo);
 
                 case "<<<":
-                    return DefinitionStatusEnum.subtypeOf;
+                    return new DefinitionStatusLiteral(DefinitionStatusEnum.subtypeOf);
 
                 default:
                     throw new ParserException();
             }
         }
 
-        private IList<(EtlTemplateInformationSlot info, EtlFocusConcept focusConcept)> ConvertFocusconcept(FocusconceptContext context)
+        private IList<(TemplateInformationSlot info, IConceptReferenceOrSlot focusConcept)> ConvertFocusconcept(FocusconceptContext context)
         {
             var conceptReferences = new List<(TemplateinformationslotContext info, ConceptreferenceContext concept)>();
             TemplateinformationslotContext currentInformationSlot = null;
@@ -126,56 +126,43 @@ namespace SnomedTemplateService.Parser
             {
                 throw new ParserException();
             }
-            return conceptReferences.Select(p =>
-                (
-                p.info switch { null => null, var s => ConvertTemplateinformationslot(s) },
-                ConvertConceptreference(p.concept) switch { null => throw new ParserException(), var cr => new EtlFocusConcept(cr) }
-                )
-            ).ToList();
+            return conceptReferences.Select(c =>
+                (info: c.info switch { null => null, var s => ConvertTemplateinformationslot(s) },
+                    focusConcept: ConvertConceptreference(c.concept) ?? throw new ParserException())
+                ).ToList();
         }
 
-        private EtlConceptReference ConvertConceptreference(ConceptreferenceContext context)
+        private IConceptReferenceOrSlot ConvertConceptreference(ConceptreferenceContext context)
         {
             var conceptSlotContext = context.conceptreplacementslot();
             var expressionSlotContext = context.expressionreplacementslot();
             var conceptIdContext = context.conceptid();
             var termContext = context.term();
 
-            EtlConceptReplacementSlot conceptReplacementSlot = null;
-            EtlExpressionReplacementSlot expressionReplacementSlot = null;
-            ulong conceptId = 0;
-            string term = null;
             if ((new object[] { conceptSlotContext, expressionSlotContext, conceptIdContext }).Count(c => c != null) != 1)
             {
                 throw new ParserException();
             }
             if (conceptSlotContext != null)
             {
-                conceptReplacementSlot = ConvertConceptreplacementslot(conceptSlotContext);
+                return ConvertConceptreplacementslot(conceptSlotContext);
             }
             if (expressionSlotContext != null)
             {
-                expressionReplacementSlot = ConvertExpressionreplacementslot(expressionSlotContext);
+                return ConvertExpressionreplacementslot(expressionSlotContext);
             }
             if (conceptIdContext != null)
             {
-                conceptId = ConvertConceptid(conceptIdContext);
+                ulong conceptId = ConvertConceptid(conceptIdContext);
+                string term = null;
+
                 if (termContext != null)
                 {
                     term = ConvertTerm(termContext);
                 }
+                return new ConceptReference(conceptId, term);
             }
-
-            if (conceptReplacementSlot != null)
-            {
-                return new EtlConceptReference(new SecondOf<ConceptReference, EtlConceptReplacementSlot, EtlExpressionReplacementSlot>(conceptReplacementSlot));
-            }
-            if (expressionReplacementSlot != null)
-            {
-                return new EtlConceptReference(new ThirdOf<ConceptReference, EtlConceptReplacementSlot, EtlExpressionReplacementSlot>(expressionReplacementSlot));
-            }
-            ConceptReference conceptReference = new ConceptReference(conceptId, term);
-            return new EtlConceptReference(new FirstOf<ConceptReference, EtlConceptReplacementSlot, EtlExpressionReplacementSlot>(conceptReference));
+            throw new ParserException();
         }
 
         private ulong ConvertConceptid(ConceptidContext context)
@@ -188,48 +175,45 @@ namespace SnomedTemplateService.Parser
             return context.GetText();
         }
 
-        private OneOf<EtlAttributeSetRefinement, EtlAttributeGroupRefinement> ConvertRefinement(RefinementContext context)
+        private IAttributeSetOrGroupRefinement ConvertRefinement(RefinementContext context)
         {
             var attributesetContext = context.attributeset();
 
             if (attributesetContext != null)
             {
-                return new FirstOf<EtlAttributeSetRefinement, EtlAttributeGroupRefinement>(
-                    new EtlAttributeSetRefinement(
-                        ConvertAttributeset(attributesetContext),
-                        context.attributegroup().Select(ag1 => ag1 switch
-                        {
-                            null => throw new ParserException(),
-                            var ag2 => ConvertAttributegroup(ag2)
-                        }
-                        ).ToList()
-                    )
+                return new AttributeSetRefinement(
+                    ConvertAttributeset(attributesetContext),
+                    context.attributegroup().Select(ag1 => ag1 switch
+                    {
+                        null => throw new ParserException(),
+                        var ag2 => ConvertAttributegroup(ag2)
+                    }
+                    ).ToList()
+
                 );
             }
             else
             {
-                return new SecondOf<EtlAttributeSetRefinement, EtlAttributeGroupRefinement>(
-                    new EtlAttributeGroupRefinement(
+                return new AttributeGroupRefinement(
                         context.attributegroup().Select(ag1 => ag1 switch
                         {
                             null => throw new ParserException(),
                             var ag2 => ConvertAttributegroup(ag2)
                         }
                         ).ToList()
-                    )
                 );
             }
         }
 
-        private (EtlTemplateInformationSlot info, EtlAttributeGroup group) ConvertAttributegroup(AttributegroupContext context)
+        private (TemplateInformationSlot info, AttributeSet group) ConvertAttributegroup(AttributegroupContext context)
         {
             return (context.templateinformationslot() switch { null => null, var ti => ConvertTemplateinformationslot(ti) },
-            new EtlAttributeGroup(ConvertAttributeset(context.attributeset())));
+                ConvertAttributeset(context.attributeset()));
         }
 
-        private EtlAttributeSet ConvertAttributeset(AttributesetContext context)
+        private AttributeSet ConvertAttributeset(AttributesetContext context)
         {
-            return new EtlAttributeSet(context.attribute().Select(
+            return new AttributeSet(context.attribute().Select(
                 attr => attr switch
                 {
                     null => throw new ParserException(),
@@ -239,7 +223,7 @@ namespace SnomedTemplateService.Parser
 
         }
 
-        private (EtlTemplateInformationSlot info, EtlAttribute attr) ConvertAttribute(AttributeContext context)
+        private (TemplateInformationSlot info, EtlAttribute attr) ConvertAttribute(AttributeContext context)
         {
             return (
                 context.templateinformationslot() switch
@@ -262,19 +246,18 @@ namespace SnomedTemplateService.Parser
             );
         }
 
-        private EtlAttributeName ConvertAttributename(AttributenameContext context)
+        private IConceptReferenceOrSlot ConvertAttributename(AttributenameContext context)
         {
-            return new EtlAttributeName(ConvertConceptreference(context.conceptreference()));
+            return ConvertConceptreference(context.conceptreference());
         }
 
-        private OneOf<EtlExpressionValue, EtlConcreteValue> ConvertAttributevalue(AttributevalueContext context)
+        private IAttributeValueOrSlot ConvertAttributevalue(AttributevalueContext context)
         {
             var expressionvalueContext = context.expressionvalue();
             var stringvalueContext = context.stringvalue();
             var numericvalueContext = context.numericvalue();
             var booleanvalueContext = context.booleanvalue();
             var concretevalueslotContext = context.concretevaluereplacementslot();
-            OneOf<int, EtlIntReplacementSlot, decimal, EtlDecimalReplacementSlot, string, EtlStringReplacementSlot, bool, EtlBooleanReplacementSlot> switchConcreteValue = null;
             if ((new object[] { expressionvalueContext, stringvalueContext, numericvalueContext,
                 booleanvalueContext, concretevalueslotContext}).Count(c => c != null) != 1)
             {
@@ -282,83 +265,35 @@ namespace SnomedTemplateService.Parser
             }
             if (expressionvalueContext != null)
             {
-                return new FirstOf<EtlExpressionValue, EtlConcreteValue>(ConvertExpressionvalue(expressionvalueContext));
+                return ConvertExpressionvalue(expressionvalueContext).Handle<IAttributeValueOrSlot>(
+                    handleSubexpression: e=>e,
+                    handleConceptSlot: s=>s,
+                    handleExpressionSlot: s=>s
+                    );
             }
             else if (numericvalueContext != null)
             {
-                var numericValue = ConvertNumericvalue(numericvalueContext);
-                switchConcreteValue = numericValue.Handle<
-                    OneOf<int, EtlIntReplacementSlot,
-                        decimal, EtlDecimalReplacementSlot,
-                        string, EtlStringReplacementSlot,
-                        bool, EtlBooleanReplacementSlot>
-                    >(
-                    i => new FirstOf<int, EtlIntReplacementSlot,
-                        decimal, EtlDecimalReplacementSlot,
-                        string, EtlStringReplacementSlot,
-                        bool, EtlBooleanReplacementSlot>(i),
-                    d => new ThirdOf<int, EtlIntReplacementSlot,
-                        decimal, EtlDecimalReplacementSlot,
-                        string, EtlStringReplacementSlot,
-                        bool, EtlBooleanReplacementSlot>(d)
-                        );
+                return ConvertNumericvalue(numericvalueContext);
             }
             else if (stringvalueContext != null)
             {
-                var stringValue = ConvertStringvalue(stringvalueContext);
-                switchConcreteValue =
-                    new FifthOf<int, EtlIntReplacementSlot,
-                        decimal, EtlDecimalReplacementSlot,
-                        string, EtlStringReplacementSlot,
-                        bool, EtlBooleanReplacementSlot>
-                    (stringValue);
+                return new StringLiteral(ConvertStringvalue(stringvalueContext));
             }
             else if (booleanvalueContext != null)
             {
-                var booleanValue = ConvertBooleanvalue(booleanvalueContext);
-                switchConcreteValue =
-                 new SeventhOf<int, EtlIntReplacementSlot,
-                     decimal, EtlDecimalReplacementSlot,
-                     string, EtlStringReplacementSlot,
-                     bool, EtlBooleanReplacementSlot>
-                 (booleanValue);
+                return new BoolLiteral(ConvertBooleanvalue(booleanvalueContext));
             }
             else if (concretevalueslotContext != null)
             {
-                var concreteValueSlot = ConvertConcretevaluereplacementslot(concretevalueslotContext);
-                switchConcreteValue =
-                    concreteValueSlot.Handle<
-                    OneOf<int, EtlIntReplacementSlot,
-                        decimal, EtlDecimalReplacementSlot,
-                        string, EtlStringReplacementSlot,
-                        bool, EtlBooleanReplacementSlot>
-                    >(
-                        strslot => new SixthOf<int, EtlIntReplacementSlot,
-                        decimal, EtlDecimalReplacementSlot,
-                        string, EtlStringReplacementSlot,
-                        bool, EtlBooleanReplacementSlot>(strslot),
-                        intslot => new SecondOf<int, EtlIntReplacementSlot,
-                        decimal, EtlDecimalReplacementSlot,
-                        string, EtlStringReplacementSlot,
-                        bool, EtlBooleanReplacementSlot>(intslot),
-                        decslot => new FourthOf<int, EtlIntReplacementSlot,
-                        decimal, EtlDecimalReplacementSlot,
-                        string, EtlStringReplacementSlot,
-                        bool, EtlBooleanReplacementSlot>(decslot),
-                        boolslot => new EighthOf<int, EtlIntReplacementSlot,
-                        decimal, EtlDecimalReplacementSlot,
-                        string, EtlStringReplacementSlot,
-                        bool, EtlBooleanReplacementSlot>(boolslot)
-                    );
+                return ConvertConcretevaluereplacementslot(concretevalueslotContext);
             }
             else
             {
                 throw new ParserException();
             }
-            return new SecondOf<EtlExpressionValue, EtlConcreteValue>(new EtlConcreteValue(switchConcreteValue));
         }
 
-        private EtlExpressionValue ConvertExpressionvalue(ExpressionvalueContext context)
+        private ISubexpressionOrSlot ConvertExpressionvalue(ExpressionvalueContext context)
         {
             var conceptRef = context.conceptreference();
             var subExp = context.subexpression();
@@ -368,11 +303,15 @@ namespace SnomedTemplateService.Parser
             }
             if (conceptRef != null)
             {
-                return new EtlExpressionValue(new SecondOf<EtlSubExpression, EtlConceptReference>(ConvertConceptreference(conceptRef)));
+                return ConvertConceptreference(conceptRef)
+                    .Handle<ISubexpressionOrSlot>(
+                        handleConceptReference: c=>new Subexpression(c),
+                        handleConceptSlot: s=>s,
+                        handleExpressionSlot: s=> s);
             }
             else if (subExp != null)
             {
-                return new EtlExpressionValue(new FirstOf<EtlSubExpression, EtlConceptReference>(ConvertSubexpression(subExp)));
+                return ConvertSubexpression(subExp);
             }
             else
             {
@@ -385,7 +324,7 @@ namespace SnomedTemplateService.Parser
             return Regex.Replace(context.GetText(), @"\\([\""])", "$1");
         }
 
-        private OneOf<int, decimal> ConvertNumericvalue(NumericvalueContext context)
+        private IAttributeValueOrSlot ConvertNumericvalue(NumericvalueContext context)
         {
             var sign = context.DASH() != null ? -1 : 1; 
             if ((new object[] { context.decimalvalue(), context.integervalue() }).Count(c => c != null) != 1)
@@ -394,11 +333,11 @@ namespace SnomedTemplateService.Parser
             }
             else if (context.integervalue() != null)
             {
-                return new FirstOf<int, decimal>(sign * ConvertIntegervalue(context.integervalue()));
+                return new IntLiteral(sign * ConvertIntegervalue(context.integervalue()));
             }
             else if (context.decimalvalue() != null)
             {
-                return new SecondOf<int, decimal>(sign * ConvertDecimalvalue(context.decimalvalue()));
+                return new DecimalLiteral(sign * ConvertDecimalvalue(context.decimalvalue()));
             }
             throw new ParserException();
         }
@@ -418,29 +357,29 @@ namespace SnomedTemplateService.Parser
             return bool.Parse(context.GetText());
         }
 
-        private EtlConceptReplacementSlot ConvertConceptreplacementslot(ConceptreplacementslotContext context)
+        private ConceptReplacementSlot ConvertConceptreplacementslot(ConceptreplacementslotContext context)
         {
             var slotName = context.slotname() switch { null => null, var s => ConvertSlotname(s) };
             var expressionConstraint = context.conceptreplacement().slotexpressionconstraint() switch { null => null, var e => ConvertSlotexpressionconstraint(e) };
-            return new EtlConceptReplacementSlot(expressionConstraint, slotName);
+            return new ConceptReplacementSlot(expressionConstraint, slotName);
         }
 
-        private EtlExpressionReplacementSlot ConvertExpressionreplacementslot(ExpressionreplacementslotContext context)
+        private ExpressionReplacementSlot ConvertExpressionreplacementslot(ExpressionreplacementslotContext context)
         {
             var slotName = context.slotname() switch { null => null, var s => ConvertSlotname(s) };
             var expressionConstraint = context.expressionreplacement().slotexpressionconstraint() switch { null => null, var e => ConvertSlotexpressionconstraint(e) };
-            return new EtlExpressionReplacementSlot(expressionConstraint, slotName);
+            return new ExpressionReplacementSlot(expressionConstraint, slotName);
         }
 
-        private EtlTokenReplacementSlot ConvertTokenreplacementslot(TokenreplacementslotContext context)
+        private TokenReplacementSlot ConvertTokenreplacementslot(TokenreplacementslotContext context)
         {
             var slotName = context.slotname() switch { null => null, var s => ConvertSlotname(s) };
-            return new EtlTokenReplacementSlot(ConvertSlottokenset(context.tokenreplacement().slottokenset()), slotName);
+            return new TokenReplacementSlot(ConvertSlottokenset(context.tokenreplacement().slottokenset()), slotName);
         }
 
-        private OneOf<EtlStringReplacementSlot, EtlIntReplacementSlot, EtlDecimalReplacementSlot, EtlBooleanReplacementSlot>
-            ConvertConcretevaluereplacementslot(ConcretevaluereplacementslotContext context)
+        private IAttributeValueOrSlot ConvertConcretevaluereplacementslot(ConcretevaluereplacementslotContext context)
         {
+            // TODO: CHECK
             var concreteValueReplacement = context.concretevaluereplacement();
             if (concreteValueReplacement == null)
             {
@@ -457,20 +396,18 @@ namespace SnomedTemplateService.Parser
             }
             if (stringReplacement != null)
             {
-                return new FirstOf<EtlStringReplacementSlot, EtlIntReplacementSlot, EtlDecimalReplacementSlot, EtlBooleanReplacementSlot>(
-                    new EtlStringReplacementSlot(
+                return new StringReplacementSlot(
                         stringReplacement.slotstringset() switch
                         {
                             null => throw new ParserException(),
                             var s => ConvertSlotstringset(s)
-                        }, 
+                        },
                         slotName
-                        )
-                    );
+                        );
             }
             else if (intReplacement != null)
             {
-                var r = new EtlIntReplacementSlot(slotName);
+                var slot = new IntReplacementSlot(slotName);
                 var integerReplacements = (intReplacement.slotintegerset() switch
                 {
                     null => throw new ParserException(),
@@ -479,14 +416,14 @@ namespace SnomedTemplateService.Parser
 
                 foreach (var ir in integerReplacements)
                 {
-                    ir.Handle(i => { r.Values.Add(i); return ValueTuple.Create(); }, range => { r.Ranges.Add(range); return ValueTuple.Create(); });
+                    ir.Handle(i => { slot.Values.Add(i); return ValueTuple.Create(); }, range => { slot.Ranges.Add(range); return ValueTuple.Create(); });
                 }
 
-                return new SecondOf<EtlStringReplacementSlot, EtlIntReplacementSlot, EtlDecimalReplacementSlot, EtlBooleanReplacementSlot>(r);
+                return slot;
             }
             else if (decimalReplacement != null)
             {
-                var r = new EtlDecimalReplacementSlot(slotName);
+                var slot = new DecimalReplacementSlot(slotName);
                 var decimalReplacements = (decimalReplacement.slotdecimalset() switch
                 {
                     null => throw new ParserException(),
@@ -495,34 +432,34 @@ namespace SnomedTemplateService.Parser
 
                 foreach (var dr in decimalReplacements)
                 {
-                    dr.Handle(d => { r.Values.Add(d); return ValueTuple.Create(); }, range => { r.Ranges.Add(range); return ValueTuple.Create(); });
+                    dr.Handle(d => { slot.Values.Add(d); return ValueTuple.Create(); }, range => { slot.Ranges.Add(range); return ValueTuple.Create(); });
                 }
 
-                return new ThirdOf<EtlStringReplacementSlot, EtlIntReplacementSlot, EtlDecimalReplacementSlot, EtlBooleanReplacementSlot>(r);
+                return slot;
             }
             else if (boolReplacement != null)
             {
-                return new FourthOf<EtlStringReplacementSlot, EtlIntReplacementSlot, EtlDecimalReplacementSlot, EtlBooleanReplacementSlot>(
-                    new EtlBooleanReplacementSlot(
+                return new BoolReplacementSlot(
                         boolReplacement.slotbooleanset() switch
                         {
                             null => throw new ParserException(),
                             var b => ConvertSlotbooleanset(b)
                         },
-                        slotName)
-                    );
+                        slotName);                  
             }
             throw new ParserException();
         }
 
-        private ICollection<SlotToken> ConvertSlottokenset(SlottokensetContext context)
+        private ICollection<DefinitionStatusEnum> ConvertSlottokenset(SlottokensetContext context)
         {
-            return Regex.Replace(context.GetText().ToLowerInvariant(), @"\s+", " ") switch
-            {
-                "=== <<<" => new List<SlotToken>() { SlotToken.definitionstatus },
-                "<<< ===" => new List<SlotToken>() { SlotToken.definitionstatus },
-                _ => throw new ParserException("")
-            };
+            var tokens = Regex.Split(context.GetText().ToLowerInvariant().Trim(), @"\s+");
+            return tokens.SelectMany(
+                token => token switch
+                {
+                    "===" => new[] { DefinitionStatusEnum.equivalentTo },
+                    "<<<" => new[] { DefinitionStatusEnum.subtypeOf },
+                    _ => Enumerable.Empty<DefinitionStatusEnum>()
+                }).ToList();
         }
 
         private ICollection<string> ConvertSlotstringset(SlotstringsetContext context)
@@ -530,25 +467,25 @@ namespace SnomedTemplateService.Parser
             return context.slotstring().Select(slotstr => ConvertSlotstring(slotstr)).ToList();
         }
 
-        private ICollection<OneOf<int, EtlIntReplacementSlot.Range>> ConvertSlotintegerset(SlotintegersetContext context)
+        private ICollection<OneOf<int, IntReplacementSlot.Range>> ConvertSlotintegerset(SlotintegersetContext context)
         {
-            return context.children.Select<IParseTree, OneOf<int, EtlIntReplacementSlot.Range>>(
+            return context.children.Select<IParseTree, OneOf<int, IntReplacementSlot.Range>>(
                 c => c switch
                 {
-                    SlotintegervalueContext iv => new FirstOf<int, EtlIntReplacementSlot.Range>(ConvertSlotintegervalue(iv)),
-                    SlotintegerrangeContext ir => new SecondOf<int, EtlIntReplacementSlot.Range>(ConvertSlotintegerrange(ir)),
+                    SlotintegervalueContext iv => new FirstOf<int, IntReplacementSlot.Range>(ConvertSlotintegervalue(iv)),
+                    SlotintegerrangeContext ir => new SecondOf<int, IntReplacementSlot.Range>(ConvertSlotintegerrange(ir)),
                     _ => throw new ParserException()
                 }
             ).ToList();
         }
 
-        private ICollection<OneOf<decimal, EtlDecimalReplacementSlot.Range>> ConvertSlotdecimalset(SlotdecimalsetContext context)
+        private ICollection<OneOf<decimal, DecimalReplacementSlot.Range>> ConvertSlotdecimalset(SlotdecimalsetContext context)
         {
-            return context.children.Select<IParseTree, OneOf<decimal, EtlDecimalReplacementSlot.Range>>(
+            return context.children.Select<IParseTree, OneOf<decimal, DecimalReplacementSlot.Range>>(
                 c => c switch
                 {
-                    SlotdecimalvalueContext dv => new FirstOf<decimal, EtlDecimalReplacementSlot.Range>(ConvertSlotdecimalvalue(dv)),
-                    SlotdecimalrangeContext dr => new SecondOf<decimal, EtlDecimalReplacementSlot.Range>(ConvertSlotdecimalrange(dr)),
+                    SlotdecimalvalueContext dv => new FirstOf<decimal, DecimalReplacementSlot.Range>(ConvertSlotdecimalvalue(dv)),
+                    SlotdecimalrangeContext dr => new SecondOf<decimal, DecimalReplacementSlot.Range>(ConvertSlotdecimalrange(dr)),
                     _ => throw new ParserException()
                 }
             ).ToList();
@@ -559,7 +496,7 @@ namespace SnomedTemplateService.Parser
             return context.slotbooleanvalue().Select(slotbool => ConvertSlotbooleanvalue(slotbool)).ToList();
         }
 
-        private EtlIntReplacementSlot.Range ConvertSlotintegerrange(SlotintegerrangeContext context)
+        private IntReplacementSlot.Range ConvertSlotintegerrange(SlotintegerrangeContext context)
         {
 
             var minimum = context.slotintegerminimum() switch
@@ -594,7 +531,7 @@ namespace SnomedTemplateService.Parser
                 };
             }
 
-            return new EtlIntReplacementSlot.Range(exclusiveMinimum, minimum, exclusiveMaximum, maximum);
+            return new IntReplacementSlot.Range(exclusiveMinimum, minimum, exclusiveMaximum, maximum);
         }
 
         private int ConvertSlotintegervalue(SlotintegervalueContext context)
@@ -602,7 +539,7 @@ namespace SnomedTemplateService.Parser
             return int.Parse(context.GetText().TrimStart(new[] { '#' }));
         }
 
-        private EtlDecimalReplacementSlot.Range ConvertSlotdecimalrange(SlotdecimalrangeContext context)
+        private DecimalReplacementSlot.Range ConvertSlotdecimalrange(SlotdecimalrangeContext context)
         {
             var minimum = context.slotdecimalminimum() switch
             {
@@ -637,7 +574,7 @@ namespace SnomedTemplateService.Parser
                 };
             }
 
-            return new EtlDecimalReplacementSlot.Range(exclusiveMinimum, minimum, exclusiveMaximum, maximum);
+            return new DecimalReplacementSlot.Range(exclusiveMinimum, minimum, exclusiveMaximum, maximum);
         }
 
         private decimal ConvertSlotdecimalvalue(SlotdecimalvalueContext context)
@@ -665,12 +602,12 @@ namespace SnomedTemplateService.Parser
             return context.GetText();
         }
 
-        private EtlTemplateInformationSlot ConvertTemplateinformationslot(TemplateinformationslotContext context)
+        private TemplateInformationSlot ConvertTemplateinformationslot(TemplateinformationslotContext context)
         {
             var cardinality = context.slotinformation()?.cardinality();
             var slotname = context.slotinformation()?.slotname();
 
-            return new EtlTemplateInformationSlot(
+            return new TemplateInformationSlot(
                 cardinality switch { null => null, var x => ConvertCardinality(x) },
                 slotname switch { null => null, var x => ConvertSlotname(x) });
         }

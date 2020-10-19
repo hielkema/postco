@@ -25,6 +25,10 @@ namespace SnomedTemplateService.Data
         public TemplateData GetById(int id)
         {
             var templateNode = sourceDoc.SelectSingleNode($"//template[@id={id}]");
+            if (templateNode == null)
+            {
+                return null;
+            }
             var result = new TemplateData(
                 id,
                 DateTime.Parse(templateNode.SelectSingleNode("time")?.InnerText?.Trim(), CultureInfo.InvariantCulture),

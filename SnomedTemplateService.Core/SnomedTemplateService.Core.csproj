@@ -5,15 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Service\**" />
+    <EmbeddedResource Remove="Service\**" />
+    <None Remove="Service\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SnomedTemplateService.Util\SnomedTemplateService.Util.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Service\" />
   </ItemGroup>
 
 </Project>

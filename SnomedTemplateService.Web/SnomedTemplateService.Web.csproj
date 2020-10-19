@@ -19,5 +19,11 @@
     <ProjectReference Include="..\SnomedTemplateService.Parser\SnomedTemplateService.Parser.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="expressionTemplates.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 
 </Project>
