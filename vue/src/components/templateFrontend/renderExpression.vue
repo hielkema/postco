@@ -66,7 +66,6 @@ export default {
       this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
       .then((response) => {
         this.snowstorm.rootFSN = response.data.fsn.term;
-        console.log( this.snowstorm)
         return true;
       })
     },

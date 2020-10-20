@@ -9,6 +9,10 @@
         <v-card-text>
           <table>
             <tr>
+              <th>FSN</th>
+              <td>{{ rootFSN }}</td>
+            </tr>
+            <tr>
               <th>ID</th>
               <td>
                 {{ requestedTemplate.template.root }} 
@@ -16,10 +20,6 @@
                   <v-icon>link</v-icon>
                 </v-btn>
               </td>
-            </tr>
-            <tr>
-              <th>FSN</th>
-              <td>{{ rootFSN }}</td>
             </tr>
           </table>
         </v-card-text>
