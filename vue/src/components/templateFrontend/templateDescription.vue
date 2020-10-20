@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-card 
-      outlined
-      class="ma-2">
+      color="grey lighten-3"
+      >
         <v-card-title>
             {{ requestedTemplate.title }}
         </v-card-title>

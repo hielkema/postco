@@ -1,14 +1,28 @@
 <template>
   <div>
-    <v-card 
-      class="ma-2"
-      outlined>
+    <v-card
+      color="grey lighten-3"
+      >
         <v-card-title>
             Template details
         </v-card-title>
         <v-card-text class="text-left">
-            <li>SNOMED versie: {{ requestedTemplate.snomedVersion }}</li>
-            <li>SNOMED branch: {{requestedTemplate.snomedBranch}}</li>
+          <table>
+            <tr>
+              <th>SNOMED versie</th>
+              <td>
+                {{ requestedTemplate.snomedVersion }}
+              </td>
+            </tr>
+            <tr>
+              <th>
+                SNOMED branch
+              </th>
+              <td>
+                {{requestedTemplate.snomedBranch}}
+              </td>
+            </tr>
+          </table>
         </v-card-text>
     </v-card>
   </div>

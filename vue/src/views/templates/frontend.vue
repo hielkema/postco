@@ -35,7 +35,7 @@
 				<templateGroup v-for="(group, key) in selectedTemplate.template.groups" :key="key" v-bind:groupData="group" v-bind:groupKey="key" />
 			</v-col>
 		</v-row>
-		<v-row>
+		<!-- <v-row>
 			<v-col cols=12>
 				<v-card>
 					<v-card-title>
@@ -48,7 +48,7 @@
 					</v-card-text>
 				</v-card>
 			</v-col>
-		</v-row>
+		</v-row> -->
 		<v-row>
 			<v-col cols=12>
 				<renderExpression />

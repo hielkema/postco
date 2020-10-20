@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card>
+    <v-card color="grey lighten-3">
         <v-card-title>
             Expressie
         </v-card-title>
@@ -62,9 +62,11 @@ export default {
   },
   methods: {
     retrieveFSN (conceptid) {
-      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/MAIN%2FSNOMEDCT-NL/concepts/'+conceptid)
+      var branchVersion = encodeURI(this.selectedTemplate.snomedBranch + '/' + this.selectedTemplate.snomedVersion)
+      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
       .then((response) => {
         this.snowstorm.rootFSN = response.data.fsn.term;
+        console.log( this.snowstorm)
         return true;
       })
     },

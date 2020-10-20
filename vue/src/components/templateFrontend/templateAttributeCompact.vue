@@ -1,49 +1,15 @@
 <template>
   <div>
-    <v-card>
-        <v-card-title class="ma-1">
-          Attribuut {{attributeKey + 1}}
-        </v-card-title>
+    <v-card class="mb-2">
         <v-card-text>            
           <v-simple-table>
             <template v-slot:default>
               <tbody>
                 <tr>
-                  <th>
-                    Groep / Attribuut ID
-                  </th>
-                  <td>
-                    {{groupKey}} / {{attributeKey}}
-                  </td>
-                </tr>
-                <tr>
-                  <th>
-                    Informatie
-                  </th>
-                  <td>
+                  <td width="350px">
+                    <strong>Attribuut {{attributeKey + 1}}</strong><br>
                     {{ thisComponent.title }}: {{ thisComponent.description }}
                   </td>
-                </tr>
-                <tr>
-                  <th>
-                    Attribuut
-                  </th>
-                  <td>
-                    {{ thisComponent.attribute }} | {{attributeFSN}} |
-                  </td>
-                </tr>
-                <tr>
-                  <th>
-                    Valide waarden
-                  </th>
-                  <td>
-                    {{thisComponent.value}}
-                  </td>
-                </tr>
-                <tr>
-                  <th>
-                    Zoek attribuutwaarde
-                  </th>
                   <td>
                     <b v-if="loading">Resultaat wordt geladen...<br></b>
                     <v-autocomplete
@@ -61,14 +27,6 @@
                       @change="$store.dispatch('templates/saveAttribute', {'groupKey':groupKey, 'attributeKey': attributeKey, 'attribute' : {'id':thisComponent.attribute, 'display':attributeFSN}, 'concept': select})"
                       >
                     </v-autocomplete>
-                  </td>
-                </tr>
-                <tr v-if="select">
-                  <th>
-                    Gekozen waarde
-                  </th>
-                  <td>
-                    <pre> {{ thisComponent.attribute }} | {{attributeFSN}} | => {{select.id}} |{{select.display}}|</pre>
                   </td>
                 </tr>
               </tbody>

@@ -1,16 +1,27 @@
 <template>
   <div>
     <v-card 
-      class="ma-2"
-      outlined>
+      color="grey lighten-3"
+      >
         <v-card-title>
             Rootconcept
         </v-card-title>
         <v-card-text>
-            <li>ID: {{ requestedTemplate.template.root }}</li>
-            <li>FSN: {{rootFSN}}</li>
-            
-            <v-btn target="_blank" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+requestedTemplate.template.root">Open in browser</v-btn>
+          <table>
+            <tr>
+              <th>ID</th>
+              <td>
+                {{ requestedTemplate.template.root }} 
+                <v-btn small target="_blank" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+requestedTemplate.template.root">
+                  <v-icon>link</v-icon>
+                </v-btn>
+              </td>
+            </tr>
+            <tr>
+              <th>FSN</th>
+              <td>{{ rootFSN }}</td>
+            </tr>
+          </table>
         </v-card-text>
     </v-card>
   </div>
@@ -35,7 +46,8 @@ export default {
   },
   methods: {
     retrieveFSN (conceptid) {
-      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/MAIN%2FSNOMEDCT-NL/concepts/'+conceptid)
+      var branchVersion = encodeURI(this.requestedTemplate.snomedBranch + '/' + this.requestedTemplate.snomedVersion)
+      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
       .then((response) => {
         this.rootFSN = response.data.fsn.term
         return true;
