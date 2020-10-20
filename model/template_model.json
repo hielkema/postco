@@ -8,7 +8,7 @@
     ],        
     'title' : str,         // Titel die in de frontend getoond wordt
     'description' : str,   // Beschrijving die in de frontend getoond wordt
-    'snomedVersion' : str, // SNOMED-versie waarop de template gebaseerd is
+    'snomedVersion' : str, // SNOMED-versie waarop de template gebaseerd is [bv 2020-09-30]
     'snomedBranch' : str,  // SNOMED-branch in Snowstorm (MAIN/SNOMEDCT-NL of SNOMEDCT-NL voor NL editie)
     'template' : {
         'root' : str       // Root-concept voor template
@@ -34,7 +34,7 @@
     ],        
     'title' : 'Test Template 1',                // Titel die in de frontend getoond wordt
     'description' : 'Bedoeld om te testen.',    // Beschrijving die in de frontend getoond wordt
-    'snomedVersion' : '20200731',               // SNOMED-versie waarop de template gebaseerd is
+    'snomedVersion' : '2020-09-30',               // SNOMED-versie waarop de template gebaseerd is
     'snomedBranch' : 'MAIN/SNOMEDCT-NL',        // SNOMED-branch in Snowstorm (MAIN/SNOMEDCT-NL of SNOMEDCT-NL voor NL editie)
     'template' : {
         'root' : 74400008  // Root-concept voor template

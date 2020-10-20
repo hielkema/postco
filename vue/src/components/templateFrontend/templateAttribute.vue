@@ -1,23 +1,21 @@
 <template>
   <div>
-    <v-card 
-      outlined
-      class="ma-2">
-        <!-- <v-card-title>
-          Attribuut
-        </v-card-title> -->
+    <v-card>
+        <v-card-title class="ma-1">
+          Attribuut {{attributeKey + 1}}
+        </v-card-title>
         <v-card-text>            
           <v-simple-table>
             <template v-slot:default>
               <tbody>
-                <tr>
+                <!-- <tr>
                   <th>
                     Groep / Attribuut ID
                   </th>
                   <td>
                     {{groupKey}} / {{attributeKey}}
                   </td>
-                </tr>
+                </tr> -->
                 <tr>
                   <th>
                     Informatie
@@ -36,18 +34,10 @@
                 </tr>
                 <tr>
                   <th>
-                    ECL-query
+                    Valide waarden
                   </th>
                   <td>
                     {{thisComponent.value}}
-                  </td>
-                </tr>
-                <tr v-if="items.length >= 10000">
-                  <th>
-                    Waarschuwing:
-                  </th>
-                  <td>
-                    Er zijn meer dan 10.000 resultaten gevonden ({{totalResults}}). Alleen de eerste 10.000 worden getoond in de dropdown. Voer een specifiekere zoekterm in.
                   </td>
                 </tr>
                 <tr>
@@ -59,8 +49,6 @@
                     <v-autocomplete
                       light
                       dense
-                      filled
-                      cache-items
                       :items="items"
                       item-text="display"
                       item-value="id"
@@ -70,18 +58,19 @@
                       v-model="select"
                       :search-input.sync="search"
                       :loading="loading"
+                      @change="$store.dispatch('templates/saveAttribute', {'groupKey':groupKey, 'attributeKey': attributeKey, 'attribute' : {'id':thisComponent.attribute, 'display':attributeFSN}, 'concept': select})"
                       >
                     </v-autocomplete>
                   </td>
                 </tr>
-                <tr v-if="select">
+                <!-- <tr v-if="select">
                   <th>
                     Gekozen waarde
                   </th>
                   <td>
                     <pre> {{ thisComponent.attribute }} | {{attributeFSN}} | => {{select.id}} |{{select.display}}|</pre>
                   </td>
-                </tr>
+                </tr> -->
               </tbody>
             </template>
           </v-simple-table>
@@ -98,7 +87,6 @@ export default {
       select: null,
       attributeFSN: 'laden...',
       items: [],
-      totalResults: 0,
       search: null,
       loading: false,
     }
@@ -116,9 +104,7 @@ export default {
       this.loading = true;
       this.$snowstorm.get('https://snowstorm.test-nictiz.nl/MAIN%2FSNOMEDCT-NL/concepts/?term='+ encodeURI(term) +'&offset=0&limit=10000&ecl='+encodeURI(this.thisComponent.value))
       .then((response) => {
-        this.setItems(response.data['items'])
-        this.totalResults = response.data['total']
-        this.loading = false
+         this.setItems(response.data['items'])
         return true;
       })
     },
@@ -132,12 +118,23 @@ export default {
         })
       }
       this.items = output
+      this.loading = false
       return true;
+    },
+    retrieveEclDebounced() {
+      clearTimeout(this._timerId)
+
+      this._timerId = setTimeout(() => {
+        this.retrieveECL(this.search)
+      }, 500)
     }
   },
   watch: {
     search (val) {
-      val && val !== this.select && this.retrieveECL(val)
+      if (!val) {
+        return
+      }
+      this.retrieveEclDebounced()
     },
   },
   computed: {
@@ -150,7 +147,6 @@ export default {
   },
   mounted: function(){
     this.retrieveFSN(this.thisComponent.attribute)
-    // this.retrieveECL(this.thisComponent.value)
     this.retrieved = true
   }
 }

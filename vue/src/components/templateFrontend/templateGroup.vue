@@ -1,15 +1,15 @@
 <template>
   <div>
-    <v-card 
-      outlined
-      class="ma-2">
-        <v-card-title>
-          Groep {{groupKey}}
-        </v-card-title>
+    <v-card class="ma-1">
         <v-card-text>
-            <div v-for="(attribute, key) in thisGroup" :key="key" class="ma-1">
-                <templateAttribute v-bind:attributeKey="key" v-bind:groupKey="groupKey" v-bind:componentData="attribute" />
-            </div>
+          <v-row>
+            <v-col cols=1>
+              <strong>Groep {{groupKey+1}}</strong>
+            </v-col>
+            <v-col cols=11>
+                <templateAttribute v-for="(attribute, key) in thisGroup" :key="key" v-bind:attributeKey="key" v-bind:groupKey="groupKey" v-bind:componentData="attribute" />
+            </v-col>
+          </v-row>
         </v-card-text>
     </v-card>
   </div>
