@@ -4,6 +4,8 @@ services:
         build:
             context: ./nginx
             dockerfile: Dockerfile
+        ports:
+            - 1009:80
         expose:
             - 80
         environment:
@@ -14,20 +16,14 @@ services:
         depends_on:
             - nodejs
         networks:
-            postco-internal:
-                aliases:
-                    - proxy
+            - postco-internal
+            - proxy
+            
     
     nodejs:
         build:
             context: './vue'
             dockerfile: 'Dockerfile_prod'
-        volumes:
-            - './vue:/usr/src/app'
-            - 'node_modules:/usr/src/app/node_modules'
-        environment: 
-            - CHOKIDAR_USEPOLLING=true
-            - CORS_DEBUG=1
         expose:
             - 80
         networks:
@@ -38,5 +34,7 @@ networks:
     postco-internal:
         external: false
         name: postco-internal
+    proxy:
+        external: true
 volumes:
     node_modules:
