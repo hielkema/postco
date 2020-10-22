@@ -1,0 +1,42 @@
+version: '2.1'
+services:
+    nginx:
+        build:
+            context: ./nginx
+            dockerfile: Dockerfile
+        ports:
+            - "1009:80"
+        environment:
+            - VIRTUAL_HOST=postco.test-nictiz.nl
+            - VIRTUAL_PORT=8080
+            - LETSENCRYPT_HOST=postco.test-nictiz.nl
+            - LETSENCRYPT_EMAIL=mertens@nictiz.nl
+        depends_on:
+            - nodejs
+        networks:
+            postco-internal:
+                aliases:
+                    - proxy
+    
+    nodejs:
+        build:
+            context: './vue'
+            dockerfile: 'Dockerfile_prod'
+        volumes:
+            - './vue:/usr/src/app'
+            - 'node_modules:/usr/src/app/node_modules'
+        environment: 
+            - CHOKIDAR_USEPOLLING=true
+            - CORS_DEBUG=1
+        expose:
+            - 80
+        networks:
+            postco-internal:
+                aliases:
+                    - nodejs
+networks:
+    postco-internal:
+        external: false
+        name: postco-internal
+volumes:
+    node_modules:

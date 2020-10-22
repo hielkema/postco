@@ -19,8 +19,8 @@ const state = {
       'snomedVersion' : '2020-09-30',               // SNOMED-versie waarop de template gebaseerd is
       'snomedBranch' : 'MAIN/SNOMEDCT-NL',        // SNOMED-branch in Snowstorm (MAIN/SNOMEDCT-NL of SNOMEDCT-NL voor NL editie)
       'template' : {
-        'root' : '74400008',  // Root-concept voor template
-        'groups' : [       // Attribuutgroepen - voor nu 1, maar in model vast rekening gehouden met array
+        'focus' : ['74400008','272379006'],  // Focusconcepten voor template
+        'groups' : [       // Attribuutgroepen
           [              // Groep 1
             {
               'title' : 'Veroorzaakt door', 

@@ -1,21 +1,5 @@
 version: '2.1'
-services:
-    nginx:
-        build:
-            context: ./nginx
-            dockerfile: Dockerfile
-        ports:
-            - "1009:80"
-        # environment:
-        #     - VIRTUAL_HOST=postco.test-nictiz.nl
-        #     - VIRTUAL_PORT=8080
-        #     - LETSENCRYPT_HOST=postco.test-nictiz.nl
-        #     - LETSENCRYPT_EMAIL=mertens@nictiz.nl
-        networks:
-            postco-internal:
-                aliases:
-                    - proxy
-    
+services:  
     nodejs:
         build:
             context: './vue'
@@ -28,6 +12,10 @@ services:
             - CORS_DEBUG=1
         ports:
             - '9124:8080'
+        networks:
+            postco-internal:
+                aliases:
+                    - nodejs
 networks:
     postco-internal:
         external: false

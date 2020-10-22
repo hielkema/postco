@@ -5,7 +5,7 @@
             Expressie
         </v-card-title>
         <v-card-text>
-            {{formatted}}
+            <pre>{{formatted}}</pre>
         </v-card-text>
     </v-card>
   </div>
@@ -19,7 +19,7 @@ export default {
       retrieved: false,
       expressie : 'Laden...',
       snowstorm: {
-          rootFSN : 'Laden...'
+          focusConcepts: []
       }
     }
   },
@@ -33,7 +33,13 @@ export default {
     formatted(){
         var data = this.postcoData
         var group;
-        var expression = '=== ' + this.selectedTemplate.template.root + ' |' + this.snowstorm.rootFSN +'| : '
+        
+        var expression = ''
+        expression += '=== '
+        expression += this.snowstorm.focusConcepts.join(" + ")
+        expression += ': '
+
+        // Loop over alle groepen
         var groups = [...new Set(data.map(item => item.groupKey))];
         var loop = 0
         groups.forEach((currentValue, currentKey, set)=>{
@@ -42,17 +48,21 @@ export default {
             group = data.filter(o =>{
                 return o.groupKey == currentValue
             })
-            expression += '{'
+            expression += '\n\t{'
+            // Loop over alle attributen
             for (i = 0; i < group.length; i++) {
-                expression += group[i].attribute.id;
+                expression += '\n\t\t'
+                expression += group[i].attribute.id + ' |' + group[i].attribute.display + '|';
                 expression += ' = '
                 expression += group[i].concept.id + ' |' + group[i].concept.display + '|';
                 if(i < group.length-1) { expression += ', ' }else{break;}
             }
+
+            // Tussen groepen in de optie om alternatieve notatie einde van groep aan te geven
             if(loop+1 < groups.length){
-                expression += '}, '
+                expression += '\n\t} '
             }else{
-                expression += '}'
+                expression += '\n\t}'
             }
             loop++
         })
@@ -61,17 +71,20 @@ export default {
     }
   },
   methods: {
-    retrieveFSN (conceptid) {
-      var branchVersion = encodeURI(this.selectedTemplate.snomedBranch + '/' + this.selectedTemplate.snomedVersion)
-      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
-      .then((response) => {
-        this.snowstorm.rootFSN = response.data.fsn.term;
-        return true;
+    retrieveFocusFSN (conceptids) {
+      conceptids.forEach((conceptid, key, set)=>{
+        var branchVersion = encodeURI(this.selectedTemplate.snomedBranch + '/' + this.selectedTemplate.snomedVersion)
+        this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
+        .then((response) => {
+          this.snowstorm.focusConcepts.push(conceptid + ' |'+ response.data.fsn.term + '|');
+          console.log('Focusconcept '+conceptid + ' uit SET ' + set + ' opgehaald')
+          return true;
+        })
       })
     },
   },
   mounted: function(){
-    this.retrieveFSN(this.selectedTemplate.template.root)
+    this.retrieveFocusFSN(this.selectedTemplate.template.focus)
   }
   
 }

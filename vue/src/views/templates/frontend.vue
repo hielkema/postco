@@ -21,7 +21,15 @@
 				</v-row>
 				<v-row>
 					<v-col>
-						<rootConcept />
+						<v-card 
+						color="grey lighten-3"
+						class="mb-1"
+						>
+							<v-card-title>
+								Focusconcepten
+							</v-card-title>
+						</v-card>
+						<focusConcept class="mb-1" v-for="(concept, key) in selectedTemplate.template.focus" :key="key" v-bind:concept="concept" />
 					</v-col>
 				</v-row>
 			</v-col>
@@ -29,6 +37,11 @@
 				<v-row>
 					<v-col cols=12>
 						<templateDescription />
+					</v-col>
+				</v-row>
+				<v-row>
+					<v-col cols=12>
+						<templateAuthor />
 					</v-col>
 				</v-row>
 			</v-col>
@@ -68,15 +81,17 @@
 </template>
 
 <script>
-import rootConcept from '@/components/templateFrontend/rootConcept.vue'
+import focusConcept from '@/components/templateFrontend/focusConcept.vue'
 import templateDescription from '@/components/templateFrontend/templateDescription.vue'
+import templateAuthor from '@/components/templateFrontend/templateAuthor.vue'
 import templateMetadata from '@/components/templateFrontend/templateMetadata.vue'
 import templateGroup from '@/components/templateFrontend/templateGroup.vue'
 import renderExpression from '@/components/templateFrontend/renderExpression.vue'
 export default {
 	components: {
-		rootConcept,
+		focusConcept,
 		templateDescription,
+		templateAuthor,
 		templateMetadata,
 		templateGroup,
 		renderExpression,

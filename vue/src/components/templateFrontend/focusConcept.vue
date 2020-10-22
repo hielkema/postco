@@ -1,11 +1,6 @@
 <template>
   <div>
-    <v-card 
-      color="grey lighten-3"
-      >
-        <v-card-title>
-            Rootconcept
-        </v-card-title>
+    <v-card>
         <v-card-text>
           <table>
             <tr>
@@ -15,8 +10,8 @@
             <tr>
               <th>ID</th>
               <td>
-                {{ requestedTemplate.template.root }} 
-                <v-btn small target="_blank" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+requestedTemplate.template.root">
+                {{ concept }} 
+                <v-btn small target="_blank" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+concept">
                   <v-icon>link</v-icon>
                 </v-btn>
               </td>
@@ -30,6 +25,7 @@
 <script>
 export default {
   name: 'RootconceptComponent',
+  props: ['concept'],
   data: () => {
     return {
       retrieved: false,
@@ -55,7 +51,7 @@ export default {
     },
   },
   mounted: function(){
-    this.retrieveFSN(this.requestedTemplate.template.root)
+    this.retrieveFSN(this.concept)
     this.retrieved = true
   }
   
