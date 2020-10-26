@@ -82,7 +82,7 @@ const state = {
               'title' : 'Doel', 
               'description' : 'Welke intentie heeft de beeldvormende verrichting?',    // Beschrijving: hoe moet het vak gebruikt worden?
               'attribute' : '363703001',                                                          // SNOMED ID van het attribuut
-              'value' : '< intentie als aard van verrichtingswaarde (kwalificatiewaarde)|',                                         // ECL query met valide attribute values (dit is niet per se een valide voorbeeld)
+              'value' : '< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|',                                         // ECL query met valide attribute values (dit is niet per se een valide voorbeeld)
             }
           ]
         ]
