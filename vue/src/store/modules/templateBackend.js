@@ -67,7 +67,7 @@ const state = {
             {
               'title' : 'Methode', 
               'description' : 'Welke methode wordt er gebruikt?',    // Beschrijving: hoe moet het vak gebruikt worden?
-              'attribute' : '260686004 ',                                                          // SNOMED ID van het attribuut
+              'attribute' : '260686004',                                                          // SNOMED ID van het attribuut
               'value' : '< 360037004 |beeldvorming (kwalificatiewaarde)|',                                         // ECL query met valide attribute values (dit is niet per se een valide voorbeeld)
             },
             {
@@ -76,6 +76,14 @@ const state = {
               'attribute' : '405813007',                                                          // SNOMED ID van het attribuut
               'value' : '< 442083009 |Anatomical or acquired body structure (body structure)|  ',                                         // ECL query met valide attribute values (dit is niet per se een valide voorbeeld)
             },
+          ],
+          [              // Groep 2
+            {
+              'title' : 'Doel', 
+              'description' : 'Welke intentie heeft de beeldvormende verrichting?',    // Beschrijving: hoe moet het vak gebruikt worden?
+              'attribute' : '363703001',                                                          // SNOMED ID van het attribuut
+              'value' : '< intentie als aard van verrichtingswaarde (kwalificatiewaarde)|',                                         // ECL query met valide attribute values (dit is niet per se een valide voorbeeld)
+            }
           ]
         ]
       }
