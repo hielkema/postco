@@ -22,11 +22,18 @@
                       hide-details
                       hide-no-data
                       v-model="select"
+                      :auto-select-first="true"
                       :search-input.sync="search"
+                      :no-filter="true"
                       :loading="loading"
                       @change="$store.dispatch('templates/saveAttribute', {'groupKey':groupKey, 'attributeKey': attributeKey, 'attribute' : {'id':thisComponent.attribute, 'display':attributeFSN}, 'concept': select})"
                       >
                     </v-autocomplete>
+                  </td>
+                  <td>
+                    <v-btn small target="_blank" v-if="select" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+select.id">
+                      <v-icon>link</v-icon>
+                    </v-btn>
                   </td>
                 </tr>
               </tbody>
@@ -74,7 +81,9 @@ export default {
       for (i=0; i < response.length; i++){
         output.push({
           'id' : response[i]['conceptId'],
+          'searchString' : response[i]['fsn']['term'] + ' ' + response[i]['pt']['term'],
           'display' : response[i]['fsn']['term'],
+          'preferred' : response[i]['pt']['term'],
         })
       }
       this.items = output
