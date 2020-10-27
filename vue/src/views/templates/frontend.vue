@@ -77,6 +77,11 @@
 				<renderExpression />
 			</v-col>
 		</v-row>
+		<v-row>
+			<v-col cols=12>
+				<renderDescriptionString />
+			</v-col>
+		</v-row>
 	</div>
 </template>
 
@@ -87,6 +92,8 @@ import templateAuthor from '@/components/templateFrontend/templateAuthor.vue'
 import templateMetadata from '@/components/templateFrontend/templateMetadata.vue'
 import templateGroup from '@/components/templateFrontend/templateGroup.vue'
 import renderExpression from '@/components/templateFrontend/renderExpression.vue'
+import renderDescriptionString from '@/components/templateFrontend/renderDescriptionString.vue'
+
 export default {
 	components: {
 		focusConcept,
@@ -95,6 +102,7 @@ export default {
 		templateMetadata,
 		templateGroup,
 		renderExpression,
+		renderDescriptionString,
 	},
 	computed: {
 		selectedTemplate(){
