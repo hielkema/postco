@@ -7,7 +7,7 @@
               <tbody>
                 <tr>
                   <td width="350px">
-                    <strong>Attribuut {{attributeKey + 1}}</strong><br>
+                    <strong>Attribuut {{attributeKey}} [{{groupKey}}/{{attributeKey}}]</strong><br>
                     {{ thisComponent.title }}: {{ thisComponent.description }}
                   </td>
                   <td>
@@ -115,6 +115,19 @@ export default {
     }
   },
   mounted: function(){
+    this.$store.dispatch('templates/saveAttribute', 
+      {
+        'groupKey':this.groupKey, 
+        'attributeKey': this.attributeKey, 
+        'attribute' : {
+          'id':'....', 
+          'display':'....',
+          }, 
+        'concept': {
+          'id' : '.....',
+          'display' : '....',
+        },
+      })
     this.retrieveFSN(this.thisComponent.attribute)
     this.retrieved = true
   }

@@ -3,11 +3,18 @@
     <v-row>
       <v-col cols=2>
         <v-card fill-height>
-          <v-card-title>Groep {{groupKey+1}}</v-card-title>
+          <v-card-title>Groep {{groupKey+1}} [{{groupKey}}]</v-card-title>
         </v-card>
       </v-col>
       <v-col cols=10>
-          <templateAttribute v-for="(attribute, key) in thisGroup" :key="key" v-bind:attributeKey="key" v-bind:groupKey="groupKey" v-bind:componentData="attribute" />
+          <div v-for="(attribute, key) in thisGroup" :key="key">
+            <div v-if="attribute.type == 'attribute'">
+              <templateAttribute v-bind:attributeKey="key" v-bind:groupKey="groupKey" v-bind:componentData="attribute" />
+            </div>
+            <div v-if="attribute.type == 'postco'">
+              <templateNestedPostco v-bind:groupKey="groupKey" v-bind:attributeKey="key" v-bind:template="attribute" />
+            </div>
+          </div>
       </v-col>
     </v-row>
   </div>
@@ -15,14 +22,15 @@
 
 <script>
 import templateAttribute from '@/components/templateFrontend/templateAttributeCompact.vue'
+import templateNestedPostco from '@/components/templateFrontend/templateNestedPostcoordination.vue'
 export default {
 	components: {
     templateAttribute,
+    templateNestedPostco,
   },
   name: 'TemplateGroup',
   data: () => {
     return {
-            
     }
   },
   props: ['groupData', 'groupKey'],
@@ -32,6 +40,11 @@ export default {
     },
     thisGroup(){
       return this.groupData
+    }
+  },
+  methods: {
+    checkboxValue: function(params) {
+      this.check = params;
     }
   }
 }

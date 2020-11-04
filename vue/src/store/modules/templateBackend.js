@@ -68,20 +68,51 @@ const state = {
             {
               'title' : 'Methode', 
               'description' : 'Welke methode wordt er gebruikt?',    // Beschrijving: hoe moet het vak gebruikt worden?
+              'type' : 'attribute',
               'attribute' : '260686004',                                                          // SNOMED ID van het attribuut
               'value' : '< 360037004 |beeldvorming (kwalificatiewaarde)|',                                         // ECL query met valide attribute values (dit is niet per se een valide voorbeeld)
             },
+            // Poging tot geneste postcoördinatie
             {
               'title' : 'Procedure site', 
-              'description' : 'Welke locatie?',    // Beschrijving: hoe moet het vak gebruikt worden?
-              'attribute' : '405813007',                                                          // SNOMED ID van het attribuut
-              'value' : '< 442083009 |Anatomical or acquired body structure (body structure)|  ',                                         // ECL query met valide attribute values (dit is niet per se een valide voorbeeld)
+              'description' : 'Welke locatie?',
+              'type' : 'postco',
+              'attribute' : '405813007',
+              'value' : '< 442083009 |Anatomical or acquired body structure (body structure)|  ', // ECL query met valide attribute values als focusconcept voor de geneste expressie
+              'nestedTemplate' : {
+                'groups' : [
+                  [
+                    {
+                      'title' : 'Lateraliteit',
+                      'description' : 'Welke zijde?',
+                      'type' : 'attribute',
+                      'attribute' : '272741003',
+                      'value' : '< 182353008 |Side (qualifier value)|',
+                    },
+                    {
+                      'title' : 'Lateraliteit',
+                      'description' : 'Welke zijde?',
+                      'type' : 'attribute',
+                      'attribute' : '272741003',
+                      'value' : '< 182353008 |Side (qualifier value)|',
+                    }
+                  ],
+                  [
+                    {
+                      'title' : 'Lateraliteit 2',
+                      'description' : 'Welke zijde?',
+                      'type' : 'attribute',
+                      'attribute' : '272741003',
+                      'value' : '< 182353008 |Side (qualifier value)|',
+                    }
+                  ]
+                ]
+              }
             },
-          ],
-          [              // Groep 2
             {
               'title' : 'Doel', 
               'description' : 'Welke intentie heeft de beeldvormende verrichting?',    // Beschrijving: hoe moet het vak gebruikt worden?
+              'type' : 'attribute',
               'attribute' : '363703001',                                                          // SNOMED ID van het attribuut
               'value' : '< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|',                                         // ECL query met valide attribute values (dit is niet per se een valide voorbeeld)
             }
