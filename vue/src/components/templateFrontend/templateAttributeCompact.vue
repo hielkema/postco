@@ -7,7 +7,7 @@
               <tbody>
                 <tr>
                   <td width="350px">
-                    <strong>Attribuut {{attributeKey}} [{{groupKey}}/{{attributeKey}}]</strong><br>
+                    <strong>Attribuut {{attributeKey+1}} <!-- [{{groupKey}}/{{attributeKey}}] --></strong><br>
                     {{ thisComponent.title }}: {{ thisComponent.description }}
                   </td>
                   <td>
