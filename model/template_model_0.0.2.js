@@ -43,7 +43,7 @@
                     "focus" : [  // ***LET OP: AFWIJKEND VOOR GENESTE EXPRESSIES***: [1...1]
                         {
                             "type"          : str,
-                            "value"         : str, // SNOMED Concept ID - alleen indien type = precoordinatedConcept
+                            "conceptId"     : str, // SNOMED Concept ID - alleen indien type = precoordinatedConcept
                                                    // TODO - geen ondersteuning voor vooraf vastgelegd focusconcept in geneste expressies
                             "constraint"    : str, // ECL - alleen indien type = conceptslot
                         }
