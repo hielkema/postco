@@ -16,6 +16,12 @@ services:
             postco-internal:
                 aliases:
                     - nodejs
+    templateservice:
+        build: ./SnomedTemplateService
+        ports:
+            - '63189:80'
+        networks:
+            - postco-internal
 networks:
     postco-internal:
         external: false
