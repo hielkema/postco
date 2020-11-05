@@ -29,7 +29,7 @@
 								Focusconcepten
 							</v-card-title>
 						</v-card>
-						<focusConcept class="mb-1" v-for="(concept, key) in selectedTemplate.template.focus" :key="key" v-bind:concept="concept" />
+						<focusConcept class="mb-1" v-for="(focus, key) in selectedTemplate.template.focus" :key="key" v-bind:focus="focus" />
 					</v-col>
 				</v-row>
 			</v-col>

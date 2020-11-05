@@ -1,14 +1,14 @@
 <template>
   <div>
     <v-card class="mb-2">
-        <v-card-text>            
+        <v-card-text>     
           <v-simple-table>
             <template v-slot:default>
               <tbody>
                 <tr>
                   <td width="350px">
                     <strong>Attribuut {{attributeKey+1}} <!-- [{{groupKey}}/{{attributeKey}}] --></strong><br>
-                    {{ thisComponent.title }}: {{ thisComponent.description }}
+                    {{ templateData.title }}: {{ templateData.description }}
                   </td>
                   <td>
                     <b v-if="loading">Resultaat wordt geladen...<br></b>
@@ -26,11 +26,9 @@
                       :search-input.sync="search"
                       :no-filter="true"
                       :loading="loading"
-                      @change="$store.dispatch('templates/saveAttribute', {'groupKey':groupKey, 'attributeKey': attributeKey, 'attribute' : {'id':thisComponent.attribute, 'display':attributeFSN}, 'concept': select})"
+                      @change="$store.dispatch('templates/saveAttribute', {'groupKey':groupKey, 'attributeKey': attributeKey, 'attribute' : {'id':templateData.attribute, 'display':attributeFSN}, 'concept': select})"
                       >
                     </v-autocomplete>
-              <!-- {{thisComponent}} -->
-
                   </td>
                   <td>
                     <v-btn small target="_blank" v-if="select" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+select.id">
@@ -58,7 +56,7 @@ export default {
       loading: false,
     }
   },
-  props: ['componentData', 'attributeKey', 'groupKey'],
+  props: ['templateData', 'attributeKey', 'groupKey'],
   methods: {
     retrieveFSN (conceptid) {
       var branchVersion = encodeURI(this.requestedTemplate.snomedBranch + '/' + this.requestedTemplate.snomedVersion)
@@ -71,7 +69,7 @@ export default {
     retrieveECL (term) {
       this.loading = true;
       var branchVersion = encodeURI(this.requestedTemplate.snomedBranch + '/' + this.requestedTemplate.snomedVersion)
-      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/?term='+ encodeURI(term) +'&offset=0&limit=100&ecl='+encodeURI(this.thisComponent.value.constraint))
+      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/?term='+ encodeURI(term) +'&offset=0&limit=100&ecl='+encodeURI(this.templateData.template.focus[0].constraint))
       .then((response) => {
          this.setItems(response.data['items'])
         return true;
@@ -130,7 +128,7 @@ export default {
           'display' : '....',
         },
       })
-    this.retrieveFSN(this.thisComponent.attribute)
+    this.retrieveFSN(this.templateData.attribute)
     this.retrieved = true
   }
 }

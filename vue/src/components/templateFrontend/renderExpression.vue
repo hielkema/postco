@@ -94,7 +94,7 @@ export default {
                               // Zijn er nog meer? Dan komma en inspringen
                               expression += ', \n\t\t\t\t\t' 
                             }else{
-                              // Zo niet, eindigen met accolade
+                              // Zo niet, eindigen met accolade op de volgende regel
                               expression += '\n\t\t\t\t}'
                             }
                         })
@@ -127,13 +127,14 @@ export default {
     }
   },
   methods: {
-    retrieveFocusFSN (conceptids) {
-      conceptids.forEach((conceptid, key, set)=>{
+    retrieveFocusFSN (concepts) {
+      concepts.forEach((concept, key, set)=>{
         var branchVersion = encodeURI(this.selectedTemplate.snomedBranch + '/' + this.selectedTemplate.snomedVersion)
-        this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
+        this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+concept.conceptId)
         .then((response) => {
-          this.snowstorm.focusConcepts.push(conceptid + ' |'+ response.data.fsn.term + '|');
-          console.log('Focusconcept '+conceptid + ' uit SET ' + set + ' opgehaald')
+          this.snowstorm.focusConcepts.push(concept.conceptId + ' |'+ response.data.fsn.term + '|');
+          console.log('Focusconcept '+concept.conceptId + ' uit SET opgehaald')
+          console.log(set)
           return true;
         })
       })

@@ -6,117 +6,95 @@ const state = {
 
     // Example template #2
     requestedTemplate: 
-    // {
-    //   'id' : 2,            // Unique, primary key
-    //   'time' : '1602058089',
-    //   'authors' : [
-    //     {
-    //       'name' : 'Test Test',
-    //       'contact' : 'test@test.nl',
-    //     }
-    //   ],
-    //   'title' : 'Test Template 2',                // Titel die in de frontend getoond wordt
-    //   'description' : 'Bedoeld om te testen. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla mattis lorem id mi venenatis, sed commodo neque tristique. Aliquam eget turpis placerat, aliquet dolor sed, vehicula est. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras sit amet erat semper, hendrerit odio a, molestie lacus. Sed rhoncus sapien leo, nec luctus dolor pretium a. Integer mauris dui, viverra placerat vehicula id, egestas vel elit. Aenean posuere enim eget diam cursus, vel egestas tellus scelerisque. Quisque cursus porta dictum. Donec vel metus libero. Phasellus sollicitudin vel felis in venenatis.',    // Beschrijving die in de frontend getoond wordt
-    //   'snomedVersion' : '2020-09-30',               // SNOMED-versie waarop de template gebaseerd is
-    //   'snomedBranch' : 'MAIN/SNOMEDCT-NL',        // SNOMED-branch in Snowstorm (MAIN/SNOMEDCT-NL of SNOMEDCT-NL voor NL editie)
-    //   'template' : {
-    //     'focus' : ['74400008','272379006'],  // Focusconcepten voor template
-    //     'groups' : [       // Attribuutgroepen
-    //       [              // Groep 1
-    //         {
-    //           'title' : 'Veroorzaakt door', 
-    //           'description' : 'Hiermee kan je aangeven wat de veroorzaker is van de aandoening',    // Beschrijving: hoe moet het vak gebruikt worden?
-    //           'attribute' : '246075003',                                                          // SNOMED ID van het attribuut
-    //           'value' : '<< 105590001 |Substance (substance)| OR 138875005 |SNOMED CT Concept (SNOMED RT+CTV3)| OR << 260787004 |Physical object (physical object)| OR << 373873005 |Pharmaceutical / biologic product (product)| OR << 410607006 |Organism (organism)| OR << 78621006 |Physical force (physical force)| OR <<404684003 |clinical finding|',                                         // ECL query met valide attribute values (dit is niet per se een valide voorbeeld)
-    //         },
-    //         {
-    //           'title' : 'Substantie', 
-    //           'description' : 'Wat voor substantie?',    // Beschrijving: hoe moet het vak gebruikt worden?
-    //           'attribute' : '105590001',                                                          // SNOMED ID van het attribuut
-    //           'value' : '<< 105590001 |Substance (substance)| OR 138875005 |SNOMED CT Concept (SNOMED RT+CTV3)| OR << 260787004 |Physical object (physical object)| OR << 373873005 |Pharmaceutical / biologic product (product)| OR << 410607006 |Organism (organism)| OR << 78621006 |Physical force (physical force)| OR <<404684003 |clinical finding|',                                         // ECL query met valide attribute values (dit is niet per se een valide voorbeeld)
-    //         },
-    //       ],
-    //       [              // Groep 2
-    //         {
-    //           'title' : 'Veroorzaakt door', 
-    //           'description' : 'Hiermee kan je aangeven wat de veroorzaker is van de aandoening',    // Beschrijving: hoe moet het vak gebruikt worden?
-    //           'attribute' : '246075003',                                                          // SNOMED ID van het attribuut
-    //           'value' : '<< 105590001 |Substance (substance)| OR 138875005 |SNOMED CT Concept (SNOMED RT+CTV3)| OR << 260787004 |Physical object (physical object)| OR << 373873005 |Pharmaceutical / biologic product (product)| OR << 410607006 |Organism (organism)| OR << 78621006 |Physical force (physical force)| OR <<404684003 |clinical finding|',                                         // ECL query met valide attribute values (dit is niet per se een valide voorbeeld)
-    //         }
-    //       ]
-    //     ]
-    //   }
-    // },
     {
-      'id' : 2,            // Unique, primary key
-      'time' : '1602058089',
-      'authors' : [
+      "id" : 2, // Unique, primary key
+      "time" : "1602058089",
+      "authors" : [
         {
-          'name' : 'Test Test',
-          'contact' : 'test@test.nl',
+          "name" : "Test Test",
+          "contact" : "test@test.nl"
         }
       ],
-      'title' : 'Beeldvormende verrichting',                // Titel die in de frontend getoond wordt
-      'description' : 'Bedoeld om te testen. Usecase: Coderen van beeldvormende verrichtingen op een lichaamsstructuur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla mattis lorem id mi venenatis, sed commodo neque tristique. Aliquam eget turpis placerat, aliquet dolor sed, vehicula est. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras sit amet erat semper, hendrerit odio a, molestie lacus. Sed rhoncus sapien leo, nec luctus dolor pretium a. Integer mauris dui, viverra placerat vehicula id, egestas vel elit. Aenean posuere enim eget diam cursus, vel egestas tellus scelerisque. Quisque cursus porta dictum. Donec vel metus libero. Phasellus sollicitudin vel felis in venenatis.',    // Beschrijving die in de frontend getoond wordt
-      'snomedVersion' : '2020-09-30',               // SNOMED-versie waarop de template gebaseerd is
-      'snomedBranch' : 'MAIN/SNOMEDCT-NL',        // SNOMED-branch in Snowstorm (MAIN/SNOMEDCT-NL of SNOMEDCT-NL voor NL editie)
-      'stringFormat' : '[0/0] van [0/1] met [1/0]',
-      'template' : {
-        'focus' : ['71388002'],  // Focusconcepten voor template
-        'groups' : [       // Attribuutgroepen
-          [              // Groep 1
+      "title" : "Beeldvormende verrichting", // Titel die in de frontend getoond wordt
+      "description" : "Bedoeld om te testen. Usecase: Coderen van beeldvormende verrichtingen op een lichaamsstructuur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla mattis lorem id mi venenatis, sed commodo neque tristique. Aliquam eget turpis placerat, aliquet dolor sed, vehicula est. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras sit amet erat semper, hendrerit odio a, molestie lacus. Sed rhoncus sapien leo, nec luctus dolor pretium a. Integer mauris dui, viverra placerat vehicula id, egestas vel elit. Aenean posuere enim eget diam cursus, vel egestas tellus scelerisque. Quisque cursus porta dictum. Donec vel metus libero. Phasellus sollicitudin vel felis in venenatis.", // Beschrijving die in de frontend getoond wordt
+      "snomedVersion" : "2020-09-30", // SNOMED-versie waarop de template gebaseerd is
+      "snomedBranch" : "MAIN/SNOMEDCT-NL", // SNOMED-branch in Snowstorm (MAIN/SNOMEDCT-NL of SNOMEDCT-NL voor NL editie)
+      "stringFormat" : "[0/0] van [0/1] met [1/0]",
+      "template" : {
+        "focus" : [
             {
-              'title' : 'Methode', 
-              'description' : 'Welke methode wordt er gebruikt?',    // Beschrijving: hoe moet het vak gebruikt worden?
-              'type' : 'attribute',
-              'attribute' : '260686004',                                                          // SNOMED ID van het attribuut
-              'value' : '< 360037004 |beeldvorming (kwalificatiewaarde)|',                                         // ECL query met valide attribute values (dit is niet per se een valide voorbeeld)
+                "type" : "precoordinatedConcept",
+                "conceptId" : "71388002"
+            }
+        ], // Focusconcepten voor template
+        "groups" : [ // Attribuutgroepen
+          [
+            // Groep 1
+            {
+              "title" : "Methode",
+              "description" : "Welke methode wordt er gebruikt?", // Beschrijving: hoe moet het vak gebruikt worden?
+              "attribute" : "260686004", // SNOMED ID van het attribuut
+              "value" : {
+                "type" : "conceptslot",
+                "constraint" : "< 360037004 |beeldvorming (kwalificatiewaarde)|"  // ECL query met valide attribute values (dit is niet per se een valide voorbeeld)
+              }
             },
             // Poging tot geneste postcoördinatie
             {
-              'title' : 'Procedure site', 
-              'description' : 'Welke locatie?',
-              'type' : 'postco',
-              'attribute' : '405813007',
-              'value' : '< 442083009 |Anatomical or acquired body structure (body structure)|  ', // ECL query met valide attribute values als focusconcept voor de geneste expressie
-              'nestedTemplate' : {
-                'groups' : [
+              "title" : "Procedure site",
+              "description" : "Welke locatie?",
+              "attribute" : "405813007",
+              "template" : {
+                "focus" : [{
+                  "type" : "conceptslot",
+                  "constraint" : "< 442083009 |Anatomical or acquired body structure (body structure)|" // ECL query met valide attribute values als focusconcept voor de geneste expressie
+                },
+              ],
+                "groups" : [
                   [
                     {
-                      'title' : 'Lateraliteit',
-                      'description' : 'Welke zijde?',
-                      'type' : 'attribute',
-                      'attribute' : '272741003',
-                      'value' : '< 182353008 |Side (qualifier value)|',
+                      "title" : "Lateraliteit",
+                      "description" : "Welke zijde?",
+                      "attribute" : "272741003",
+                      "value" : {
+                        "type" : "conceptslot",
+                        "constraint" : "< 182353008 |Side (qualifier value)|"
+                      }
                     },
                     {
-                      'title' : 'Lateraliteit',
-                      'description' : 'Welke zijde?',
-                      'type' : 'attribute',
-                      'attribute' : '272741003',
-                      'value' : '< 182353008 |Side (qualifier value)|',
+                      "title" : "Lateraliteit",
+                      "description" : "Welke zijde?",
+                      "attribute" : "272741003",
+                      "value" : {
+                        "type" : "conceptslot",
+                        "constraint" : "< 182353008 |Side (qualifier value)|"
+                      }
                     }
                   ],
                   [
                     {
-                      'title' : 'Lateraliteit 2',
-                      'description' : 'Welke zijde?',
-                      'type' : 'attribute',
-                      'attribute' : '272741003',
-                      'value' : '< 182353008 |Side (qualifier value)|',
+                      "title" : "Lateraliteit 2",
+                      "description" : "Welke zijde?",
+                      "attribute" : "272741003",
+                      "value" : {
+                        "type" : "conceptslot",
+                        "constraint" : "< 182353008 |Side (qualifier value)|"
+                      }
                     }
                   ]
                 ]
               }
             },
             {
-              'title' : 'Doel', 
-              'description' : 'Welke intentie heeft de beeldvormende verrichting?',    // Beschrijving: hoe moet het vak gebruikt worden?
-              'type' : 'attribute',
-              'attribute' : '363703001',                                                          // SNOMED ID van het attribuut
-              'value' : '< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|',                                         // ECL query met valide attribute values (dit is niet per se een valide voorbeeld)
+              "title" : "Doel",
+              "description" : "Welke intentie heeft de beeldvormende verrichting?", // Beschrijving: hoe moet het vak gebruikt worden?
+              "attribute" : "363703001", // SNOMED ID van het attribuut
+              "value" : {
+                "type" : "conceptslot",
+                "constraint" : "< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|" // ECL query met valide attribute values (dit is niet per se een valide voorbeeld)
+              }
             }
-          ]
+          ],
         ]
       }
     },

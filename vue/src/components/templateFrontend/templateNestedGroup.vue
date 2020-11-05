@@ -1,10 +1,10 @@
 <template>
   <div>
     <div v-for="(attribute, key) in thisGroup" :key="key">
-      <div v-if="attribute.type == 'attribute'">
+      <div v-if="attribute.hasOwnProperty('value')">
         <templateAttribute v-bind:attributeKey="key" v-bind:groupKey="groupParents" v-bind:componentData="attribute" />
       </div>
-      <div v-if="attribute.type == 'template'">
+      <div v-if="attribute.hasOwnProperty('template')">
         Dubbel geneste templates worden niet ondersteund.
       </div>
     </div>
