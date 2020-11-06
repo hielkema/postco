@@ -56,8 +56,8 @@
                                 "attribute"   : str,
                                 "value" : {
                                     "type"       : str,
-                                    "constraint" : str, // alleen bij type = conceptslot
                                     "value"      : str, // alleen bij type = precoordinatedConcept
+                                    "constraint" : str, // alleen bij type = conceptslot
                                 }
                             }
                         ]
