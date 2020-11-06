@@ -2,21 +2,26 @@
   <div>
     <v-card>
         <v-card-text>
-          <table>
-            <tr>
-              <th>FSN</th>
-              <td>{{ rootFSN }}</td>
-            </tr>
-            <tr>
-              <th>ID</th>
-              <td>
-                {{ concept }} 
-                <v-btn small target="_blank" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+concept">
-                  <v-icon>link</v-icon>
-                </v-btn>
-              </td>
-            </tr>
-          </table>
+          <div v-if="focus.type == 'precoordinatedConcept'">
+            <table>
+              <tr>
+                <th>FSN</th>
+                <td>{{ rootFSN }}</td>
+              </tr>
+              <tr>
+                <th>ID</th>
+                <td>
+                  {{ focus.conceptId }} 
+                  <v-btn small target="_blank" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+focus.conceptId">
+                    <v-icon>link</v-icon>
+                  </v-btn>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div v-else>
+            Er is geen ondersteuning voor conceptslot in de root van de template.
+          </div>
         </v-card-text>
     </v-card>
   </div>
@@ -25,7 +30,7 @@
 <script>
 export default {
   name: 'RootconceptComponent',
-  props: ['concept'],
+  props: ['focus'],
   data: () => {
     return {
       retrieved: false,
@@ -51,7 +56,7 @@ export default {
     },
   },
   mounted: function(){
-    this.retrieveFSN(this.concept)
+    this.retrieveFSN(this.focus.conceptId)
     this.retrieved = true
   }
   
