@@ -31,7 +31,7 @@
                 "attribute"      : str,  // SNOMED Concept ID van het attribuut
                 "value" : {             // Definieert de methode van bepalen van attribuutwaarde ('conceptslot' = keuze / 'precoordinatedConcept' = voorgedefinieerd)
                     "type"       : str, // conceptslot / precoordinatedConcept
-                    "value"      : str, // SNOMED Concept ID - alleen indien type = precoordinatedConcept
+                    "conceptId"  : str, // SNOMED Concept ID - alleen indien type = precoordinatedConcept
                     "constraint" : str, // ECL query met valide attribute values - alleen indien type = conceptslot
                 }
             },
@@ -56,7 +56,7 @@
                                 "attribute"   : str,
                                 "value" : {
                                     "type"       : str,
-                                    "value"      : str, // alleen bij type = precoordinatedConcept
+                                    "conceptId"  : str, // alleen bij type = precoordinatedConcept
                                     "constraint" : str, // alleen bij type = conceptslot
                                 }
                             }
