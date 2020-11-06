@@ -19,7 +19,7 @@ services:
     templateservice:
         build: ./SnomedTemplateService
         ports:
-            - '63189:80'
+            - '9125:80'
         networks:
             - postco-internal
 networks:
