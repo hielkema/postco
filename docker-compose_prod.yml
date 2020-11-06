@@ -4,8 +4,8 @@ services:
         build:
             context: ./nginx
             dockerfile: Dockerfile
-        ports:
-            - 1009:80
+        # ports:
+        #     - 1009:80
         expose:
             - 80
         environment:
@@ -30,6 +30,19 @@ services:
             postco-internal:
                 aliases:
                     - nodejs
+
+
+    templateservice:
+        build: ./SnomedTemplateService
+        # ports:
+        #     - '9125:80'
+        expose:
+            - 80
+        networks:
+            postco-internal:
+                aliases:
+                    - templateservice
+
 networks:
     postco-internal:
         external: false
