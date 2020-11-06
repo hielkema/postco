@@ -51,6 +51,7 @@ namespace SnomedTemplateService.Core.Domain
         public string Description { get; set; }
         public string SnomedVersion { get; }
         public string SnomedBranch { get; }
+        public string StringFormat { get; set; }
         public string Etl { get; }
         public IDictionary<string, string> SlotTitles
         {
