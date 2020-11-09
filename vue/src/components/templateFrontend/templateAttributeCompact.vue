@@ -29,7 +29,6 @@
                       @change="$store.dispatch('templates/saveAttribute', {'groupKey':groupKey, 'attributeKey': attributeKey, 'attribute' : {'id':thisComponent.attribute, 'display':attributeFSN}, 'concept': select})"
                       >
                     </v-autocomplete>
-              <!-- {{thisComponent}} -->
 
                   </td>
                   <td>
