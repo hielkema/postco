@@ -140,8 +140,8 @@ const state = {
       return true
     },
     setTemplate: (state, payload) => {
-      state.requestedTemplate = payload
-      console.log(payload)
+      state.requestedTemplate = payload.data
+      console.log(payload.data)
       state.loading.template = false
     },
     addError: (state, payload) => {
