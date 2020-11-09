@@ -25,6 +25,5 @@ services:
 networks:
     postco-internal:
         external: false
-        name: postco-internal
 volumes:
     node_modules:
