@@ -9,6 +9,11 @@ const routes = [
     path: '/test/:templateID',
     name: 'Template',
     component: () => import('@/views/templates/frontend.vue')
+  },
+  {
+    path: '/template/:templateID',
+    name: 'Template',
+    component: () => import('@/views/templates/frontend.vue')
   }
 ]
 
