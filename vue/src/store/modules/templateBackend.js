@@ -140,7 +140,7 @@ const state = {
       return true
     },
     setTemplate: (state, payload) => {
-      state.template = payload
+      state.requestedTemplate = payload
       state.loading.template = false
     },
     addError: (state, payload) => {
