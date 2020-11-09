@@ -8,5 +8,6 @@ namespace SnomedTemplateService.Core.Interfaces
     public interface ITemplateRepository
     {
         TemplateData GetById(int id);
+        IList<TemplateData> GetTemplates();
     }
 }

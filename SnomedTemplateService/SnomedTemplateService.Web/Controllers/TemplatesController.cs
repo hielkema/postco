@@ -9,6 +9,7 @@ using SnomedTemplateService.Core.Domain.Etl;
 using SnomedTemplateService.Data;
 using System.Dynamic;
 using SnomedTemplateService.Util;
+using SnomedTemplateService.Core.Domain;
 
 namespace SnomedTemplateService.Web.Controllers
 {
@@ -49,27 +50,41 @@ namespace SnomedTemplateService.Web.Controllers
                 handleExpressionSlot: s => throw new Exception("slots are not supported for the root expression")
                 );
 
-            dynamic result = new ExpandoObject();
+            var result = TemplateMetadataToJson(templateData);
+            result["template"] = EtlSubexpressionToJson(rootExpression, templateData.SlotTitles, templateData.SlotDescriptions);
 
-            result.id = templateData.Id;
-            result.time = templateData.Time;
+            return result;
+        }
+
+        public List<object> Get()
+        {
+            var templateRepository = new XmlFileTemplateRepository(_hostEnvironment.ContentRootFileProvider.GetFileInfo("expressionTemplates.xml"));
+            return templateRepository.GetTemplates().Select(t => (object) TemplateMetadataToJson(t)).ToList();
+
+        }
+
+        private IDictionary<string, object> TemplateMetadataToJson(TemplateData templateData)
+        {
+            var result = new Dictionary<string, object>
+            {
+                ["id"] = templateData.Id,
+                ["time"] = templateData.Time
+            };
             if (templateData.Authors.Count != 0)
             {
-                result.authors = templateData.Authors.Select(a => !string.IsNullOrEmpty(a.Contact) ? (object)new { name = a.Name, contact = a.Contact } : new { name = a.Name }).ToArray();
+                result["authors"] = templateData.Authors.Select(a => !string.IsNullOrEmpty(a.Contact) ? (object)new { name = a.Name, contact = a.Contact } : new { name = a.Name }).ToArray();
             }
-            result.title = templateData.Title;
+            result["title"] = templateData.Title;
             if (!string.IsNullOrEmpty(templateData.Description))
             {
-                result.description = templateData.Description;
+                result["description"] = templateData.Description;
             }
-            result.snomedVersion = templateData.SnomedVersion;
-            result.snomedBranch = templateData.SnomedBranch;
+            result["snomedVersion"] = templateData.SnomedVersion;
+            result["snomedBranch"] = templateData.SnomedBranch;
             if (!string.IsNullOrEmpty(templateData.StringFormat))
             {
-                result.stringFormat = templateData.StringFormat;
+                result["stringFormat"] = templateData.StringFormat;
             }
-            result.template = EtlSubexpressionToJson(rootExpression, templateData.SlotTitles, templateData.SlotDescriptions);
-
             return result;
         }
 
@@ -125,28 +140,30 @@ namespace SnomedTemplateService.Web.Controllers
                         handleSubexpressionOrSlot: e => e.Handle(
                             handleSubexpression: sub =>
                             {
-                                dynamic result = new ExpandoObject();
-                                result.attribute = attrNameSctId;
+                                var result = new Dictionary<string, object>
+                                {
+                                    ["attribute"] = attrNameSctId
+                                };
                                 if (sub.IsConceptReference)
                                 {
                                     var concept = sub.GetConceptReference();
-                                    result.title = concept.Term;
-                                    result.value = GetPrecoordinatedConceptJson(concept.SctId);
+                                    result["title"] = concept.Term;
+                                    result["value"] = GetPrecoordinatedConceptJson(concept.SctId);
                                 }
                                 else
                                 {
                                     var infoSlotName = info?.SlotName;
                                     if (infoSlotName != null)
                                     {
-                                        result.title = slotTitles.ContainsKey(infoSlotName) ?
+                                        result["title"] = slotTitles.ContainsKey(infoSlotName) ?
                                             slotTitles[info?.SlotName] :
                                             info?.SlotName;
                                         if (slotDescriptions.ContainsKey(infoSlotName))
                                         {
-                                            result.description = slotDescriptions[infoSlotName];
+                                            result["description"] = slotDescriptions[infoSlotName];
                                         }
                                     }
-                                    result.template = EtlSubexpressionToJson(sub, slotTitles, slotDescriptions);
+                                    result["template"] = EtlSubexpressionToJson(sub, slotTitles, slotDescriptions);
                                 }
                                 return result;
                             },
@@ -190,56 +207,61 @@ namespace SnomedTemplateService.Web.Controllers
             IDictionary<string, string> slotDescriptions
             )
         {
-            dynamic result = new ExpandoObject();
-
-            result.attribute = attributeName;
+            var result = new Dictionary<string, object>
+            {
+                ["attribute"] = attributeName
+            };
 
             var infoSlotName = infoSlot?.SlotName;
             var valueSlotName = valueSlot.Handle(c => c.SlotName, e=> e.SlotName);
 
             if (valueSlotName != null && slotTitles.ContainsKey(valueSlotName))
             {
-                result.title = slotTitles[valueSlotName];
+                result["title"] = slotTitles[valueSlotName];
             }
             else if (infoSlotName != null && slotTitles.ContainsKey(infoSlotName))
             {
-                result.title = slotTitles[infoSlotName];
+                result["title"] = slotTitles[infoSlotName];
             }
             else if (valueSlotName != null)
             {
-                result.title = valueSlotName;
+                result["title"] = valueSlotName;
             }
             else if (infoSlotName != null)
             {
-                result.title = infoSlotName;
+                result["title"] = infoSlotName;
             }
 
             if (valueSlotName != null && slotDescriptions.ContainsKey(valueSlotName))
             {
-                result.description = slotDescriptions[valueSlotName];
+                result["description"] = slotDescriptions[valueSlotName];
             }
             else if (infoSlotName != null && slotDescriptions.ContainsKey(infoSlotName))
             {
-                result.description = slotDescriptions[infoSlotName];
+                result["description"] = slotDescriptions[infoSlotName];
             }
 
-            result.value = GetConceptSlotJson(valueSlot.Handle(c=>c.ExpressionConstraint, e=>e.ExpressionConstraint));
+            result["value"] = GetConceptSlotJson(valueSlot.Handle(c=>c.ExpressionConstraint, e=>e.ExpressionConstraint));
             return result;
         }
 
         private object GetConceptSlotJson(string constraint)
         {
-            dynamic result = new ExpandoObject();
-            result.type = "conceptSlot";
-            result.constraint = constraint;
+            var result = new Dictionary<string, object>
+            {
+                ["type"] = "conceptSlot",
+                ["constraint"] = constraint
+            };
             return result;
         }
 
         private object GetPrecoordinatedConceptJson(ulong sctId)
         {
-            dynamic result = new ExpandoObject();
-            result.type = "precoordinatedConcept";
-            result.conceptId = sctId.ToString();
+            var result = new Dictionary<string, object>
+            {
+                ["type"] = "precoordinatedConcept",
+                ["conceptId"] = sctId.ToString()
+            };
             return result;
         }
     }
