@@ -9,7 +9,6 @@ const state = {
       'bool' : false,
       'list' : [],
     },
-    requestedTemplate: {},
 
     // Example template #2
     // requestedTemplate: 
@@ -106,14 +105,15 @@ const state = {
     //   }
     // },
 
-    template: {
+    requestedTemplate: {
       'rootConcept' : {
         'id' : 'laden',
         'fsn' : {
           'term': 'laden',
           'lang' : 'laden'
         },
-      }
+      },
+      'template' : {},
     },
 
     expressionParts: [],
@@ -140,7 +140,7 @@ const state = {
       return true
     },
     setTemplate: (state, payload) => {
-      state.requestedTemplate = payload
+      state.template = payload
       state.loading.template = false
     },
     addError: (state, payload) => {

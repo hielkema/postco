@@ -41,9 +41,6 @@ export default {
     requestedTemplate(){
       return this.$store.state.templates.requestedTemplate
     },
-    template(){
-      return this.$store.state.templates.template
-    }
   },
   methods: {
     retrieveFSN (conceptid) {
