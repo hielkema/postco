@@ -66,6 +66,8 @@ export default {
       .then((response) => {
         this.attributeFSN = response.data.fsn.term
         return true;
+      }).catch(() => {
+        this.$store.dispatch('addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributeCompact]')
       })
     },
     retrieveECL (term) {
@@ -75,6 +77,8 @@ export default {
       .then((response) => {
          this.setItems(response.data['items'])
         return true;
+      }).catch(() => {
+        this.$store.dispatch('addErrormessage', 'Er is een fout opgetreden bij het ophalen van een antwoordlijst. [templateAttributeCompact]')
       })
     },
     setItems(response) {
