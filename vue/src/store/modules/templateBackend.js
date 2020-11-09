@@ -11,65 +11,65 @@ const state = {
     },
 
     // Example template #2
-    requestedTemplate: 
-    {
-      "id": 1,
-      "time": "2020-10-15T17:52:00+00:00",
-      "authors": [
-        {
-          "name": "Alice"
-        },
-        {
-          "name": "Bob",
-          "contact": "bob@example.org"
-        }
-      ],
-      "title": "Fractuur",
-      "description": "Beschrijving Fractuur Template",
-      "snomedVersion": "20200731",
-      "snomedBranch": "MAIN/SNOMEDCT-NL",
-      "template": {
-        "focus": [
-          {
-            "type": "precoordinatedConcept",
-            "conceptId": "64572001"
-          }
-        ],
-        "groups": [
-          [
-            {
-              "attribute": "363698007",
-              "title": "SiteTitle",
-              "description": "SiteDescription",
-              "value": {
-                "type": "conceptSlot",
-                "constraint": "<<  272673000 |Bone structure|"
-              }
-            },
-            {
-              "attribute": "116676008",
-              "title": "FractureType",
-              "description": "DescNoTitle",
-              "value": {
-                "type": "conceptSlot",
-                "constraint": "<<  72704001 |Fracture|"
-              }
-            }
-          ]
-        ]
-      }
-    },
-
-    // requestedTemplate: {
-    //   'rootConcept' : {
-    //     'id' : 'laden',
-    //     'fsn' : {
-    //       'term': 'laden',
-    //       'lang' : 'laden'
+    // requestedTemplate: 
+    // {
+    //   "id": 1,
+    //   "time": "2020-10-15T17:52:00+00:00",
+    //   "authors": [
+    //     {
+    //       "name": "Alice"
     //     },
-    //   },
-    //   'template' : {},
+    //     {
+    //       "name": "Bob",
+    //       "contact": "bob@example.org"
+    //     }
+    //   ],
+    //   "title": "Fractuur",
+    //   "description": "Beschrijving Fractuur Template",
+    //   "snomedVersion": "20200731",
+    //   "snomedBranch": "MAIN/SNOMEDCT-NL",
+    //   "template": {
+    //     "focus": [
+    //       {
+    //         "type": "precoordinatedConcept",
+    //         "conceptId": "64572001"
+    //       }
+    //     ],
+    //     "groups": [
+    //       [
+    //         {
+    //           "attribute": "363698007",
+    //           "title": "SiteTitle",
+    //           "description": "SiteDescription",
+    //           "value": {
+    //             "type": "conceptSlot",
+    //             "constraint": "<<  272673000 |Bone structure|"
+    //           }
+    //         },
+    //         {
+    //           "attribute": "116676008",
+    //           "title": "FractureType",
+    //           "description": "DescNoTitle",
+    //           "value": {
+    //             "type": "conceptSlot",
+    //             "constraint": "<<  72704001 |Fracture|"
+    //           }
+    //         }
+    //       ]
+    //     ]
+    //   }
     // },
+
+    requestedTemplate: {
+      'rootConcept' : {
+        'id' : 'laden',
+        'fsn' : {
+          'term': 'laden',
+          'lang' : 'laden'
+        },
+      },
+      'template' : {},
+    },
 
     expressionParts: [],
   }
