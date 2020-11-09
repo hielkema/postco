@@ -101,6 +101,15 @@
 				<renderDescriptionString />
 			</v-col>
 		</v-row>
+
+
+		<v-row >
+			<v-col cols=12>
+				<v-card>
+					<pre>{{state}}</pre>
+				</v-card>
+			</v-col>
+		</v-row>
 	</div>
 </template>
 
@@ -140,6 +149,9 @@ export default {
 		},
 		error(){
 			return this.$store.state.templates.error
+		},
+		state(){
+			return this.$store.state.templates
 		},
 	},
 	mounted() {
