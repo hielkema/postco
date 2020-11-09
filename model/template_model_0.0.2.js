@@ -16,10 +16,10 @@
     "template" : {
       "focus" : [          // Focusconcepten voor template [1...*]
             {
-                "type"     : str,  // 'precoordinatedConcept' = voorgedefinieerd of 'conceptslot' = vrije keuze,
+                "type"     : str,  // 'precoordinatedConcept' = voorgedefinieerd of 'conceptSlot' = vrije keuze,
                                    // TODO - geen ondersteuning voor kiesbaar focusconcept in de root van de template
                 "conceptId": str,  // SNOMED Concept ID - alleen indien type = precoordinatedConcept
-                "constraint": str, // ECL query - alleen indien type = conceptslot
+                "constraint": str, // ECL query - alleen indien type = conceptSlot
             }
         ], 
         "groups" : [ // Attribuutgroepen [1...*]
@@ -29,10 +29,10 @@
                 "title"          : str,  // Leesbare titel van attribuutslot
                 "description"    : str,  // Beschrijving: hoe moet het vak gebruikt worden?
                 "attribute"      : str,  // SNOMED Concept ID van het attribuut
-                "value" : {             // Definieert de methode van bepalen van attribuutwaarde ('conceptslot' = keuze / 'precoordinatedConcept' = voorgedefinieerd)
-                    "type"       : str, // conceptslot / precoordinatedConcept
-                    "value"      : str, // SNOMED Concept ID - alleen indien type = precoordinatedConcept
-                    "constraint" : str, // ECL query met valide attribute values - alleen indien type = conceptslot
+                "value" : {             // Definieert de methode van bepalen van attribuutwaarde ('conceptSlot' = keuze / 'precoordinatedConcept' = voorgedefinieerd)
+                    "type"       : str, // conceptSlot / precoordinatedConcept
+                    "conceptId"  : str, // SNOMED Concept ID - alleen indien type = precoordinatedConcept
+                    "constraint" : str, // ECL query met valide attribute values - alleen indien type = conceptSlot
                 }
             },
             { // Voorbeeld van een geneste postcoördinatie
@@ -45,7 +45,7 @@
                             "type"          : str,
                             "conceptId"     : str, // SNOMED Concept ID - alleen indien type = precoordinatedConcept
                                                    // TODO - geen ondersteuning voor vooraf vastgelegd focusconcept in geneste expressies
-                            "constraint"    : str, // ECL - alleen indien type = conceptslot
+                            "constraint"    : str, // ECL - alleen indien type = conceptSlot
                         }
                     ],
                     "groups" : [
@@ -56,8 +56,8 @@
                                 "attribute"   : str,
                                 "value" : {
                                     "type"       : str,
-                                    "value"      : str, // alleen bij type = precoordinatedConcept
-                                    "constraint" : str, // alleen bij type = conceptslot
+                                    "conceptId"  : str, // alleen bij type = precoordinatedConcept
+                                    "constraint" : str, // alleen bij type = conceptSlot
                                 }
                             }
                         ]

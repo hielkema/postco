@@ -8,7 +8,7 @@ using SnomedTemplateService.Parser;
 using SnomedTemplateService.Core.Domain.Etl;
 using SnomedTemplateService.Data;
 using System.Dynamic;
-using System.ComponentModel;
+using SnomedTemplateService.Util;
 
 namespace SnomedTemplateService.Web.Controllers
 {
@@ -29,157 +29,218 @@ namespace SnomedTemplateService.Web.Controllers
         [HttpGet("{id}")]
         public object Get(int id)
         {
-            try
+            var templateRepository = new XmlFileTemplateRepository(_hostEnvironment.ContentRootFileProvider.GetFileInfo("expressionTemplates.xml"));
+            var parseService = new AntlrEtlParseService();
+
+            var templateData = templateRepository.GetById(id);
+
+            if (templateData == null)
             {
-                var templateRepository = new XmlFileTemplateRepository(_hostEnvironment.ContentRootFileProvider.GetFileInfo("expressionTemplates.xml"));
-                var parseService = new AntlrEtlParseService();
+                return NotFound();
+            }
 
-                var templateData = templateRepository.GetById(id);
+            var parseResult = parseService.ParseExpressionTemplate(templateData.Etl);
 
-                if (templateData == null)
-                {
-                    return NotFound();
-                }
+            Subexpression rootExpression = null;
 
-                var parseResult = parseService.ParseExpressionTemplate(templateData.Etl);
+            var subExpression = parseResult.Subexpression.Handle(
+                handleSubexpression: e => { rootExpression = e; return ValueTuple.Create(); },
+                handleConceptSlot: s => throw new Exception("slots are not supported for the root expression"),
+                handleExpressionSlot: s => throw new Exception("slots are not supported for the root expression")
+                );
 
-                var subExpression = parseResult.Subexpression;
+            dynamic result = new ExpandoObject();
 
-                var rootNode = subExpression.Handle(
-                    handleSubexpression: e => e,
-                    handleConceptSlot: s => throw new Exception("slots are not supported for the root expression"),
-                    handleExpressionSlot: s => throw new Exception("slots are not supported for the root expression")
-                    );
+            result.id = templateData.Id;
+            result.time = templateData.Time;
+            if (templateData.Authors.Count != 0)
+            {
+                result.authors = templateData.Authors.Select(a => !string.IsNullOrEmpty(a.Contact) ? (object)new { name = a.Name, contact = a.Contact } : new { name = a.Name }).ToArray();
+            }
+            result.title = templateData.Title;
+            if (!string.IsNullOrEmpty(templateData.Description))
+            {
+                result.description = templateData.Description;
+            }
+            result.snomedVersion = templateData.SnomedVersion;
+            result.snomedBranch = templateData.SnomedBranch;
+            if (!string.IsNullOrEmpty(templateData.StringFormat))
+            {
+                result.stringFormat = templateData.StringFormat;
+            }
+            result.template = EtlSubexpressionToJson(rootExpression, templateData.SlotTitles, templateData.SlotDescriptions);
 
-                ConceptReference focusConcept;
+            return result;
+        }
 
-                if (rootNode.FocusConcepts.Count == 1 && rootNode.FocusConcepts.Single().info.IsEmpty())
-                {
-                    focusConcept = rootNode.FocusConcepts.Single().focus.Handle(
-                        handleConceptReference: c => c,
-                        handleConceptSlot: s => throw new Exception("slots are not supported for focus concepts"),
-                        handleExpressionSlot: s => throw new Exception("slots are not supported for focus concepts")
-                        );
-                }
-                else
-                {
-                    throw new Exception("Only templates with exactly one focus concept are supported");
-                }
-
-
-                var attrInfos = rootNode.Refinement.Handle(
-                    attrSetRefinement =>
+        private object EtlSubexpressionToJson(Subexpression subexpression, IDictionary<string,string> slotTitles, IDictionary<string, string> slotDescriptions)
+        {
+            var focusConceptsJson = new List<object>();  
+            foreach (var fc in subexpression.FocusConcepts.Select(fi=>fi.focus))
+            {
+                fc.Handle(
+                    handleConceptReference: c =>
                     {
-                        if (attrSetRefinement.AttributeGroups.Count != 0) throw new Exception("Groups are not supported for a set refinement");
-                        return attrSetRefinement.AttributeSet.Attributes;
+                        focusConceptsJson.Add(GetPrecoordinatedConceptJson(c.SctId));
+                        return ValueTuple.Create();
                     },
-                    attrGroupRefinement =>
+                    handleConceptSlot: s =>
                     {
-                        if (attrGroupRefinement.AttributeGroups.Count > 1)
-                        {
-                            throw new Exception("Multiple groups are not supported.");
-                        };
-                        (var info, var group) = attrGroupRefinement.AttributeGroups.FirstOrDefault();
-                        return group?.Attributes ?? new List<(TemplateInformationSlot, EtlAttribute)>();
-                    });
-
-                var attributes = attrInfos.Select(
-                    attrInfo => (attrInfo.attr, optional: attrInfo.info.Cardinality.MinCardinality == 0)
-                    );
-
-                var group = attributes.Select<(EtlAttribute attr, bool optional), object>(
-                                a =>
-                                {
-                                    dynamic result = new ExpandoObject();
-                                    var attrName = a.attr.AttributeName.Handle(
-                                        handleConceptReference: c => c.SctId.ToString(),
-                                        handleConceptSlot: s => throw new Exception("Replacement slots are not supported for attribute names."),
-                                        handleExpressionSlot: s => throw new Exception("Replacement slots are not supported for attribute names.")
-                                    );
-                                    var attrValue = a.attr.AttributeValue.Handle(
-                                        handleSubexpressionOrSlot: e => e.Handle(
-                                            handleSubexpression: sub =>
-                                            {
-                                                if (sub.IsConceptReference)
-                                                {
-                                                    var concept = sub.GetConceptReference();
-                                                    return (
-                                                       title: concept.Term,
-                                                       description: null,
-                                                       attribute: attrName,
-                                                       value: concept.SctId.ToString()
-                                                    );
-                                                }
-                                                else
-                                                {
-                                                    throw new Exception("Subexpressions are not supported");
-                                                }
-                                            },
-                                            handleConceptSlot: s => (
-                                                title: templateData.SlotTitles.ContainsKey(s.SlotName) ?
-                                                    templateData.SlotTitles[s.SlotName] :
-                                                    s.SlotName,
-                                                description: templateData.SlotDescriptions.ContainsKey(s.SlotName) ?
-                                                    templateData.SlotDescriptions[s.SlotName] :
-                                                    null,
-                                                attribute: attrName,
-                                                value: s.ExpressionConstraint
-                                            ),
-                                            handleExpressionSlot: s => (
-                                                title: templateData.SlotTitles.ContainsKey(s.SlotName) ?
-                                                    templateData.SlotTitles[s.SlotName] :
-                                                    s.SlotName,
-                                                description: templateData.SlotDescriptions.ContainsKey(s.SlotName) ?
-                                                    templateData.SlotDescriptions[s.SlotName] :
-                                                    null,
-                                                attribute: attrName,
-                                                value: s.ExpressionConstraint
-                                            )
-                                        ),
-                                        handleStringOrSlot: s => throw new Exception("Concrete slots/values are not supported"),
-                                        handleIntOrSlot: s => throw new Exception("Concrete slots/values are not supported"),
-                                        handleDecimalOrSlot: s => throw new Exception("Concrete slots/values are not supported"),
-                                        handleBoolOrSlot: s => throw new Exception("Concrete slots/values are not supported")
-                                    );
-                                    result.title = attrValue.title;
-                                    if (attrValue.description != null)
-                                        result.description = attrValue.description;
-                                    result.attribute = attrName;
-                                    result.value = attrValue.value;
-
-                                    return result;
-                                }).ToArray();
-
-                dynamic result = new ExpandoObject();
-
-                result.id = templateData.Id;
-                result.time = templateData.Time;
-                if (templateData.Authors.Count != 0)
-                {
-                    result.authors = templateData.Authors.Select(a => !string.IsNullOrEmpty(a.Contact) ? (object)new { name = a.Name, contact = a.Contact } : new { name = a.Name }).ToArray();
-                }
-                result.title = templateData.Title;
-                if (!string.IsNullOrEmpty(templateData.Description))
-                {
-                    result.description = templateData.Description;
-                }
-                result.snomedVersion = templateData.SnomedVersion;
-                result.snomedBranch = templateData.SnomedBranch;
-
-                result.template = new
-                {
-                    root = focusConcept.SctId.ToString(),
-                    groups = new object[][] {
-                            group
-                        }
-                };
-
-                return result;
+                        focusConceptsJson.Add(GetConceptSlotJson(s.ExpressionConstraint));
+                        return ValueTuple.Create();
+                    },
+                    handleExpressionSlot: s =>
+                    {
+                        focusConceptsJson.Add(GetConceptSlotJson(s.ExpressionConstraint));
+                        return ValueTuple.Create();
+                    }
+                );
             }
-            catch
+            var groups = subexpression.Refinement.Handle(
+                handleSetRefinement: attrSetRefinement =>
+                {
+                    if (attrSetRefinement.AttributeGroups.Count != 0) throw new Exception("Groups are not supported for a set refinement");
+                    return new List<IList<(TemplateInformationSlot info, EtlAttribute attr)>>() { attrSetRefinement.AttributeSet.Attributes };
+                },
+                handleGroupRefinement: attrGroupRefinement =>
+                {
+                    return attrGroupRefinement.AttributeGroups.Select(a => a.group.Attributes);
+                });
+
+            var groupsListJson = new List<List<object>>();
+
+            foreach(var grp in groups)
             {
-                return StatusCode(500);
+                var groupJson = new List<object>();
+                groupsListJson.Add(groupJson);
+                foreach (var (info, attr) in grp)
+                {
+                    var attrNameSctId = attr.AttributeName.Handle(
+                        handleConceptReference: c => c.SctId.ToString(),
+                        handleConceptSlot: s => throw new Exception("Replacement slots are not supported for attribute names."),
+                        handleExpressionSlot: s => throw new Exception("Replacement slots are not supported for attribute names.")
+                    );
+                    
+                    object attrJson = attr.AttributeValue.Handle<object>(
+                        handleSubexpressionOrSlot: e => e.Handle(
+                            handleSubexpression: sub =>
+                            {
+                                dynamic result = new ExpandoObject();
+                                result.attribute = attrNameSctId;
+                                if (sub.IsConceptReference)
+                                {
+                                    var concept = sub.GetConceptReference();
+                                    result.title = concept.Term;
+                                    result.value = GetPrecoordinatedConceptJson(concept.SctId);
+                                }
+                                else
+                                {
+                                    var infoSlotName = info?.SlotName;
+                                    if (infoSlotName != null)
+                                    {
+                                        result.title = slotTitles.ContainsKey(infoSlotName) ?
+                                            slotTitles[info?.SlotName] :
+                                            info?.SlotName;
+                                        if (slotDescriptions.ContainsKey(infoSlotName))
+                                        {
+                                            result.description = slotDescriptions[infoSlotName];
+                                        }
+                                    }
+                                    result.template = EtlSubexpressionToJson(sub, slotTitles, slotDescriptions);
+                                }
+                                return result;
+                            },
+                            handleConceptSlot: s =>
+                                HandleConceptOrExpressionSlotInAttributeValue(
+                                    info,
+                                    attrNameSctId,
+                                    new FirstOf<ConceptReplacementSlot, ExpressionReplacementSlot>(s),
+                                    slotTitles,
+                                    slotDescriptions
+                                    ),
+                            handleExpressionSlot: s =>
+                                HandleConceptOrExpressionSlotInAttributeValue(
+                                    info,
+                                    attrNameSctId,
+                                    new SecondOf<ConceptReplacementSlot, ExpressionReplacementSlot>(s),
+                                    slotTitles,
+                                    slotDescriptions
+                                    )
+                        ),
+                        handleStringOrSlot: s => throw new Exception("Concrete slots/values are not supported"),
+                        handleIntOrSlot: s => throw new Exception("Concrete slots/values are not supported"),
+                        handleDecimalOrSlot: s => throw new Exception("Concrete slots/values are not supported"),
+                        handleBoolOrSlot: s => throw new Exception("Concrete slots/values are not supported")
+                    );
+                    groupJson.Add(attrJson);
+                }
             }
+            return new
+            {
+                focus = focusConceptsJson.ToArray(),
+                groups = groupsListJson.ToArray().ToArray()
+            };
+        }
+
+        private object HandleConceptOrExpressionSlotInAttributeValue(
+            TemplateInformationSlot infoSlot,
+            string attributeName,
+            OneOf<ConceptReplacementSlot, ExpressionReplacementSlot> valueSlot,
+            IDictionary<string, string> slotTitles,
+            IDictionary<string, string> slotDescriptions
+            )
+        {
+            dynamic result = new ExpandoObject();
+
+            result.attribute = attributeName;
+
+            var infoSlotName = infoSlot?.SlotName;
+            var valueSlotName = valueSlot.Handle(c => c.SlotName, e=> e.SlotName);
+
+            if (valueSlotName != null && slotTitles.ContainsKey(valueSlotName))
+            {
+                result.title = slotTitles[valueSlotName];
+            }
+            else if (infoSlotName != null && slotTitles.ContainsKey(infoSlotName))
+            {
+                result.title = slotTitles[infoSlotName];
+            }
+            else if (valueSlotName != null)
+            {
+                result.title = valueSlotName;
+            }
+            else if (infoSlotName != null)
+            {
+                result.title = infoSlotName;
+            }
+
+            if (valueSlotName != null && slotDescriptions.ContainsKey(valueSlotName))
+            {
+                result.description = slotDescriptions[valueSlotName];
+            }
+            else if (infoSlotName != null && slotDescriptions.ContainsKey(infoSlotName))
+            {
+                result.description = slotDescriptions[infoSlotName];
+            }
+
+            result.value = GetConceptSlotJson(valueSlot.Handle(c=>c.ExpressionConstraint, e=>e.ExpressionConstraint));
+            return result;
+        }
+
+        private object GetConceptSlotJson(string constraint)
+        {
+            dynamic result = new ExpandoObject();
+            result.type = "conceptSlot";
+            result.constraint = constraint;
+            return result;
+        }
+
+        private object GetPrecoordinatedConceptJson(ulong sctId)
+        {
+            dynamic result = new ExpandoObject();
+            result.type = "precoordinatedConcept";
+            result.conceptId = sctId.ToString();
+            return result;
         }
     }
 }

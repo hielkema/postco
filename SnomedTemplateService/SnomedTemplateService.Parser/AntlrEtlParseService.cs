@@ -52,6 +52,7 @@ namespace SnomedTemplateService.Parser
             {
                 throw new ParserException();
             }
+
             if (constDefStatus != null)
             {
                 defStatus = ConvertDefinitionstatus(constDefStatus);
@@ -62,7 +63,7 @@ namespace SnomedTemplateService.Parser
             }
             else
             {
-                throw new ParserException();
+                defStatus = new DefinitionStatusLiteral(DefinitionStatusEnum.equivalentTo);
             }
             return subexpression switch 
             {
