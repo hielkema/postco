@@ -3,12 +3,12 @@
     <v-row>
       <v-col cols=2>
         <v-card fill-height>
-          <v-card-title>Groep {{groupKey+1}} [{{groupKey}}]</v-card-title>
+          <v-card-title>Groep {{groupKey+1}}</v-card-title>
         </v-card>
       </v-col>
       <v-col cols=10>
           <div v-for="(attribute, key) in thisGroup" :key="key">
-            <div v-if="(attribute.hasOwnProperty('value')) && (attribute.value.type == 'conceptslot')">
+            <div v-if="(attribute.hasOwnProperty('value')) && (attribute.value.type == 'conceptSlot')">
               <templateAttribute v-bind:attributeKey="key" v-bind:groupKey="groupKey" v-bind:componentData="attribute" />
             </div>
             <div v-else-if="attribute.hasOwnProperty('template')">
