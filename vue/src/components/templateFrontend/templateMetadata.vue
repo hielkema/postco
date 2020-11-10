@@ -22,6 +22,14 @@
                 {{requestedTemplate.snomedBranch}}
               </td>
             </tr>
+            <tr>
+              <th>
+                Tijd aanmaken template
+              </th>
+              <td>
+                {{new Date(requestedTemplate.time).toLocaleString('nl-NL')}}
+              </td>
+            </tr>
           </table>
         </v-card-text>
     </v-card>
