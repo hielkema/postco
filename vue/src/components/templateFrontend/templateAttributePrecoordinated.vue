@@ -8,10 +8,10 @@
                 <tr>
                   <td width="350px">
                     <strong>Attribuut {{attributeKey+1}} <!-- [{{groupKey}}/{{attributeKey}}] --></strong><br>
-                    {{ thisComponent.title }}: {{ thisComponent.description }}
+                    {{ componentData.title }}: {{ componentData.description }}
                   </td>
                   <td>
-                    {{thisComponent.value.conceptId}} <strong>| {{attributeValueFSN}} |</strong>
+                    {{thisComponent.value.conceptId}} <strong>| {{attributeValue.display}} |</strong>
                   </td>
                 </tr>
               </tbody>
@@ -27,42 +27,48 @@ export default {
   name: 'TemplateAttribute',
   data: () => {
     return {
-      attributeFSN: 'laden...',
-      attributeValueFSN: 'laden...',
+      attribute: 'laden...',
+      attributeValue: 'laden...',
       loading: {
-        'attributeFSN' : true,
-        'attributeValueFSN' : true,
+        'attribute' : true,
+        'attributeValue' : true,
       },
     }
   },
   props: ['componentData', 'attributeKey', 'groupKey'],
   methods: {
-    retrieveAttributeFSN (conceptid) {
+    retrieveAttributeTerms (conceptid) {
       var that = this
       return new Promise((resolve, reject) => {
         var branchVersion = encodeURI(that.requestedTemplate.snomedBranch + '/' + that.requestedTemplate.snomedVersion)
         that.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
         .then((response) => {
-          that.attributeFSN = response.data.fsn.term
-          that.loading.attributeFSN = false
+          that.attribute = {
+            'display' : response.data.fsn.term,
+            'preferred' : response.data.pt.term,
+          }
+          that.loading.attribute = false
           resolve({
             'display': response.data.fsn.term,
             'preferred': response.data.pt.term,
           })
         }).catch(() => {
           that.$store.dispatch('addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributeCompact]')
-          reject('Error retrieveAttributeFSN')
+          reject('Error retrieveAttribute')
         })
       })
     },
-    retrieveAttributeValueFSN (conceptid) {
+    retrieveAttributeValueTerms (conceptid) {
       var that = this
       return new Promise(function(resolve) {
         var branchVersion = encodeURI(that.requestedTemplate.snomedBranch + '/' + that.requestedTemplate.snomedVersion)
         that.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
         .then((response) => {
-          that.attributeValueFSN = response.data.fsn.term
-          that.loading.attributeValueFSN = false
+          that.attributeValue = {
+            'display': response.data.fsn.term,
+            'preferred' : response.data.pt.term,
+          }
+          that.loading.attributeValue = false
           resolve({
             'display': response.data.fsn.term,
             'preferred': response.data.pt.term,
@@ -117,19 +123,19 @@ export default {
         },
       })
 
-      this.retrieveAttributeFSN(this.thisComponent.attribute).then((attribute)=>(
-      this.retrieveAttributeValueFSN(this.thisComponent.value.conceptId)).then((attributeValue)=>
-        this.$store.dispatch('templates/saveAttribute', {
-          'groupKey':this.groupKey, 'attributeKey': this.attributeKey, 'attribute' : {
-              'id':this.thisComponent.attribute,
-              'display': attribute.preferred,
-              'preferred': attribute.preferred,
-            }, 'concept': {
-              'id': this.thisComponent.value.conceptId,
-              'display': attributeValue.preferred,
-              'preferred': attributeValue.preferred,
-            }
-        })
+      this.retrieveAttributeTerms(this.thisComponent.attribute).then((attribute)=>(
+        this.retrieveAttributeValueTerms(this.thisComponent.value.conceptId)).then((attributeValue)=>
+          this.$store.dispatch('templates/saveAttribute', {
+            'groupKey':this.groupKey, 'attributeKey': this.attributeKey, 'attribute' : {
+                'id':this.thisComponent.attribute,
+                'display': attribute.preferred,
+                'preferred': attribute.preferred,
+              }, 'concept': {
+                'id': this.thisComponent.value.conceptId,
+                'display': attributeValue.preferred,
+                'preferred': attributeValue.preferred,
+              }
+          })
       ))
 
     
