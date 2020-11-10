@@ -10,20 +10,21 @@
         </v-card-text>
     </v-card>
     
-		<v-row v-if="debug">
-			<v-col cols=12>
-				<v-card>
-					<v-card-title>
-						<strong>[TEST] Identifiers voor gebruik in leesbare titel</strong>
-					</v-card-title>
-					<v-card-text>
-						<li v-for="(value, key) in postcoData" :key="key">
-							[{{value.groupKey}}/{{value.attributeKey}}]: {{value.attribute.display}} = {{value.concept.display}}
-						</li>
-					</v-card-text>
-				</v-card>
-			</v-col>
-		</v-row>
+    <v-expansion-panels>
+      <v-expansion-panel
+        key="descriptionGeneratorData"
+      >
+        <v-expansion-panel-header
+          class="grey lighten-5">
+          <small>[DEBUG] Identifiers voor gebruik in leesbare titel</small>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <li v-for="(value, key) in postcoData" :key="key">
+            [{{value.groupKey}}/{{value.attributeKey}}]: {{value.attribute.display}} = {{value.concept.display}}
+          </li>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
   </div>
 </template>
 

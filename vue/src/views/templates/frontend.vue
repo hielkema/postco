@@ -88,14 +88,19 @@
 			</v-col>
 		</v-row>
 
-
-		<v-row v-if="debug">
-			<v-col cols=12>
-				<v-card>
+		<v-expansion-panels>
+			<v-expansion-panel
+				key="descriptionGeneratorData"
+			>
+				<v-expansion-panel-header
+				class="grey lighten-5">
+				<small>[DEBUG] State</small>
+				</v-expansion-panel-header>
+				<v-expansion-panel-content>
 					<pre>{{state}}</pre>
-				</v-card>
-			</v-col>
-		</v-row>
+				</v-expansion-panel-content>
+			</v-expansion-panel>
+		</v-expansion-panels>
 	</div>
 </template>
 
