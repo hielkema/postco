@@ -10,9 +10,11 @@ using SnomedTemplateService.Data;
 using System.Dynamic;
 using SnomedTemplateService.Util;
 using SnomedTemplateService.Core.Domain;
+using Microsoft.AspNetCore.Cors;
 
 namespace SnomedTemplateService.Web.Controllers
 {
+    [EnableCors(Policies.CorsAllowAnyOrigin)]
     [ApiController]
     [Route("[controller]")]
     public class TemplatesController : ControllerBase
@@ -55,7 +57,6 @@ namespace SnomedTemplateService.Web.Controllers
 
             return result;
         }
-
         public List<object> Get()
         {
             var templateRepository = new XmlFileTemplateRepository(_hostEnvironment.ContentRootFileProvider.GetFileInfo("expressionTemplates.xml"));

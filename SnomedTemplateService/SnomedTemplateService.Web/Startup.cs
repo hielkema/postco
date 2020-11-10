@@ -23,9 +23,17 @@ namespace SnomedTemplateService.Web
 
         public IConfiguration Configuration { get; }
 
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(
+                options => options.AddPolicy(name: Policies.CorsAllowAnyOrigin,
+                    builder =>
+                    {
+                        builder.WithOrigins("*");
+                    })
+                );
             services.AddControllers()
                 .AddNewtonsoftJson(options => options.SerializerSettings.Formatting = Formatting.Indented);
         }
@@ -41,6 +49,8 @@ namespace SnomedTemplateService.Web
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
