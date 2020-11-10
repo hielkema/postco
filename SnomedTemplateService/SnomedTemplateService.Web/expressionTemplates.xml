@@ -47,6 +47,7 @@
     <title>Allergische reactie door substantie</title>
     <snomedVersion>2020-09-30</snomedVersion>
     <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/1] veroorzaakt door [0/0]</stringFormat>
     <etl>
       <![CDATA[
 [[+tok (=== <<<) @DefStatus]]  281647001 |Adverse reaction (disorder)| :
