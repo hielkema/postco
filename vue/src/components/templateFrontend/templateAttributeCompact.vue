@@ -127,10 +127,12 @@ export default {
         'attribute' : {
           'id':'....', 
           'display':'....',
+          'preferred':'....',
           }, 
         'concept': {
           'id' : '.....',
           'display' : '....',
+          'preferred':'....',
         },
       })
     this.retrieveFSN(this.thisComponent.attribute)

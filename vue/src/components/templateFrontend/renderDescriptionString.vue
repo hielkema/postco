@@ -9,6 +9,21 @@
             <pre>Gegenereerd: {{formatted}}</pre>
         </v-card-text>
     </v-card>
+    
+		<v-row v-if="debug">
+			<v-col cols=12>
+				<v-card>
+					<v-card-title>
+						<strong>[TEST] Identifiers voor gebruik in leesbare titel</strong>
+					</v-card-title>
+					<v-card-text>
+						<li v-for="(value, key) in postcoData" :key="key">
+							[{{value.groupKey}}/{{value.attributeKey}}]: {{value.attribute.display}} = {{value.concept.display}}
+						</li>
+					</v-card-text>
+				</v-card>
+			</v-col>
+		</v-row>
   </div>
 </template>
 
@@ -31,28 +46,38 @@ export default {
     postcoData(){
         return this.$store.state.templates.expressionParts
     },
+    debug(){
+        return this.$store.state.debug
+    },
     formatted(){
-        var stringFormat = this.selectedTemplate.stringFormat
+        if(this.selectedTemplate.stringFormat){
+          var stringFormat = this.selectedTemplate.stringFormat
+        }else{
+          stringFormat = "Niet beschikbaar voor deze template."
+        }
+
+
         console.log("String in template = " + stringFormat)
        
         //eslint-disable-next-line
         const regex2 = /\[(.*?)\]/g;
         const array = [...stringFormat.matchAll(regex2)]
-
+        console.log(array)
         array.forEach((value)=>{
-          var ident = value[1].split("/")
-          console.log("Looking for Group: " + ident[0] + " / Key: " + ident[1] )
+          var lastindex = value[1].lastIndexOf('/')
+          var group = value[1].toString().substr(0, lastindex)
+          var attribute = value[1].toString().substr(lastindex+1)
+          console.log("Looking for Group: " + group + " / Key: " + attribute )
 
-          // Dus nu: in template, vervang value[1] door de waarde in this.postcoData met group ident[0] en key ident[1]
+          // Dus nu: in template, vervang value[1] door de waarde in this.postcoData met group en attribute
           var regex = new RegExp(value[1]);
           console.log("Handling portion: " + value[1])
           var replace_string = this.postcoData.filter(obj => {
-            return ((obj.groupKey == ident[0]) && (obj.attributeKey == ident[1]))
+            return ((obj.groupKey == group) && (obj.attributeKey == attribute))
           })
           
           // Als er iets gevonden is; vervang het betreffende deel in de template string
           if(replace_string.length > 0) {
-            console.log(replace_string[0].concept.preferred)
             stringFormat = stringFormat.replace(regex, replace_string[0].concept.preferred);
           }else{
             console.log("Niks gevonden")

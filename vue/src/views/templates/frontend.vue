@@ -77,20 +77,6 @@
 				</v-card>
 			</v-col>
 		</v-row>
-		<!-- <v-row>
-			<v-col cols=12>
-				<v-card>
-					<v-card-title>
-						<strong>Postco data</strong>
-					</v-card-title>
-					<v-card-text>
-						<li v-for="(value, key) in postcoData" :key="key">
-							[groep {{value.groupKey}} / attribuut {{value.attributeKey}}]: {{value.attribute.display}} = {{value.concept.display}}
-						</li>
-					</v-card-text>
-				</v-card>
-			</v-col>
-		</v-row> -->
 		<v-row v-if="!loading.template">
 			<v-col cols=12>
 				<renderExpression />
@@ -103,7 +89,7 @@
 		</v-row>
 
 
-		<v-row >
+		<v-row v-if="debug">
 			<v-col cols=12>
 				<v-card>
 					<pre>{{state}}</pre>
@@ -140,6 +126,9 @@ export default {
 	computed: {
 		selectedTemplate(){
 			return this.$store.state.templates.requestedTemplate
+		},
+		debug(){
+			return this.$store.state.debug
 		},
 		loading(){
 			return this.$store.state.templates.loading

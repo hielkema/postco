@@ -45,7 +45,10 @@ export default {
         .then((response) => {
           that.attributeFSN = response.data.fsn.term
           that.loading.attributeFSN = false
-          resolve(response.data.fsn.term)
+          resolve({
+            'display': response.data.fsn.term,
+            'preferred': response.data.pt.term,
+          })
         }).catch(() => {
           that.$store.dispatch('addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributeCompact]')
           reject('Error retrieveAttributeFSN')
@@ -60,7 +63,10 @@ export default {
         .then((response) => {
           that.attributeValueFSN = response.data.fsn.term
           that.loading.attributeValueFSN = false
-          resolve(response.data.fsn.term)
+          resolve({
+            'display': response.data.fsn.term,
+            'preferred': response.data.pt.term,
+          })
         }).catch(() => {
           that.$store.dispatch('addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributeCompact]')
         })
@@ -102,22 +108,26 @@ export default {
         'attribute' : {
           'id':'....', 
           'display':'....',
+          'preferred':'....',
           }, 
         'concept': {
           'id' : '.....',
           'display' : '....',
+          'preferred':'....',
         },
       })
 
-      this.retrieveAttributeFSN(this.thisComponent.attribute).then((attributeFSN)=>(
-      this.retrieveAttributeValueFSN(this.thisComponent.value.conceptId)).then((attributeValueFSN)=>
+      this.retrieveAttributeFSN(this.thisComponent.attribute).then((attribute)=>(
+      this.retrieveAttributeValueFSN(this.thisComponent.value.conceptId)).then((attributeValue)=>
         this.$store.dispatch('templates/saveAttribute', {
           'groupKey':this.groupKey, 'attributeKey': this.attributeKey, 'attribute' : {
               'id':this.thisComponent.attribute,
-              'display': attributeFSN
+              'display': attribute.preferred,
+              'preferred': attribute.preferred,
             }, 'concept': {
               'id': this.thisComponent.value.conceptId,
-              'display': attributeValueFSN,
+              'display': attributeValue.preferred,
+              'preferred': attributeValue.preferred,
             }
         })
       ))
