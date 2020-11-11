@@ -49,6 +49,11 @@ export default {
       .then((response) => {
         this.rootFSN = response.data.fsn.term
         return true;
+      }).catch(() => {
+        setTimeout(() => {
+          this.retrieveFSN (conceptid)
+        }, 5000)
+        this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [focusConcept]')
       })
     },
   },

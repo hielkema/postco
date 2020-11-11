@@ -136,6 +136,10 @@ export default {
           console.log('Focusconcept '+concept.conceptId + ' uit SET opgehaald')
           console.log(set)
           return true;
+        }).catch(()=>{
+          setTimeout(() => {
+            this.retrieveFocusFSN (concepts)
+          }, 5000)
         })
       })
     },

@@ -53,7 +53,8 @@ export default {
             'preferred': response.data.pt.term,
           })
         }).catch(() => {
-          that.$store.dispatch('addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributeCompact]')
+          that.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributeCompact]')
+          
           reject('Error retrieveAttribute')
         })
       })
@@ -73,8 +74,12 @@ export default {
             'display': response.data.fsn.term,
             'preferred': response.data.pt.term,
           })
-        }).catch(() => {
-          that.$store.dispatch('addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributeCompact]')
+        })
+        .catch(() => {
+          setTimeout(() => {
+            that.retrieveAttributeValueTerms (conceptid)
+          }, 5000)
+          that.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributePrecoordinated]')
         })
       })
     },
@@ -123,22 +128,26 @@ export default {
         },
       })
 
-      this.retrieveAttributeTerms(this.thisComponent.attribute).then((attribute)=>(
-        this.retrieveAttributeValueTerms(this.thisComponent.value.conceptId)).then((attributeValue)=>
-          this.$store.dispatch('templates/saveAttribute', {
-            'groupKey':this.groupKey, 'attributeKey': this.attributeKey, 'attribute' : {
-                'id':this.thisComponent.attribute,
-                'display': attribute.preferred,
-                'preferred': attribute.preferred,
-              }, 'concept': {
-                'id': this.thisComponent.value.conceptId,
-                'display': attributeValue.preferred,
-                'preferred': attributeValue.preferred,
-              }
-          })
-      ))
-
-    
+    this.retrieveAttributeTerms(this.thisComponent.attribute).then((attribute)=>(
+      this.retrieveAttributeValueTerms(this.thisComponent.value.conceptId)).then((attributeValue)=>
+        this.$store.dispatch('templates/saveAttribute', {
+          'groupKey':this.groupKey, 'attributeKey': this.attributeKey, 'attribute' : {
+              'id':this.thisComponent.attribute,
+              'display': attribute.preferred,
+              'preferred': attribute.preferred,
+            }, 'concept': {
+              'id': this.thisComponent.value.conceptId,
+              'display': attributeValue.preferred,
+              'preferred': attributeValue.preferred,
+            }
+        })
+    ).catch(()=>{
+      this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributePrecoordinated]')
+      this.retrieveAttributeValueTerms(this.thisComponent.value.conceptId)
+    })).catch(()=>{
+      this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributePrecoordinated]')
+      this.retrieveAttributeTerms(this.thisComponent.attribute)
+    })
     this.retrieved = true
   }
 }

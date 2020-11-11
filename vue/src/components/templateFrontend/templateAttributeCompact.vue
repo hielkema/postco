@@ -66,7 +66,11 @@ export default {
         this.attributeFSN = response.data.fsn.term
         return true;
       }).catch(() => {
-        this.$store.dispatch('addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributeCompact]')
+        this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributeCompact]')
+        
+        setTimeout(() => {
+          this.retrieveFSN (conceptid)
+        }, 5000)
       })
     },
     retrieveECL (term) {
@@ -77,7 +81,11 @@ export default {
          this.setItems(response.data['items'])
         return true;
       }).catch(() => {
-        this.$store.dispatch('addErrormessage', 'Er is een fout opgetreden bij het ophalen van een antwoordlijst. [templateAttributeCompact]')
+        this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een antwoordlijst. [templateAttributeCompact]')
+        
+        setTimeout(() => {
+          this.retrieveECL (term)
+        }, 5000)
       })
     },
     setItems(response) {
