@@ -148,8 +148,8 @@
     <stringFormat>[0/0] van [0/1] met [1/0]</stringFormat>
     <etl>
       <![CDATA[
-      71388002 |Procedure (procedure)| : {
-          260686004 |Method| = [[+id (< 360037004 |beeldvorming (kwalificatiewaarde)|) @Methode ]],
+      [[+tok (=== <<<) @DefStatus]] 71388002 |Procedure (procedure)| : 
+          { 260686004 |Method| = [[+id (< 360037004 |beeldvorming (kwalificatiewaarde)|) @Methode ]],
           [[ @Locatie ]] 405813007 |Procedure site - Direct| = 
               ([[+id (< 442083009 |Anatomical or acquired body structure (body structure)|) ]] : { 
                       272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) @Lat1 ]],
@@ -185,5 +185,526 @@
         <description>Welke intentie heeft de beeldvormende verrichting?</description>
       </slot>
    </slots>
+  </template>
+  <template id="7">
+    <time>2020-11-18T16:22:00Z</time>
+    <authors>
+        <author>
+            <name>Feikje Hielkema-Raadsveld</name>
+            <contact>hielkema@nictiz.nl</contact>
+        </author>
+    </authors>
+    <title>Afwijking van anatomische locatie (aandoening)</title>
+    <description>
+        Dit template kan worden gebruikt om elke mogelijke morfologische afwijking van elke mogelijke lichaamslocatie te specificeren. 
+        Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen. Gebruik daarvoor
+        template 'afwijkingVanLocatieAanZijde'.
+        Het focusconcept is aandoening: voor bevindingen met een morfologie zou een apart template nodig zijn.
+    </description>
+    <snomedVersion>2020-09-30</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/0] van [0/1]</stringFormat>	<!-- bv. fractuur van ulna -->
+    <etl>
+        <![CDATA[
+            [[+tok (=== <<<) @DefStatus]] 64572001 |aandoening (aandoening)| : {
+                116676008 |gerelateerde morfologie (attribuut)| = 
+                	[[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) @Afwijking ]],
+                363698007 |locatie van bevinding (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]]
+			}
+        ]]>
+    </etl>
+    <slots>
+        <slot name="Afwijking">
+        <title>Afwijking</title>
+        <description>Welke morfologische afwijking?</description>
+        </slot>
+        <slot name="Locatie">
+        <title>Locatie</title>
+        <description>Welke locatie?</description>
+        </slot>
+    </slots>
+  </template>
+<template id="8">
+    <time>2020-11-18T16:22:00Z</time>
+    <authors>
+        <author>
+            <name>Feikje Hielkema-Raadsveld</name>
+            <contact>hielkema@nictiz.nl</contact>
+        </author>
+    </authors>
+    <title>Afwijking van anatomische locatie aan zijde (aandoening)</title>
+    <description>
+        Dit template kan worden gebruikt om elke mogelijke morfologische afwijking van elke mogelijke lichaamslocatie te specificeren,
+        met een lateraliteit erbij. Je kunt alleen anatomische locaties kiezen die volgens SNOMED lateraliseerbaar zijn: wel
+        de nier, niet de lever. Voor afwijkingen van anatomische locaties zonder lateraliteit, gebruik template 'afwijkingVanLocatie'.
+        Het focusconcept is aandoening: voor bevindingen met een morfologie zou een apart template nodig zijn.
+    </description>
+    <snomedVersion>2020-09-30</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/0] van [0/1] [1/0]</stringFormat>	<!-- bv. fractuur van ulna links -->
+    <etl>
+        <![CDATA[
+            64572001 |aandoening (aandoening)| : {
+                116676008 |gerelateerde morfologie (attribuut)| = [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) @Afwijking ]],
+                363698007 |locatie van bevinding (attribuut)| =  
+                    ([[+id (^723264001 |Lateralizable body structure reference set (foundation metadata concept)|) @Locatie ]] : { 
+                            272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) @Lateraliteit ]]
+                            })
+			}
+        ]]>
+    </etl>
+    <slots>
+        <slot name="Afwijking">
+        <title>Afwijking</title>
+        <description>Welke morfologische afwijking?</description>
+        </slot>
+        <slot name="Locatie">
+        <title>Locatie</title>
+        <description>Welke locatie? Kies een locatie die lateraliseerbaar is.</description>
+        </slot>
+        <slot name="Lateraliteit">
+        <title>Lateraliteit</title>
+        <description>Welke zijde?</description>
+        </slot>
+    </slots>
+  </template>
+  <template id="9">
+    <time>2020-11-18T16:22:00Z</time>
+    <authors>
+        <author>
+            <name>Feikje Hielkema-Raadsveld</name>
+            <contact>hielkema@nictiz.nl</contact>
+        </author>
+    </authors>
+    <title>Afwijking van anatomische locatie vastgesteld met analyse van monster</title>
+    <description>
+        Dit template kan worden gebruikt om een afwijking van een lichaamsstructuur vast te leggen, die 
+        is vastgesteld op basis van een bepaald type monster, bv. een biopt, FNAB of aspiraat.
+    </description>
+    <snomedVersion>2020-09-30</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/0] van [0/1] vastgesteld met analyse van [1/0]</stringFormat>	<!-- bv. carcinoom van mamma vastgesteld met analyse van biopt -->
+    <etl>
+        <![CDATA[
+            64572001 |aandoening (aandoening)| : {
+                116676008 |gerelateerde morfologie (attribuut)| = 
+                	[[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) @Afwijking ]],
+                363698007 |locatie van bevinding (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]]
+            }
+            {
+                363714003 |interpreteert (attribuut)| = ( 386053000 |beoordeling (verrichting)|: 
+                    { 116686009 |uitgevoerd in monster (attribuut)| = [[+id(< 123038009 |monster (monster)|) @Monster ]] }
+                    { 260686004 |methode (attribuut)| = 129265001 |evaluatie (kwalificatiewaarde)| }
+                    )
+			}
+        ]]>
+    </etl>
+    <slots>
+        <slot name="Afwijking">
+        	<title>Afwijking</title>
+        	<description>Welke morfologische afwijking?</description>
+        </slot>
+        <slot name="Locatie">
+        	<title>Locatie</title>
+        	<description>Welke locatie?</description>
+        </slot>
+        <slot name="Monster">
+        	<title>Monster</title>
+        	<description>Biopt, aspiraat, FNAB?</description>
+        </slot>
+    </slots>
+  </template>
+<template id="10">
+    <time>2020-11-18T16:22:00Z</time>
+    <authors>
+        <author>
+            <name>Feikje Hielkema-Raadsveld</name>
+            <contact>hielkema@nictiz.nl</contact>
+        </author>
+    </authors>
+    <title>Afwijking van anatomische locatie vastgesteld met beeldvormende verrichting</title>
+    <description>
+        Dit template kan worden gebruikt om een afwijking van een lichaamsstructuur vast te leggen, die 
+        is vastgesteld op basis van een beeldvormende verrichting.
+    </description>
+    <snomedVersion>2020-09-30</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/0] van [0/1] vastgesteld met [1/0]</stringFormat>	<!-- bv. carcinoom van mamma vastgesteld met MRI -->
+    <etl>
+        <![CDATA[
+            64572001 |aandoening (aandoening)| : {
+                116676008 |gerelateerde morfologie (attribuut)| = 
+                	[[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) @Afwijking ]],
+                363698007 |locatie van bevinding (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]]
+            } 
+            { 
+                363714003 |interpreteert (attribuut)| = [[+id(< 363679005 |beeldvormende verrichting (verrichting)|) @Verrichting ]]
+            }
+        ]]>
+    </etl>
+    <slots>
+        <slot name="Afwijking">
+        	<title>Afwijking</title>
+        	<description>Welke morfologische afwijking?</description>
+        </slot>
+        <slot name="Locatie">
+        	<title>Locatie</title>
+        	<description>Welke locatie?</description>
+        </slot>
+        <slot name="Verrichting">
+        	<title>Verrichting</title>
+        	<description>Type beeldvormende verrichting</description>
+        </slot>
+    </slots>
+  </template>
+<template id="11">
+    <time>2020-11-18T16:22:00Z</time>
+    <authors>
+        <author>
+            <name>Feikje Hielkema-Raadsveld</name>
+            <contact>hielkema@nictiz.nl</contact>
+        </author>
+    </authors>
+    <title>Beeldvormende verrichting van locatie</title>
+    <description>
+        Dit template kan worden gebruikt om een beeldvormende verrichting van elke mogelijke lichaamslocatie te specificeren. 
+        Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen. Gebruik daarvoor
+        template 'beeldvormendeVerrichtingAanZijde'.
+    </description>
+    <snomedVersion>2020-09-30</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/0] van [0/1]</stringFormat>	<!-- bv. MRI van pols -->
+    <etl>
+        <![CDATA[
+            363679005 |beeldvormende verrichting (verrichting)| : {
+                260686004 |methode (attribuut)| = 
+                	[[+id (<< 360037004 |beeldvorming (kwalificatiewaarde)|) @Methode ]],
+                405813007 |directe locatie van verrichting (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]]
+			}
+        ]]>
+    </etl>
+    <slots>
+        <slot name="Methode">
+        	<title>Methode</title>
+        	<description>Welk type beeldvorming?</description>
+        </slot>
+        <slot name="Locatie">
+        	<title>Locatie</title>
+        	<description>Welke locatie?</description>
+        </slot>
+    </slots>
+  </template>
+
+<template id="12">
+    <time>2020-11-18T16:22:00Z</time>
+    <authors>
+        <author>
+            <name>Feikje Hielkema-Raadsveld</name>
+            <contact>hielkema@nictiz.nl</contact>
+        </author>
+    </authors>
+    <title>Beeldvormende verrichting van locatie aan zijde</title>
+    <description>
+        Dit template kan worden gebruikt om een beeldvormende verrichting van elke mogelijke lichaamslocatie te specificeren,
+        met daarbij ook een lateraliteit. Je kunt alleen locaties kiezen die lateraliseerbaar zijn; voor overige locaties, gebruik 
+        template beeldvormendeVerrichting.
+    </description>
+    <snomedVersion>2020-09-30</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/0] van [0/1] [1/0]</stringFormat>	<!-- bv. MRI van pols links -->
+    <etl>
+        <![CDATA[
+            363679005 |beeldvormende verrichting (verrichting)| : {
+                260686004 |methode (attribuut)| = 
+                	[[+id (<< 360037004 |beeldvorming (kwalificatiewaarde)|) @Methode ]],
+                405813007 |directe locatie van verrichting (attribuut)| =  
+                    ([[+id (^723264001 |Lateralizable body structure reference set (foundation metadata concept)|) @Locatie ]] : { 
+                            272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) @Lateraliteit ]]
+                            })
+			}
+        ]]>
+    </etl>
+    <slots>
+        <slot name="Methode">
+        	<title>Methode</title>
+        	<description>Welk type beeldvorming?</description>
+        </slot>
+        <slot name="Locatie">
+        	<title>Locatie</title>
+        	<description>Welke locatie?</description>
+        </slot>
+        <slot name="Lateraliteit">
+        	<title>Lateraliteit</title>
+        	<description>Welke zijde?</description>
+        </slot>
+    </slots>
+  </template>
+<template id="13">
+    <time>2020-11-18T16:22:00Z</time>
+    <authors>
+        <author>
+            <name>Feikje Hielkema-Raadsveld</name>
+            <contact>hielkema@nictiz.nl</contact>
+        </author>
+    </authors>
+    <title>Endoscopisch verwijderen van laesie</title>
+    <description>
+        Dit template kan worden gebruikt om een endoscopische verwijdering van een type laesie van een lichaamsstructuur te specificeren.
+        Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen.
+    </description>
+    <snomedVersion>2020-09-30</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/0] van [0/2] van [0/1] met [0/3]</stringFormat>	<!-- bv. verwijderen van carcinoom van blaas met cystoscoop -->
+    <etl>
+        <![CDATA[
+            71388002 |verrichting (verrichting)| : {
+                260686004 |methode (attribuut)| = 
+                	[[+id (<< 129303008 |verwijderen (kwalificatiewaarde)|) @Methode ]],
+                405813007 |directe locatie van verrichting (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]],
+                363700003 |directe morfologie (attribuut)| = 
+                	([[+id (<< 52988006 |afwijkend weefsel (afwijkende morfologie)|) @Laesie ]],
+                425391005 |met gebruik van hulpmiddel voor toegang (attribuut)| = 
+                	([[+id (<< 37270008 |endoscoop (fysiek object)|) @Scoop ]]
+			}
+        ]]>
+    </etl>
+    <slots>
+        <slot name="Methode">
+        	<title>Methode</title>
+        	<description>Welke methode van verwijderen?</description>
+        </slot>
+        <slot name="Locatie">
+        	<title>Locatie</title>
+        	<description>Welke locatie?</description>
+        </slot>
+        <slot name="Laesie">
+        	<title>Laesie</title>
+        	<description>Welk type laesie?</description>
+        </slot>
+        <slot name="Scoop">
+        	<title>Scoop</title>
+        	<description>Welk type scoop?</description>
+        </slot>
+    </slots>
+  </template>
+  <template id="14">
+    <time>2020-11-18T16:22:00Z</time>
+    <authors>
+        <author>
+            <name>Feikje Hielkema-Raadsveld</name>
+            <contact>hielkema@nictiz.nl</contact>
+        </author>
+    </authors>
+    <title>MammaCarcinoom</title>
+    <description>
+        Dit template kan worden gebruikt om een type carcinoom van een specifieke locatie in de mammma vast te leggen.
+    </description>
+    <snomedVersion>2020-09-30</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/0] van [0/1]</stringFormat>	<!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
+    <etl>
+        <![CDATA[
+            64572001 |aandoening (aandoening)| : {
+                116676008 |gerelateerde morfologie (attribuut)| = 
+                	[[+id (< 68453008 |carcinoom - geen subtype (afwijkende morfologie)|) @Afwijking ]],
+                363698007 |locatie van bevinding (attribuut)| =  
+                    ([[+id (< 76752008 |structuur van mamma (lichaamsstructuur)|) @Locatie ]]
+			}
+        ]]>
+    </etl>
+    <slots>
+        <slot name="Afwijking">
+        <title>Afwijking</title>
+        <description>Welke type carcinoom?</description>
+        </slot>
+        <slot name="Locatie">
+        <title>Locatie</title>
+        <description>Welk kwadrant?</description>
+        </slot>
+    </slots>
+  </template>
+<template id="15">
+    <time>2020-11-18T16:22:00Z</time>
+    <authors>
+        <author>
+            <name>Feikje Hielkema-Raadsveld</name>
+            <contact>hielkema@nictiz.nl</contact>
+        </author>
+    </authors>
+    <title>Proliferatieve massa van anatomische locatie</title>
+    <description>
+        Dit template kan worden gebruikt om een type proliferatieve massa (zoals een carcinoom) van elke mogelijke lichaamslocatie te specificeren. 
+        Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen. Gebruik daarvoor
+        template 'afwijkingVanLocatieAanZijde'.
+    </description>
+    <snomedVersion>2020-09-30</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/0] van [0/1]</stringFormat>	<!-- bv. benigne neoplasma van huid -->
+    <etl>
+        <![CDATA[
+            64572001 |aandoening (aandoening)| : {
+                116676008 |gerelateerde morfologie (attribuut)| = 
+                	[[+id (<< 416939005 |proliferatieve massa (afwijkende morfologie)|) @Afwijking ]],
+                363698007 |locatie van bevinding (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]]
+			}
+        ]]>
+    </etl>
+    <slots>
+        <slot name="Afwijking">
+        <title>Afwijking</title>
+        <description>Welk type proliferatieve massa?</description>
+        </slot>
+        <slot name="Locatie">
+        <title>Procedure site</title>
+        <description>Welke locatie?</description>
+        </slot>
+    </slots>
+  </template>
+<template id="16">
+    <time>2020-11-18T16:22:00Z</time>
+    <authors>
+        <author>
+            <name>Feikje Hielkema-Raadsveld</name>
+            <contact>hielkema@nictiz.nl</contact>
+        </author>
+    </authors>
+    <title>Scintigrafie</title>
+    <description>
+        Dit template kan worden gebruikt om een nucleaire beeldvormende verrichting van elke mogelijke lichaamslocatie te specificeren,
+        met daarbij een specifieke isotoop. Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen.
+ 		Let op: kies bij voorkeur een methode waar nog geen locatie of intentie in gespecificeerd is; anders kun je een expressie krijgen met
+ 		twee verschillende locaties en intenties.
+    </description>
+    <snomedVersion>2020-09-30</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/0] van [1/0] met [2/0]</stringFormat>	<!-- bv. geven van 'boost'-bestraling van hals met therapeutische intentie-->
+    <etl>
+        <![CDATA[
+            ([[+id (<< 108290001 |bestraling voor oncologie en/of radiotherapie (verrichting)|) @Methode ]]: {
+                405813007 |directe locatie van verrichting (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]]
+            }
+            {
+                363703001 |doel (attribuut)| = 
+                	([[+id (< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|) @Intentie ]]
+			}
+        ]]>
+    </etl>
+    <slots>
+        <slot name="Methode">
+        	<title>Methode</title>
+        	<description>Welk type radiotherapie?</description>
+        </slot>
+        <slot name="Locatie">
+        	<title>Locatie</title>
+        	<description>Welke locatie?</description>
+        </slot>
+        <slot name="Intentie">
+        	<title>Intentie</title>
+        	<description>Palliatief of therapeutisch?</description>
+        </slot>
+    </slots>
+  </template>
+  <template id="17">
+    <time>2020-11-18T16:22:00Z</time>
+    <authors>
+        <author>
+            <name>Feikje Hielkema-Raadsveld</name>
+            <contact>hielkema@nictiz.nl</contact>
+        </author>
+    </authors>
+    <title>Scintigrafie</title>
+    <description>
+        Dit template kan worden gebruikt om een nucleaire beeldvormende verrichting van elke mogelijke lichaamslocatie te specificeren,
+        met daarbij een specifieke isotoop. 
+        Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen.
+    </description>
+    <snomedVersion>2020-09-30</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/0] van [0/1] met [0/2]</stringFormat>	<!-- bv. SPECT-CT van schildklier met jodium-131 -->
+    <etl>
+        <![CDATA[
+            373205008 |scintigrafie (verrichting)| : {
+                260686004 |methode (attribuut)| = 
+                	[[+id (<< 312421008 |nucleaire beeldvorming (kwalificatiewaarde)|) @Methode ]],
+                405813007 |directe locatie van verrichting (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]],
+                424361007 |met gebruik van substantie (attribuut)| = 
+                	([[+id (<< 89457008 |radio-isotoop (substantie)|) @Isotoop ]]
+			}
+        ]]>
+    </etl>
+    <slots>
+        <slot name="Methode">
+        	<title>Methode</title>
+        	<description>Welk type scintigrafie?</description>
+        </slot>
+        <slot name="Locatie">
+        	<title>Locatie</title>
+        	<description>Welke locatie?</description>
+        </slot>
+        <slot name="Isotoop">
+        	<title>Isotoop</title>
+        	<description>Welke isotoop?</description>
+        </slot>
+    </slots>
+  </template>
+  <template id="18">
+    <time>2020-11-18T16:22:00Z</time>
+    <authors>
+        <author>
+            <name>Feikje Hielkema-Raadsveld</name>
+            <contact>hielkema@nictiz.nl</contact>
+        </author>
+    </authors>
+    <title>Verwijderen van laesie met intentie</title>
+    <description>
+        Dit template kan worden gebruikt om een verwijdering van een type laesie van een lichaamsstructuur met therapeutische 
+        of palliatieve intentie te specificeren.
+        Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen.
+    </description>
+    <snomedVersion>2020-09-30</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/0] van [0/2] van [0/1] met [0/3]</stringFormat>	<!-- bv. verwijderen van carcinoom van blaas met palliatieve intentie -->
+    <etl>
+        <![CDATA[
+            71388002 |verrichting (verrichting)| : {
+                260686004 |methode (attribuut)| = 
+                	[[+id (<< 129303008 |verwijderen (kwalificatiewaarde)|) @Methode ]],
+                405813007 |directe locatie van verrichting (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]],
+                363700003 |directe morfologie (attribuut)| = 
+                	([[+id (<< 52988006 |afwijkend weefsel (afwijkende morfologie)|) @Laesie ]]
+            }
+            {
+                363703001 |doel (attribuut)| = 
+                	([[+id (< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|) @Intentie ]]
+			}
+        ]]>
+    </etl>
+    <slots>
+        <slot name="Methode">
+        	<title>Methode</title>
+        	<description>Welke methode van verwijderen?</description>
+        </slot>
+        <slot name="Locatie">
+        	<title>Locatie</title>
+        	<description>Welke locatie?</description>
+        </slot>
+        <slot name="Laesie">
+        	<title>Laesie</title>
+        	<description>Welk type laesie?</description>
+        </slot>
+        <slot name="Intentie">
+        	<title>Intentie</title>
+        	<description>Palliatief of therapeutisch?</description>
+        </slot>
+    </slots>
   </template>
 </templates>
