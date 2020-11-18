@@ -292,10 +292,10 @@
                 	[[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) @Afwijking ]],
                 363698007 |locatie van bevinding (attribuut)| =  
                     [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]]
-            }
+            },
             {
                 363714003 |interpreteert (attribuut)| = ( 386053000 |beoordeling (verrichting)|: 
-                    { 116686009 |uitgevoerd in monster (attribuut)| = [[+id(< 123038009 |monster (monster)|) @Monster ]] }
+                    { 116686009 |uitgevoerd in monster (attribuut)| = [[+id(< 123038009 |monster (monster)|) @Monster ]] },
                     { 260686004 |methode (attribuut)| = 129265001 |evaluatie (kwalificatiewaarde)| }
                     )
 			}
