@@ -8,8 +8,13 @@
             {{template.title}}: {{template.description}}<br>
           </v-card-subtitle>
           <v-card-text v-if="template.template.focus.length <= 1">
-              Focus <templateNestedFocus v-bind:attributeKey="attributeKey" v-bind:groupKey="groupKey" v-bind:templateData="template" />
-              
+              <div v-if="template.template.focus[0].type == 'precoordinatedConcept'">
+                Focus <templateNestedFocusPrecoordinated v-bind:attributeKey="attributeKey" v-bind:groupKey="groupKey" v-bind:templateData="template" />
+              </div>
+              <div v-else>
+                Focus <templateNestedFocus v-bind:attributeKey="attributeKey" v-bind:groupKey="groupKey" v-bind:templateData="template" />
+              </div>
+
               Attributen 
               <div v-for="(group, key) in template.template.groups" :key="key">
                 Groep {{key+1}}
@@ -27,6 +32,7 @@
 
 <script>
 import templateNestedFocus from '@/components/templateFrontend/templateNestedFocus.vue'
+import templateNestedFocusPrecoordinated from '@/components/templateFrontend/templateNestedFocusPrecoordinated.vue'
 // import templateAttribute from '@/components/templateFrontend/templateAttributeCompact.vue'
 import templateNestedGroup from '@/components/templateFrontend/templateNestedGroup.vue'
 export default {
@@ -34,6 +40,7 @@ export default {
     // templateAttribute,
     templateNestedFocus,
     templateNestedGroup,
+    templateNestedFocusPrecoordinated,
   },
   name: 'NestedTemplate',
   data: () => {
