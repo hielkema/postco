@@ -44,7 +44,6 @@
                         {
                             "type"          : str,
                             "conceptId"     : str, // SNOMED Concept ID - alleen indien type = precoordinatedConcept
-                                                   // TODO - geen ondersteuning voor vooraf vastgelegd focusconcept in geneste expressies
                             "constraint"    : str, // ECL - alleen indien type = conceptSlot
                         }
                     ],
