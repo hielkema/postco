@@ -48,7 +48,10 @@
 								Focusconcepten
 							</v-card-title>
 						</v-card>
-						<focusConcept class="mb-1" v-for="(focus, key) in selectedTemplate.template.focus" :key="key" v-bind:focus="focus" />
+						<div v-for="(focus, key) in selectedTemplate.template.focus" :key="key">
+							<focusConceptPrecoordinated class="mb-1" v-if="focus.type == 'precoordinatedConcept'" v-bind:focus="focus" />
+							<focusConcept class="mb-1" v-if="focus.type == 'conceptSlot'" v-bind:focus="focus" />
+						</div>
 					</v-col>
 				</v-row>
 			</v-col>
@@ -106,6 +109,7 @@
 
 <script>
 import focusConcept from '@/components/templateFrontend/focusConcept.vue'
+import focusConceptPrecoordinated from '@/components/templateFrontend/focusConceptPrecoordinated.vue'
 import templateDescription from '@/components/templateFrontend/templateDescription.vue'
 import templateAuthor from '@/components/templateFrontend/templateAuthor.vue'
 import templateMetadata from '@/components/templateFrontend/templateMetadata.vue'
@@ -116,6 +120,7 @@ import renderDescriptionString from '@/components/templateFrontend/renderDescrip
 export default {
 	components: {
 		focusConcept,
+		focusConceptPrecoordinated,
 		templateDescription,
 		templateAuthor,
 		templateMetadata,

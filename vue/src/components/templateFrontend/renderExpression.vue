@@ -81,11 +81,13 @@ export default {
                     var nestedGroups = [...new Set(nested.map(item => item.groupKey))]
                     nestedGroups.forEach((nestedGroup, nestedKey)=>{
                       // expression += '{'
+                        
 
                         var _nested = nested.filter(o =>{
                             // Filter de data op huidige groep
                             return (o.groupKey == nestedGroup)
                         })
+
                         _nested.forEach((_nestedValue, _nestedKey)=>{
                             expression += _nestedValue.attribute.id+' |'+_nestedValue.attribute.display+'|'
                             expression += ' = '
@@ -98,8 +100,8 @@ export default {
                               expression += '\n\t\t\t\t}'
                             }
                         })
-                      if(nestedKey < nested.length-2){
-                        // Zijn er nog meer binnen deze groep? Dan accolade en inspringen
+                      if(nestedKey < nested.length-1){
+                        // Zijn er nog meer groepen binnen deze geneste expressie? Dan accolade en inspringen
                         expression += '\n\t\t\t\t{\n\t\t\t\t\t' 
                       }
                     })

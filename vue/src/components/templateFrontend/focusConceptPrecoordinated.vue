@@ -2,12 +2,21 @@
   <div>
     <v-card>
         <v-card-text>
-          <div v-if="focus.type == 'conceptSlot'">
-            {{focus}}
-          </div>
-          <div v-else>
-            Er is nog geen ondersteuning voor dit type focusconcept.
-          </div>
+          <table>
+            <tr>
+              <th>FSN</th>
+              <td>{{ rootFSN }}</td>
+            </tr>
+            <tr>
+              <th>ID</th>
+              <td>
+                {{ focus.conceptId }} 
+                <v-btn small target="_blank" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+focus.conceptId">
+                  <v-icon>link</v-icon>
+                </v-btn>
+              </td>
+            </tr>
+          </table>
         </v-card-text>
     </v-card>
   </div>
@@ -44,7 +53,7 @@ export default {
     },
   },
   mounted: function(){
-    this.retrieveFSN(this.templateData.attribute)
+    this.retrieveFSN(this.focus.conceptId)
     this.retrieved = true
   }
   
