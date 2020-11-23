@@ -462,15 +462,12 @@
     <etl>
         <![CDATA[
             71388002 |verrichting (verrichting)| : {
-                260686004 |methode (attribuut)| = 
-                	[[+id (<< 129303008 |verwijderen (kwalificatiewaarde)|) @Methode ]],
-                405813007 |directe locatie van verrichting (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]],
-                363700003 |directe morfologie (attribuut)| = 
-                	([[+id (<< 52988006 |afwijkend weefsel (afwijkende morfologie)|) @Laesie ]],
-                425391005 |met gebruik van hulpmiddel voor toegang (attribuut)| = 
-                	([[+id (<< 37270008 |endoscoop (fysiek object)|) @Scoop ]]
-			}
+                260686004 |methode (attribuut)|                         = [[+id (<< 129303008 |verwijderen (kwalificatiewaarde)|) @Methode ]],
+                405813007 |directe locatie van verrichting (attribuut)| = [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]],
+                363700003 |directe morfologie (attribuut)|              = [[+id (<< 52988006 |afwijkend weefsel (afwijkende morfologie)|) @Laesie ]],
+                425391005 |met gebruik van hulpmiddel voor toegang (attribuut)| 
+                                                                        = [[+id (<< 37270008 |endoscoop (fysiek object)|) @Scoop ]]
+			      }
         ]]>
     </etl>
     <slots>
@@ -513,7 +510,7 @@
                 116676008 |gerelateerde morfologie (attribuut)| = 
                 	[[+id (< 68453008 |carcinoom - geen subtype (afwijkende morfologie)|) @Afwijking ]],
                 363698007 |locatie van bevinding (attribuut)| =  
-                    ([[+id (< 76752008 |structuur van mamma (lichaamsstructuur)|) @Locatie ]]
+                    [[+id (< 76752008 |structuur van mamma (lichaamsstructuur)|) @Locatie ]]
 			}
         ]]>
     </etl>
@@ -586,14 +583,12 @@
     <stringFormat>[0/0] van [1/0] met [2/0]</stringFormat>	<!-- bv. geven van 'boost'-bestraling van hals met therapeutische intentie-->
     <etl>
         <![CDATA[
-            ([[+id (<< 108290001 |bestraling voor oncologie en/of radiotherapie (verrichting)|) @Methode ]]: {
-                405813007 |directe locatie van verrichting (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]]
+            [[+id (<< 108290001 |bestraling voor oncologie en/of radiotherapie (verrichting)|) @Methode ]]: {
+              405813007 |directe locatie van verrichting (attribuut)| =  [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]]
             }
             {
-                363703001 |doel (attribuut)| = 
-                	([[+id (< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|) @Intentie ]]
-			}
+              363703001 |doel (attribuut)| = [[+id (< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|) @Intentie ]]
+			      }
         ]]>
     </etl>
     <slots>
@@ -631,13 +626,10 @@
     <etl>
         <![CDATA[
             373205008 |scintigrafie (verrichting)| : {
-                260686004 |methode (attribuut)| = 
-                	[[+id (<< 312421008 |nucleaire beeldvorming (kwalificatiewaarde)|) @Methode ]],
-                405813007 |directe locatie van verrichting (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]],
-                424361007 |met gebruik van substantie (attribuut)| = 
-                	([[+id (<< 89457008 |radio-isotoop (substantie)|) @Isotoop ]]
-			}
+                260686004 |methode (attribuut)|                         = [[+id (<< 312421008 |nucleaire beeldvorming (kwalificatiewaarde)|) @Methode ]],
+                405813007 |directe locatie van verrichting (attribuut)| = [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]],
+                424361007 |met gebruik van substantie (attribuut)|      = [[+id (<< 89457008 |radio-isotoop (substantie)|) @Isotoop ]]
+			      }
         ]]>
     </etl>
     <slots>
@@ -675,17 +667,13 @@
     <etl>
         <![CDATA[
             71388002 |verrichting (verrichting)| : {
-                260686004 |methode (attribuut)| = 
-                	[[+id (<< 129303008 |verwijderen (kwalificatiewaarde)|) @Methode ]],
-                405813007 |directe locatie van verrichting (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]],
-                363700003 |directe morfologie (attribuut)| = 
-                	([[+id (<< 52988006 |afwijkend weefsel (afwijkende morfologie)|) @Laesie ]]
+                260686004 |methode (attribuut)| = [[+id (<< 129303008 |verwijderen (kwalificatiewaarde)|) @Methode ]],
+                405813007 |directe locatie van verrichting (attribuut)| = [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]],
+                363700003 |directe morfologie (attribuut)| = [[+id (<< 52988006 |afwijkend weefsel (afwijkende morfologie)|) @Laesie ]]
             }
             {
-                363703001 |doel (attribuut)| = 
-                	([[+id (< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|) @Intentie ]]
-			}
+                363703001 |doel (attribuut)| = [[+id (< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|) @Intentie ]]
+			      }
         ]]>
     </etl>
     <slots>
