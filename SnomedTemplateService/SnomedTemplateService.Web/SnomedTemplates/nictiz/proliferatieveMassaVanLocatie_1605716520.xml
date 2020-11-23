@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+    <time>1605716520</time>
+    <authors>
+        <author>
+            <name>Feikje Hielkema-Raadsveld</name>
+            <contact>hielkema@nictiz.nl</contact>
+        </author>
+    </authors>
+    <title>Proliferatieve massa van anatomische locatie</title>
+    <description>
+        Dit template kan worden gebruikt om een type proliferatieve massa (zoals een carcinoom) van elke mogelijke lichaamslocatie te specificeren. 
+        Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen. Gebruik daarvoor
+        template 'afwijkingVanLocatieAanZijde'.
+    </description>
+    <snomedVersion>2020-09-30</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/0] van [0/1]</stringFormat>	<!-- bv. benigne neoplasma van huid -->
+    <etl>
+        <![CDATA[
+            64572001 |aandoening (aandoening)| : {
+                116676008 |gerelateerde morfologie (attribuut)| = 
+                	[[+id (<< 416939005 |proliferatieve massa (afwijkende morfologie)|) @Afwijking ]],
+                363698007 |locatie van bevinding (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]]
+			}
+        ]]>
+    </etl>
+    <slots>
+        <slot name="Afwijking">
+        <title>Afwijking</title>
+        <description>Welk type proliferatieve massa?</description>
+        </slot>
+        <slot name="Locatie">
+        <title>Procedure site</title>
+        <description>Welke locatie?</description>
+        </slot>
+    </slots>
+</template>

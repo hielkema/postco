@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Hosting;
-using SnomedTemplateService.Parser;
 using SnomedTemplateService.Core.Domain.Etl;
-using SnomedTemplateService.Data;
-using System.Dynamic;
 using SnomedTemplateService.Util;
 using SnomedTemplateService.Core.Domain;
 using Microsoft.AspNetCore.Cors;
+using SnomedTemplateService.Core.Interfaces;
 
 namespace SnomedTemplateService.Web.Controllers
 {
@@ -20,21 +17,23 @@ namespace SnomedTemplateService.Web.Controllers
     public class TemplatesController : ControllerBase
     {
         private readonly ILogger<TemplatesController> _logger;
-        private readonly IHostEnvironment _hostEnvironment;
+        private readonly ITemplateRepository templateRepository;
+        private readonly IEtlParseService parseService;
 
-
-        public TemplatesController(ILogger<TemplatesController> logger, IHostEnvironment hostEnvironment)
+        public TemplatesController(
+            ILogger<TemplatesController> logger,
+            ITemplateRepository templateRepository,
+            IEtlParseService parseService
+        )
         {
             _logger = logger;
-            _hostEnvironment = hostEnvironment;
+            this.templateRepository = templateRepository;
+            this.parseService = parseService;
         }
 
         [HttpGet("{id}")]
-        public object Get(int id)
+        public object Get(string id)
         {
-            var templateRepository = new XmlFileTemplateRepository(_hostEnvironment.ContentRootFileProvider.GetFileInfo("expressionTemplates.xml"));
-            var parseService = new AntlrEtlParseService();
-
             var templateData = templateRepository.GetById(id);
 
             if (templateData == null)
@@ -59,9 +58,7 @@ namespace SnomedTemplateService.Web.Controllers
         }
         public List<object> Get()
         {
-            var templateRepository = new XmlFileTemplateRepository(_hostEnvironment.ContentRootFileProvider.GetFileInfo("expressionTemplates.xml"));
-            return templateRepository.GetTemplates().Select(t => (object) TemplateMetadataToJson(t)).ToList();
-
+           return templateRepository.GetTemplates().Select(t => (object) TemplateMetadataToJson(t)).ToList();
         }
 
         private IDictionary<string, object> TemplateMetadataToJson(TemplateData templateData)
@@ -69,7 +66,7 @@ namespace SnomedTemplateService.Web.Controllers
             var result = new Dictionary<string, object>
             {
                 ["id"] = templateData.Id,
-                ["time"] = templateData.Time
+                ["time"] = templateData.TimeStamp
             };
             if (templateData.Authors.Count != 0)
             {

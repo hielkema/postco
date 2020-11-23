@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+    <time>1605716520</time>
+    <authors>
+        <author>
+            <name>Feikje Hielkema-Raadsveld</name>
+            <contact>hielkema@nictiz.nl</contact>
+        </author>
+    </authors>
+    <title>Afwijking van anatomische locatie aan zijde (aandoening)</title>
+    <description>
+        Dit template kan worden gebruikt om elke mogelijke morfologische afwijking van elke mogelijke lichaamslocatie te specificeren,
+        met een lateraliteit erbij. Je kunt alleen anatomische locaties kiezen die volgens SNOMED lateraliseerbaar zijn: wel
+        de nier, niet de lever. Voor afwijkingen van anatomische locaties zonder lateraliteit, gebruik template 'afwijkingVanLocatie'.
+        Het focusconcept is aandoening: voor bevindingen met een morfologie zou een apart template nodig zijn.
+    </description>
+    <snomedVersion>2020-09-30</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/0] van [0/1] [1/0]</stringFormat>	<!-- bv. fractuur van ulna links -->
+    <etl>
+        <![CDATA[
+            64572001 |aandoening (aandoening)| : {
+                116676008 |gerelateerde morfologie (attribuut)| = [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) @Afwijking ]],
+                363698007 |locatie van bevinding (attribuut)| =  
+                    ([[+id (^723264001 |Lateralizable body structure reference set (foundation metadata concept)|) @Locatie ]] : { 
+                            272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) @Lateraliteit ]]
+                            })
+			}
+        ]]>
+    </etl>
+    <slots>
+        <slot name="Afwijking">
+        <title>Afwijking</title>
+        <description>Welke morfologische afwijking?</description>
+        </slot>
+        <slot name="Locatie">
+        <title>Locatie</title>
+        <description>Welke locatie? Kies een locatie die lateraliseerbaar is.</description>
+        </slot>
+        <slot name="Lateraliteit">
+        <title>Lateraliteit</title>
+        <description>Welke zijde?</description>
+        </slot>
+    </slots>
+</template>

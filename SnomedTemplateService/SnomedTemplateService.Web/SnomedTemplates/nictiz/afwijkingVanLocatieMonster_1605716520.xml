@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+    <time>1605716520</time>
+    <authors>
+        <author>
+            <name>Feikje Hielkema-Raadsveld</name>
+            <contact>hielkema@nictiz.nl</contact>
+        </author>
+    </authors>
+    <title>Afwijking van anatomische locatie vastgesteld met analyse van monster</title>
+    <description>
+        Dit template kan worden gebruikt om een afwijking van een lichaamsstructuur vast te leggen, die 
+        is vastgesteld op basis van een bepaald type monster, bv. een biopt, FNAB of aspiraat.
+    </description>
+    <snomedVersion>2020-09-30</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/0] van [0/1] vastgesteld met analyse van [1/0]</stringFormat>	<!-- bv. carcinoom van mamma vastgesteld met analyse van biopt -->
+    <etl>
+        <![CDATA[
+            64572001 |aandoening (aandoening)| : {
+                116676008 |gerelateerde morfologie (attribuut)| = 
+                	[[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) @Afwijking ]],
+                363698007 |locatie van bevinding (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]]
+            }
+            {
+                363714003 |interpreteert (attribuut)| = ( 386053000 |beoordeling (verrichting)|: 
+                    { 116686009 |uitgevoerd in monster (attribuut)| = [[+id(< 123038009 |monster (monster)|) @Monster ]] }
+                    { 260686004 |methode (attribuut)| = 129265001 |evaluatie (kwalificatiewaarde)| }
+                    )
+			}
+        ]]>
+    </etl>
+    <slots>
+        <slot name="Afwijking">
+        	<title>Afwijking</title>
+        	<description>Welke morfologische afwijking?</description>
+        </slot>
+        <slot name="Locatie">
+        	<title>Locatie</title>
+        	<description>Welke locatie?</description>
+        </slot>
+        <slot name="Monster">
+        	<title>Monster</title>
+        	<description>Biopt, aspiraat, FNAB?</description>
+        </slot>
+    </slots>
+</template>

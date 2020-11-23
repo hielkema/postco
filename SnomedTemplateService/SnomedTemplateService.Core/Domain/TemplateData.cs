@@ -12,7 +12,7 @@ namespace SnomedTemplateService.Core.Domain
         private IDictionary<string, string> slotDescriptions;
         private string title;
 
-        public TemplateData(int id, DateTime time, string snomedVersion, string snomedBranch, string etl)
+        public TemplateData(string id, string timestamp, string snomedVersion, string snomedBranch, string etl)
         {
             if (string.IsNullOrEmpty(snomedVersion))
             {
@@ -31,7 +31,7 @@ namespace SnomedTemplateService.Core.Domain
 
             Id = id;
             Title = $"Template[id={id}]";
-            Time = time;
+            TimeStamp = timestamp;
             SnomedVersion = snomedVersion.Trim();
             SnomedBranch = snomedBranch.Trim();
             Etl = etl.Trim();
@@ -40,8 +40,8 @@ namespace SnomedTemplateService.Core.Domain
             SlotDescriptions = new Dictionary<string, string>();
         }
 
-        public int Id { get; }
-        public DateTime Time { get; }
+        public string Id { get; }
+        public string TimeStamp { get; }
         public IList<TemplateAuthor> Authors
         {
             get => authors;

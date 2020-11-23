@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <time>1605716520</time>
+  <authors>
+    <author>
+      <name>Alice</name>
+    </author>
+    <author>
+      <name>Bob</name>
+      <contact>bob@example.org</contact>
+    </author>
+  </authors>
+  <title>Fractuur</title>
+  <description>Beschrijving Fractuur Template</description>
+  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <etl>
+      <![CDATA[
+[[+tok (=== <<<) @DefStatus]] 64572001 |Disease| :
+        {  363698007 |Finding site|   =  [[+id (<<  272673000 |Bone structure| ) @Site]],
+           116676008 |Associated morphology|   =  [[+id (<<  72704001 |Fracture|  ) @FractureType]] }
+      ]]>
+  </etl>
+  <slots>
+    <slot name="Site">
+      <title>SiteTitle</title>
+      <description>SiteDescription</description>
+    </slot>
+    <slot name="FractureType">
+      <description>DescNoTitle</description>
+    </slot>
+  </slots>
+</template>

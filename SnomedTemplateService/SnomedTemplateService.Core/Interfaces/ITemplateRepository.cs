@@ -7,7 +7,7 @@ namespace SnomedTemplateService.Core.Interfaces
 {
     public interface ITemplateRepository
     {
-        TemplateData GetById(int id);
+        TemplateData GetById(string id);
         IList<TemplateData> GetTemplates();
     }
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+    <time>1605716520</time>
+    <authors>
+        <author>
+            <name>Feikje Hielkema-Raadsveld</name>
+            <contact>hielkema@nictiz.nl</contact>
+        </author>
+    </authors>
+    <title>Scintigrafie</title>
+    <description>
+        Dit template kan worden gebruikt om een nucleaire beeldvormende verrichting van elke mogelijke lichaamslocatie te specificeren,
+        met daarbij een specifieke isotoop. 
+        Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen.
+    </description>
+    <snomedVersion>2020-09-30</snomedVersion>
+    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+    <stringFormat>[0/0] van [0/1] met [0/2]</stringFormat>	<!-- bv. SPECT-CT van schildklier met jodium-131 -->
+    <etl>
+        <![CDATA[
+            373205008 |scintigrafie (verrichting)| : {
+                260686004 |methode (attribuut)| = 
+                	[[+id (<< 312421008 |nucleaire beeldvorming (kwalificatiewaarde)|) @Methode ]],
+                405813007 |directe locatie van verrichting (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]],
+                424361007 |met gebruik van substantie (attribuut)| = 
+                	[[+id (<< 89457008 |radio-isotoop (substantie)|) @Isotoop ]]
+			}
+        ]]>
+    </etl>
+    <slots>
+        <slot name="Methode">
+        	<title>Methode</title>
+        	<description>Welk type scintigrafie?</description>
+        </slot>
+        <slot name="Locatie">
+        	<title>Locatie</title>
+        	<description>Welke locatie?</description>
+        </slot>
+        <slot name="Isotoop">
+        	<title>Isotoop</title>
+        	<description>Welke isotoop?</description>
+        </slot>
+    </slots>
+</template>
