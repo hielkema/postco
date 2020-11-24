@@ -48,8 +48,6 @@ jobs:
         # Prefix the list here with "+" to use these queries and those in the config file.
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
 
-    # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
-    # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
       uses: github/codeql-action/autobuild@v1
 
@@ -58,12 +56,12 @@ jobs:
 
     - name: Build NodeJS
       run: |
-        docker-compose -f docker-compose_prod.yml build --no-cache nodejs && docker-compose -f docker-compose_prod.yml up nodejs
+        docker-compose -f docker-compose_prod.yml build --no-cache nodejs
         
     - name: Build Templateservice
       run: |
-        docker-compose -f docker-compose_prod.yml build --no-cache templateservice && docker-compose -f docker-compose_prod.yml up templateservice
+        docker-compose -f docker-compose_prod.yml build --no-cache templateservice
         
     - name: Build nginx
       run: |
-        docker-compose -f docker-compose_prod.yml build --no-cache nginx && docker-compose -f docker-compose_prod.yml up nginx
+        docker-compose -f docker-compose_prod.yml build --no-cache nginx
