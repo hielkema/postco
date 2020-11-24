@@ -46,7 +46,7 @@ export default {
 
         expression += '=== '
         expression += focusConcepts.map(function(concept){
-                          return concept.concept.id + ' ' + concept.concept.display;
+                          return concept.concept.id + ' |' + concept.concept.display + '|';
                       }).join('+')
         expression += ': '
 
