@@ -13,6 +13,11 @@
                   <td>
                     {{thisComponent.value.conceptId}} <strong>| {{attributeValue.display}} |</strong>
                   </td>
+                  <td>
+                    <v-btn small target="_blank" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+thisComponent.value.conceptId">
+                      <v-icon>link</v-icon>
+                    </v-btn>
+                  </td>
                 </tr>
               </tbody>
             </template>
