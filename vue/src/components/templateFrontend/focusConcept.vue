@@ -3,7 +3,6 @@
     <v-card>
         <v-card-text>
           <div v-if="focus.type == 'conceptSlot'">
-            {{focus}}<br>
             <v-simple-table>
               <template v-slot:default>
                 <tbody>
