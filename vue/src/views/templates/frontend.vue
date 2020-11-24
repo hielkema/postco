@@ -49,8 +49,8 @@
 							</v-card-title>
 						</v-card>
 						<div v-for="(focus, key) in selectedTemplate.template.focus" :key="key">
-							<focusConceptPrecoordinated class="mb-1" v-if="focus.type == 'precoordinatedConcept'" v-bind:focus="focus" />
-							<focusConcept class="mb-1" v-if="focus.type == 'conceptSlot'" v-bind:focus="focus" />
+							<focusConceptPrecoordinated class="mb-1" v-if="focus.type == 'precoordinatedConcept'" v-bind:focus="focus" v-bind:focusKey="key" />
+							<focusConcept class="mb-1" v-if="focus.type == 'conceptSlot'" v-bind:focus="focus" v-bind:focusKey="key" />
 						</div>
 					</v-col>
 				</v-row>

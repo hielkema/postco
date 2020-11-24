@@ -36,9 +36,28 @@ export default {
         var group;
         
         var expression = ''
+        
+        // Filter op focusconcepten
+        var focusConcepts = data.filter(o =>{
+              // Filter de data op groupKey == focus
+              // Additioneel: Uitsluiten van groepen met forward slash; betreft nested expressies
+              return (o.groupKey == 'focus')
+          })
+
         expression += '=== '
-        expression += this.snowstorm.focusConcepts.join(" + ")
+        expression += focusConcepts.map(function(concept){
+                          return concept.concept.id + ' ' + concept.concept.display;
+                      }).join('+')
         expression += ': '
+
+
+
+        // Filter data op niet-focusattributen
+        data = data.filter(o =>{
+              // Filter de data op groupKey == focus
+              // Additioneel: Uitsluiten van groepen met forward slash; betreft nested expressies
+              return (o.groupKey != 'focus')
+          })
 
         // Loop over alle groepen
         var groups = [...new Set(data.map(item => item.groupKey))];
@@ -129,25 +148,8 @@ export default {
     }
   },
   methods: {
-    retrieveFocusFSN (concepts) {
-      concepts.forEach((concept, key, set)=>{
-        var branchVersion = encodeURI(this.selectedTemplate.snomedBranch + '/' + this.selectedTemplate.snomedVersion)
-        this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+concept.conceptId)
-        .then((response) => {
-          this.snowstorm.focusConcepts.push(concept.conceptId + ' |'+ response.data.fsn.term + '|');
-          console.log('Focusconcept '+concept.conceptId + ' uit SET opgehaald')
-          console.log(set)
-          return true;
-        }).catch(()=>{
-          setTimeout(() => {
-            this.retrieveFocusFSN (concepts)
-          }, 5000)
-        })
-      })
-    },
   },
   mounted: function(){
-    this.retrieveFocusFSN(this.selectedTemplate.template.focus)
   }
   
 }
