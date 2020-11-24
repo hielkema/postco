@@ -17,7 +17,6 @@
       "focus" : [          // Focusconcepten voor template [1...*]
             {
                 "type"     : str,  // 'precoordinatedConcept' = voorgedefinieerd of 'conceptSlot' = vrije keuze,
-                                   // TODO - geen ondersteuning voor kiesbaar focusconcept in de root van de template
                 "conceptId": str,  // SNOMED Concept ID - alleen indien type = precoordinatedConcept
                 "constraint": str, // ECL query - alleen indien type = conceptSlot
             }
@@ -41,6 +40,7 @@
                 "attribute"     : str,
                 "template" : {
                     "focus" : [  // ***LET OP: AFWIJKEND VOOR GENESTE EXPRESSIES***: [1...1]
+                                 // ***Ondersteuning voor meerdere focusconcepten in een geneste expressie volgt.***
                         {
                             "type"          : str,
                             "conceptId"     : str, // SNOMED Concept ID - alleen indien type = precoordinatedConcept

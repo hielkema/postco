@@ -25,7 +25,7 @@
 <script>
 export default {
   name: 'RootconceptComponent',
-  props: ['focus'],
+  props: ['focus', 'focusKey'],
   data: () => {
     return {
       retrieved: false,
@@ -43,12 +43,29 @@ export default {
       this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
       .then((response) => {
         this.rootFSN = response.data.fsn.term
+
+        this.$store.dispatch('templates/saveAttribute', 
+          {
+            'groupKey': 'focus', 
+            'attributeKey': this.focusKey, 
+            'attribute' : {
+              'id':'focus', 
+              'display':'focus',
+              'preferred':'focus',
+              }, 
+            'concept': {
+              'id' : response.data.id,
+              'display' : response.data.fsn.term,
+              'preferred': response.data.pt.term,
+            },
+          })
+
         return true;
       }).catch(() => {
         setTimeout(() => {
           this.retrieveFSN (conceptid)
         }, 5000)
-        // this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [focusConcept]')
+        this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [focusConceptPrecoordinated]')
       })
     },
   },
