@@ -11,7 +11,6 @@
                     {{ thisComponent.title }}: {{ thisComponent.description }}
                   </td>
                   <td>
-                    <b v-if="loading">Resultaat wordt geladen...<br></b>
                     <v-autocomplete
                       light
                       dense
@@ -29,12 +28,18 @@
                       @change="$store.dispatch('templates/saveAttribute', {'groupKey':groupKey, 'attributeKey': attributeKey, 'attribute' : {'id':thisComponent.attribute, 'display':attributeFSN}, 'concept': select})"
                       >
                     </v-autocomplete>
-
                   </td>
-                  <td>
+                  <td v-if="!loading">
                     <v-btn small target="_blank" v-if="select" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+select.id">
                       <v-icon>link</v-icon>
                     </v-btn>
+                  </td>
+                  <td v-else>
+                    <v-progress-circular
+                      v-if="loading"
+                      indeterminate
+                      color="primary"
+                    ></v-progress-circular>
                   </td>
                 </tr>
               </tbody>
