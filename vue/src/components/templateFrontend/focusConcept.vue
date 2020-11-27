@@ -13,7 +13,6 @@
                   </tr>
                   <tr>
                     <td>
-                      <b v-if="loading">Resultaat wordt geladen...<br></b>
                       <v-autocomplete
                         light
                         dense
@@ -33,10 +32,17 @@
                       </v-autocomplete>
 
                     </td>
-                    <td>
+                    <td v-if="!loading">
                       <v-btn small target="_blank" v-if="select" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+select.id">
                         <v-icon>link</v-icon>
                       </v-btn>
+                    </td>
+                    <td v-else>
+                      <v-progress-circular
+                        v-if="loading"
+                        indeterminate
+                        color="primary"
+                      ></v-progress-circular>
                     </td>
                   </tr>
                 </tbody>

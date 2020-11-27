@@ -13,10 +13,17 @@
                   <td>
                     {{templateData.template.focus[0].conceptId}} | {{attributeValue.display}} |
                   </td>
-                  <td>
+                  <td v-if="!loading.attributeValue">
                     <v-btn small target="_blank" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+templateData.template.focus[0].conceptId">
                       <v-icon>link</v-icon>
                     </v-btn>
+                  </td>
+                  <td v-else>
+                    <v-progress-circular
+                      v-if="loading.attributeValue"
+                      indeterminate
+                      color="primary"
+                    ></v-progress-circular>
                   </td>
                 </tr>
               </tbody>

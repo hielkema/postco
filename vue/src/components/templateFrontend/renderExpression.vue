@@ -5,8 +5,8 @@
             Expressie
         </v-card-title>
         <v-card-text>
-            <!-- <pre>{{postcoData}}</pre> -->
             <pre>{{formatted}}</pre>
+            <v-btn @click="copyText()">Copy</v-btn>
         </v-card-text>
     </v-card>
   </div>
@@ -148,6 +148,9 @@ export default {
     }
   },
   methods: {
+    copyText() {
+      navigator.clipboard.writeText(this.formatted);
+    }
   },
   mounted: function(){
   }

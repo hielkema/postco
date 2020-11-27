@@ -7,6 +7,7 @@
         <v-card-text>
             <pre>Template:    {{selectedTemplate.stringFormat}}</pre>
             <pre>Gegenereerd: {{formatted}}</pre>
+            <v-btn @click="copyText()">Copy</v-btn>
         </v-card-text>
     </v-card>
     
@@ -89,6 +90,9 @@ export default {
     }
   },
   methods: {
+    copyText() {
+      navigator.clipboard.writeText(this.formatted);
+    }
   },
   mounted: function(){
   }
