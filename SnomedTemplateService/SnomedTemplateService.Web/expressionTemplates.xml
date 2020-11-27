@@ -580,7 +580,7 @@
     </description>
     <snomedVersion>2020-09-30</snomedVersion>
     <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-    <stringFormat>[0/0] van [1/0] met [2/0]</stringFormat>	<!-- bv. geven van 'boost'-bestraling van hals met therapeutische intentie-->
+    <stringFormat>[focus/0] van [0/0] met [1/0]</stringFormat>	<!-- bv. geven van 'boost'-bestraling van hals met therapeutische intentie-->
     <etl>
         <![CDATA[
             [[+id (<< 108290001 |bestraling voor oncologie en/of radiotherapie (verrichting)|) @Methode ]]: {
