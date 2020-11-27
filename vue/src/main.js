@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 Vue.use({
   install (Vue) {
   Vue.prototype.$snowstorm = axios.create({
-    // baseURL: 'https://snowstorm.test-nictiz.nl'
+    baseURL: 'https://snowstorm.test-nictiz.nl'
   })
 }
 })
