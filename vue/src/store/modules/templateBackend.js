@@ -63,6 +63,21 @@ const state = {
     },
     delError: (state, payload) => {
       state.error.list.splice(payload)
+    },
+    removeExpressionPart: (state) => {
+      state.expressionParts = []
+    },
+    removeSelectedTemplate: (state) => {
+      state.requestedTemplate = {
+        'rootConcept' : {
+          'id' : 'laden',
+          'fsn' : {
+            'term': 'laden',
+            'lang' : 'laden'
+          },
+        },
+        'template' : {},
+      }
     }
   }
 
@@ -72,6 +87,10 @@ const state = {
     saveAttribute: (context, payload) => {
       console.log('Actions/saveAttribute')
       context.commit('addExpressionPart', payload)
+    },
+    clearTemplate: (context) => {
+      context.commit('removeExpressionPart')
+      context.commit('removeSelectedTemplate')
     },
     addErrormessage: (context, payload) => {
       console.log('Actions/addErrormessage')

@@ -74,6 +74,7 @@ export default {
 	},
 	methods: {
 		openTemplate(id){
+			this.$store.dispatch('templates/clearTemplate')
 			this.$router.push({ path: `/template/`+id });
 		}
 	},
