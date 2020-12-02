@@ -100,37 +100,35 @@ namespace SnomedTemplateService.Parser
 
         private IList<(TemplateInformationSlot info, IConceptReferenceOrSlot focusConcept)> ConvertFocusconcept(FocusconceptContext context)
         {
-            var conceptReferences = new List<(TemplateinformationslotContext info, ConceptreferenceContext concept)>();
-            TemplateinformationslotContext currentInformationSlot = null;
+            var result = new List<(TemplateInformationSlot info, IConceptReferenceOrSlot focusConcept)>();
+            TemplateInformationSlot currentInformationSlot = null;
             foreach (var child in context.children)
             {
                 switch (child)
                 {
                     case null:
                         throw new ParserException();
-                    case TemplateinformationslotContext ti:
-                        if (currentInformationSlot != null)
-                        {
-                            throw new ParserException();
-                        }
+                    case TemplateinformationslotContext tic:
+                        var ti = ConvertTemplateinformationslot(tic);
                         currentInformationSlot = ti;
                         break;
                     case ConceptreferenceContext cr:
-                        conceptReferences.Add((currentInformationSlot, cr));
+                        result.Add((currentInformationSlot, ConvertConceptreference(cr)));
                         currentInformationSlot = null;
                         break;
                     default:
-                        throw new ParserException();
+                        if (!Regex.IsMatch(child.GetText(), @"^(?:[\u0020\t\r\n]+|\+)$"))
+                        {
+                            throw new Exception("syntax error");
+                        }
+                        break;
                 }
             }
             if (currentInformationSlot != null)
             {
                 throw new ParserException();
             }
-            return conceptReferences.Select(c =>
-                (info: c.info switch { null => null, var s => ConvertTemplateinformationslot(s) },
-                    focusConcept: ConvertConceptreference(c.concept) ?? throw new ParserException())
-                ).ToList();
+            return result;
         }
 
         private IConceptReferenceOrSlot ConvertConceptreference(ConceptreferenceContext context)
