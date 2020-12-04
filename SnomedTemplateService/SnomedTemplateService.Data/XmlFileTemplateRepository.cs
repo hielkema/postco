@@ -26,32 +26,36 @@ namespace SnomedTemplateService.Data
         {
             if (!memoryCache.TryGetValue(templatesCacheKey, out templates))
             {
-                var templateDirectory = GetTemplateDirectory(hostEnvironment, configuration, logger);
-                templates = ImmutableDictionary.ToImmutableDictionary(GetTemplateDictionary(templateDirectory, logger));
-                memoryCache.Set(templatesCacheKey, templates, hostEnvironment.ContentRootFileProvider.Watch($"{templateDirectory}\\*\\*.xml"));
+                var templateDirectoryPath = GetTemplateDirectoryPath(configuration);
+                var templateDirectoryContents = GetTemplateDirectoryContents(templateDirectoryPath, hostEnvironment, logger);
+                templates = ImmutableDictionary.ToImmutableDictionary(GetTemplateDictionary(templateDirectoryContents, logger));
+                
+                memoryCache.Set(templatesCacheKey, templates, hostEnvironment.ContentRootFileProvider.Watch($"{templateDirectoryPath}\\*\\*.xml"));
             }
         }
 
         public static void CheckTemplates(IHostEnvironment hostEnvironment, IConfiguration configuration, ILogger logger)
         {
-            GetTemplateDictionary(GetTemplateDirectory(hostEnvironment, configuration, logger), logger);
+            var templateDirectoryPath = GetTemplateDirectoryPath(configuration);
+            GetTemplateDictionary(GetTemplateDirectoryContents(templateDirectoryPath, hostEnvironment, logger), logger);
         }
 
-        private static IDirectoryContents GetTemplateDirectory(IHostEnvironment hostEnvironment, IConfiguration configuration, ILogger logger)
+        private static string GetTemplateDirectoryPath(IConfiguration configuration)
         {
-            var templateDirectory = configuration["SnomedTemplatesDirectory"] ?? "SnomedTemplates";
-            templateDirectory = templateDirectory.TrimEnd('\\');
-            var result = hostEnvironment.ContentRootFileProvider.GetDirectoryContents(templateDirectory);
+            return configuration["SnomedTemplatesDirectory"]?.TrimEnd('\\') ?? "SnomedTemplates";
+        }
+
+        private static IDirectoryContents GetTemplateDirectoryContents(string path, IHostEnvironment hostEnvironment, ILogger logger)
+        {
+            var result = hostEnvironment.ContentRootFileProvider.GetDirectoryContents(path);
             if (!result.Exists)
             {
-                logger.LogError("The Templates Directory ({templateDirName}) doesn't exist.", templateDirectory);
-                throw new Exception($"The Templates Directory ({templateDirectory}) doesn't exist."); 
+                logger.LogError("The Templates Directory ({templateDirName}) doesn't exist.", path);
+                throw new Exception($"The Templates Directory ({path}) doesn't exist."); 
             }
-
             return result;
         }
 
-        // TODO Add logging;
         private static Dictionary<string, TemplateData> GetTemplateDictionary(IDirectoryContents templateDirectory, ILogger logger)
         {
             var _templates = new Dictionary<string, TemplateData>();

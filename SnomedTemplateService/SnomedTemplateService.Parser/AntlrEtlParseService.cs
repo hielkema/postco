@@ -378,7 +378,6 @@ namespace SnomedTemplateService.Parser
 
         private IAttributeValueOrSlot ConvertConcretevaluereplacementslot(ConcretevaluereplacementslotContext context)
         {
-            // TODO: CHECK
             var concreteValueReplacement = context.concretevaluereplacement();
             if (concreteValueReplacement == null)
             {
