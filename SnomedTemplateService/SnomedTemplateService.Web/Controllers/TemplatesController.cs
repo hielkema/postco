@@ -128,8 +128,15 @@ namespace SnomedTemplateService.Web.Controllers
                 groupsListJson.Add(groupJson);
                 foreach (var (info, attr) in grp)
                 {
-                    var attrNameSctId = attr.AttributeName.Handle(
-                        handleConceptReference: c => c.SctId.ToString(),
+                    string attrNameSctId = null;
+                    string attrNameTerm = null;
+                    attr.AttributeName.Handle(
+                        handleConceptReference: 
+                            c => { 
+                                attrNameSctId = c.SctId.ToString();
+                                attrNameTerm = c.Term; 
+                                return new ValueTuple(); 
+                            },
                         handleConceptSlot: s => throw new Exception("Replacement slots are not supported for attribute names."),
                         handleExpressionSlot: s => throw new Exception("Replacement slots are not supported for attribute names.")
                     );
@@ -144,8 +151,15 @@ namespace SnomedTemplateService.Web.Controllers
                                 };
                                 if (sub.IsConceptReference)
                                 {
+                                    result["title"] = slotTitles.ContainsKey(attrNameSctId)
+                                        ? slotTitles[attrNameSctId] 
+                                        : (attrNameTerm ?? throw new Exception($"The term for \"{attrNameSctId}\" must be specified " +
+                                        "in the conceptreference or there must be an entry for it in the template slots dictionary"));
+                                    if (slotDescriptions.ContainsKey(attrNameSctId))
+                                    {
+                                        result["description"] = slotDescriptions[attrNameSctId];
+                                    }
                                     var concept = sub.GetConceptReference();
-                                    result["title"] = concept.Term;
                                     result["value"] = GetPrecoordinatedConceptJson(concept.SctId);
                                 }
                                 else

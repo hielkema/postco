@@ -119,7 +119,7 @@ namespace SnomedTemplateService.Parser
                     default:
                         if (!Regex.IsMatch(child.GetText(), @"^(?:[\u0020\t\r\n]+|\+)$"))
                         {
-                            throw new Exception("syntax error");
+                            throw new ParserException();
                         }
                         break;
                 }
