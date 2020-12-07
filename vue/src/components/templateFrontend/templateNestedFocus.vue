@@ -7,7 +7,7 @@
               <tbody>
                 <tr>
                   <td width="350px">
-                    <strong>Attribuut {{attributeKey+1}} <!-- [{{groupKey}}/{{attributeKey}}] --></strong><br>
+                    <strong>Focusconcept <!-- [{{groupKey}}/{{attributeKey}}] --></strong><br>
                     {{ templateData.title }}: {{ templateData.description }}
                   </td>
                   <td>
