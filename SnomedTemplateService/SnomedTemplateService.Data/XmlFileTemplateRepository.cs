@@ -113,12 +113,15 @@ namespace SnomedTemplateService.Data
             var doc = new XmlDocument();
             doc.Load(stream);
             var templateNode = doc.SelectSingleNode("/template");
+            var tags = doc.SelectNodes("/template/tags/tag").Cast<XmlElement>().Select(e => e.InnerText).ToList();
+
             var result = new TemplateData(
                 key,
                 templateNode.SelectSingleNode("time")?.InnerText?.Trim(),
                 templateNode.SelectSingleNode("snomedVersion")?.InnerText?.Trim(),
                 templateNode.SelectSingleNode("snomedBranch")?.InnerText?.Trim(),
-                templateNode.SelectSingleNode("etl")?.InnerText?.Trim()
+                templateNode.SelectSingleNode("etl")?.InnerText?.Trim(),
+                tags
             )
             {
                 Description = templateNode.SelectSingleNode("description")?.InnerText?.Trim(),

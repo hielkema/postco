@@ -14,6 +14,10 @@
     <snomedVersion>2020-09-30</snomedVersion>
     <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
     <stringFormat>[0/0] van [0/1] met [1/0]</stringFormat>
+    <tags>
+        <tag>Tag 1</tag>
+        <tag>Tag 2</tag>
+    </tags>
     <etl>
         <![CDATA[
             71388002 |Procedure (procedure)| : {
@@ -29,28 +33,28 @@
     </etl>
     <slots>
         <slot name="Methode">
-        <title>Methode</title>
-        <description>Welke methode wordt er gebruikt?</description>
+            <title>Methode</title>
+            <description>Welke methode wordt er gebruikt?</description>
         </slot>
         <slot name="Locatie">
-        <title>Procedure site</title>
-        <description>Welke locatie?</description>
+            <title>Procedure site</title>
+            <description>Welke locatie?</description>
         </slot>
         <slot name="Lat1">
-        <title>Lateraliteit</title>
-        <description>Welke zijde?</description>
+            <title>Lateraliteit</title>
+            <description>Welke zijde?</description>
         </slot>
         <slot name="Lat2">
-        <title>Lateraliteit</title>
-        <description>Welke zijde?</description>
+            <title>Lateraliteit</title>
+            <description>Welke zijde?</description>
         </slot>
         <slot name="Lat3">
-        <title>Lateraliteit 2</title>
-        <description>Welke zijde?</description>
+            <title>Lateraliteit 2</title>
+            <description>Welke zijde?</description>
         </slot>
         <slot name="Doel">
-        <title>Doel</title>
-        <description>Welke intentie heeft de beeldvormende verrichting?</description>
+            <title>Doel</title>
+            <description>Welke intentie heeft de beeldvormende verrichting?</description>
         </slot>
     </slots>
 </template>

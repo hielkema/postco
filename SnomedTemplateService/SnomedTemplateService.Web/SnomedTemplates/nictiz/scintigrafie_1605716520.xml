@@ -15,7 +15,10 @@
     </description>
     <snomedVersion>2020-09-30</snomedVersion>
     <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-    <stringFormat>[0/0] van [0/1] met [0/2]</stringFormat>	<!-- bv. SPECT-CT van schildklier met jodium-131 -->
+    <stringFormat>[0/0] van [0/1] met [0/2]</stringFormat>    <!-- bv. SPECT-CT van schildklier met jodium-131 -->
+    <tags>
+        <tag>Tag 1</tag>
+    </tags>
     <etl>
         <![CDATA[
             373205008 |scintigrafie (verrichting)| : {
@@ -30,16 +33,16 @@
     </etl>
     <slots>
         <slot name="Methode">
-        	<title>Methode</title>
-        	<description>Welk type scintigrafie?</description>
+            <title>Methode</title>
+            <description>Welk type scintigrafie?</description>
         </slot>
         <slot name="Locatie">
-        	<title>Locatie</title>
-        	<description>Welke locatie?</description>
+            <title>Locatie</title>
+            <description>Welke locatie?</description>
         </slot>
         <slot name="Isotoop">
-        	<title>Isotoop</title>
-        	<description>Welke isotoop?</description>
+            <title>Isotoop</title>
+            <description>Welke isotoop?</description>
         </slot>
     </slots>
 </template>

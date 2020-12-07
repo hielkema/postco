@@ -14,8 +14,11 @@
   <description>Beschrijving Fractuur Template</description>
   <snomedVersion>2020-09-30</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <tags>
+    <tag>Tag 2</tag>
+  </tags>
   <etl>
-      <![CDATA[
+    <![CDATA[
 [[+tok (=== <<<) @DefStatus]] 64572001 |Disease| :
         {  363698007 |Finding site|   =  [[+id (<<  272673000 |Bone structure| ) @Site]],
            116676008 |Associated morphology|   =  [[+id (<<  72704001 |Fracture|  ) @FractureType]] }

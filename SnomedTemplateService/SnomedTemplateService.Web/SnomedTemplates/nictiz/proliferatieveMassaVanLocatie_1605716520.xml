@@ -15,7 +15,10 @@
     </description>
     <snomedVersion>2020-09-30</snomedVersion>
     <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-    <stringFormat>[0/0] van [0/1]</stringFormat>	<!-- bv. benigne neoplasma van huid -->
+    <stringFormat>[0/0] van [0/1]</stringFormat>    <!-- bv. benigne neoplasma van huid -->
+    <tags>
+        <tag>Tag 1</tag>
+    </tags>
     <etl>
         <![CDATA[
             64572001 |aandoening (aandoening)| : {
@@ -28,12 +31,12 @@
     </etl>
     <slots>
         <slot name="Afwijking">
-        <title>Afwijking</title>
-        <description>Welk type proliferatieve massa?</description>
+            <title>Afwijking</title>
+            <description>Welk type proliferatieve massa?</description>
         </slot>
         <slot name="Locatie">
-        <title>Procedure site</title>
-        <description>Welke locatie?</description>
+            <title>Procedure site</title>
+            <description>Welke locatie?</description>
         </slot>
     </slots>
 </template>

@@ -13,8 +13,12 @@
   <title>CT-geleide operatie van lichaamsstructuur</title>
   <snomedVersion>2020-09-30</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <tags>
+    <tag>Tag 1</tag>
+    <tag>Tag 2</tag>
+  </tags>
   <etl>
-      <![CDATA[
+    <![CDATA[
 [[+tok (=== <<<) @DefStatus]] 71388002 |Procedure (procedure)| :
         [[1..1 @GuidanceGroup]] {  260686004 |Method (attribute)|   =  312251004 |Computed tomography imaging - action (qualifier value)|,
                       405813007 |Procedure site - Direct (attribute)|   =  [[+id (< 442083009 |Anatomical or acquired body structure (body structure)|  ) @Site]],

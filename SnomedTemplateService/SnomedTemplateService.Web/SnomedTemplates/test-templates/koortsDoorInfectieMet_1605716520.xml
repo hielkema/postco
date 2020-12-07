@@ -13,24 +13,27 @@
   enkel een bevinding is) aandoening.</description>
   <snomedVersion>2020-09-30</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-      <stringFormat>[0/0] van [0/1]</stringFormat>	<!-- bv. fractuur van ulna -->
-    <etl>
-        <![CDATA[
+  <stringFormat>[0/0] van [0/1]</stringFormat>  <!-- bv. fractuur van ulna -->
+  <tags>
+    <tag>Tag 2</tag>
+  </tags>
+  <etl>
+    <![CDATA[
 			[[+tok (=== <<<) @DefStatus]] 386661006 |koorts (bevinding)| + 64572001 |aandoening (aandoening)|: 
             { 
             	246075003 |Causative agent (attribute)| = [[+id (< 410607006 |organisme (organisme)| ) @Organism]], 
               	370135005 |pathologisch proces (attribuut)| = 441862004 |infectieus proces (kwalificatiewaarde)| 
             }
         ]]>
-    </etl>
-    <slots>
-        <slot name="DefStatus">
-        <title>Definitiestatus</title>
-        <description>Voldoende of onvoldoende gedefinieerd?</description>
-        </slot>
-        <slot name="Organism">
-        <title>Ziekteverwekker</title>
-        <description>Welke ziekteverwekker?</description>
-        </slot>
-    </slots>
+  </etl>
+  <slots>
+    <slot name="DefStatus">
+      <title>Definitiestatus</title>
+      <description>Voldoende of onvoldoende gedefinieerd?</description>
+    </slot>
+    <slot name="Organism">
+      <title>Ziekteverwekker</title>
+      <description>Welke ziekteverwekker?</description>
+    </slot>
+  </slots>
 </template>

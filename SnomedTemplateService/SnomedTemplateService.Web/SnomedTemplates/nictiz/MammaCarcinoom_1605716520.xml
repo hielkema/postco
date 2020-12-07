@@ -13,7 +13,10 @@
     </description>
     <snomedVersion>2020-09-30</snomedVersion>
     <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-    <stringFormat>[0/0] van [0/1]</stringFormat>	<!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
+    <stringFormat>[0/0] van [0/1]</stringFormat>    <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
+    <tags>
+        <tag>Tag 2</tag>
+    </tags>
     <etl>
         <![CDATA[
             64572001 |aandoening (aandoening)| : {
@@ -26,12 +29,12 @@
     </etl>
     <slots>
         <slot name="Afwijking">
-        <title>Afwijking</title>
-        <description>Welke type carcinoom?</description>
+            <title>Afwijking</title>
+            <description>Welke type carcinoom?</description>
         </slot>
         <slot name="Locatie">
-        <title>Locatie</title>
-        <description>Welk kwadrant?</description>
+            <title>Locatie</title>
+            <description>Welk kwadrant?</description>
         </slot>
     </slots>
 </template>

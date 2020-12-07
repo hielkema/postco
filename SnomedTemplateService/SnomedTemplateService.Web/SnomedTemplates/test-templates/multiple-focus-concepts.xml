@@ -10,6 +10,10 @@
   <title>multiple focus concepts-template</title>
   <snomedVersion>2020-09-30</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <tags>
+    <tag>Tag 1</tag>
+    <tag>Tag 2</tag>
+  </tags>
   <etl>
     <![CDATA[
             [[+tok (=== <<<) @DefStatus]] 281647001 |Adverse reaction (disorder)| + 64572001 |Disease| : 

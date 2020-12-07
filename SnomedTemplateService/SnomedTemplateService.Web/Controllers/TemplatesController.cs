@@ -56,13 +56,19 @@ namespace SnomedTemplateService.Web.Controllers
 
             return result;
         }
-        public List<object> Get()
+        [HttpGet("")]
+        public IEnumerable<object> List(string tag)
         {
-           return templateRepository.GetTemplates().Select(t => (object) TemplateMetadataToJson(t)).ToList();
+           return templateRepository.GetTemplates().Select(t => TemplateMetadataToJson(t, tag)).Where(m=>m != null).ToList();
         }
 
-        private IDictionary<string, object> TemplateMetadataToJson(TemplateData templateData)
+        private IDictionary<string, object> TemplateMetadataToJson(TemplateData templateData, string filterTag = null)
         {
+            if (filterTag != null && !templateData.Tags.Contains(filterTag, StringComparer.InvariantCultureIgnoreCase))
+            {
+                return null;
+            }
+            
             var result = new Dictionary<string, object>
             {
                 ["id"] = templateData.Id,
@@ -79,6 +85,7 @@ namespace SnomedTemplateService.Web.Controllers
             }
             result["snomedVersion"] = templateData.SnomedVersion;
             result["snomedBranch"] = templateData.SnomedBranch;
+            result["tags"] = templateData.Tags;
             if (!string.IsNullOrEmpty(templateData.StringFormat))
             {
                 result["stringFormat"] = templateData.StringFormat;

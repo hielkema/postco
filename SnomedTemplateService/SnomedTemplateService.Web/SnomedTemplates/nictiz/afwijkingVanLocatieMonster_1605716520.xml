@@ -15,6 +15,10 @@
     <snomedVersion>2020-09-30</snomedVersion>
     <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
     <stringFormat>[0/0] van [0/1] vastgesteld met analyse van [1/0]</stringFormat>	<!-- bv. carcinoom van mamma vastgesteld met analyse van biopt -->
+    <tags>
+        <tag>Tag 1</tag>
+        <tag>Tag 2</tag>
+    </tags>
     <etl>
         <![CDATA[
             64572001 |aandoening (aandoening)| : {

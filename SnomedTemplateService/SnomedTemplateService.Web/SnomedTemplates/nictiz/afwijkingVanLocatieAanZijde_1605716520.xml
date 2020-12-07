@@ -16,7 +16,10 @@
     </description>
     <snomedVersion>2020-09-30</snomedVersion>
     <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-    <stringFormat>[0/0] van [0/1] [1/0]</stringFormat>	<!-- bv. fractuur van ulna links -->
+    <stringFormat>[0/0] van [0/1] [1/0]</stringFormat>    <!-- bv. fractuur van ulna links -->
+    <tags>
+        <tag>Tag 2</tag>
+    </tags>
     <etl>
         <![CDATA[
             64572001 |aandoening (aandoening)| : {
@@ -30,16 +33,16 @@
     </etl>
     <slots>
         <slot name="Afwijking">
-        <title>Afwijking</title>
-        <description>Welke morfologische afwijking?</description>
+            <title>Afwijking</title>
+            <description>Welke morfologische afwijking?</description>
         </slot>
         <slot name="Locatie">
-        <title>Locatie</title>
-        <description>Welke locatie? Kies een locatie die lateraliseerbaar is.</description>
+            <title>Locatie</title>
+            <description>Welke locatie? Kies een locatie die lateraliseerbaar is.</description>
         </slot>
         <slot name="Lateraliteit">
-        <title>Lateraliteit</title>
-        <description>Welke zijde?</description>
+            <title>Lateraliteit</title>
+            <description>Welke zijde?</description>
         </slot>
     </slots>
 </template>

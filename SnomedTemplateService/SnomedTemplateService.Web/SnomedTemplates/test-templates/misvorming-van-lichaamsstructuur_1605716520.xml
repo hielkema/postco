@@ -4,8 +4,11 @@
   <title>Congenitale/verworven misvorming van lichaamsstructuur</title>
   <snomedVersion>2020-09-30</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <tags>
+    <tag>Tag 2</tag>
+  </tags>
   <etl>
-      <![CDATA[
+    <![CDATA[
 [[+tok (=== <<<) @DefStatus]]  64572001 |Disease| :
          {  363698007 |Finding site|   =  [[+id (< 442083009 |Anatomical or acquired body structure (body structure)| )  @Site]],
             116676008 |Associated morphology|   =  [[+id (<<  6081001 |deformiteit (afwijkende morfologie)| ) @Morphology]],
@@ -13,7 +16,7 @@
       ]]>
   </etl>
   <slots>
-    <slot  name="Site">
+    <slot name="Site">
       <title>SiteTitle</title>
       <description>SiteDescription</description>
     </slot>

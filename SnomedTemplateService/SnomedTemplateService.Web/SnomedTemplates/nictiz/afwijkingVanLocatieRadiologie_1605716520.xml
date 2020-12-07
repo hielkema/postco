@@ -14,7 +14,11 @@
     </description>
     <snomedVersion>2020-09-30</snomedVersion>
     <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-    <stringFormat>[0/0] van [0/1] vastgesteld met [1/0]</stringFormat>	<!-- bv. carcinoom van mamma vastgesteld met MRI -->
+    <stringFormat>[0/0] van [0/1] vastgesteld met [1/0]</stringFormat>    <!-- bv. carcinoom van mamma vastgesteld met MRI -->
+    <tags>
+        <tag>Tag 1</tag>
+        <tag>Tag 2</tag>
+    </tags>
     <etl>
         <![CDATA[
             64572001 |aandoening (aandoening)| : {
@@ -30,16 +34,16 @@
     </etl>
     <slots>
         <slot name="Afwijking">
-        	<title>Afwijking</title>
-        	<description>Welke morfologische afwijking?</description>
+            <title>Afwijking</title>
+            <description>Welke morfologische afwijking?</description>
         </slot>
         <slot name="Locatie">
-        	<title>Locatie</title>
-        	<description>Welke locatie?</description>
+            <title>Locatie</title>
+            <description>Welke locatie?</description>
         </slot>
         <slot name="Verrichting">
-        	<title>Verrichting</title>
-        	<description>Type beeldvormende verrichting</description>
+            <title>Verrichting</title>
+            <description>Type beeldvormende verrichting</description>
         </slot>
     </slots>
 </template>

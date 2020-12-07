@@ -15,7 +15,10 @@
     </description>
     <snomedVersion>2020-09-30</snomedVersion>
     <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-    <stringFormat>[0/0] van [0/2] van [0/1] met [0/3]</stringFormat>	<!-- bv. verwijderen van carcinoom van blaas met palliatieve intentie -->
+    <stringFormat>[0/0] van [0/2] van [0/1] met [0/3]</stringFormat>    <!-- bv. verwijderen van carcinoom van blaas met palliatieve intentie -->
+    <tags>
+        <tag>Tag 1</tag>
+    </tags>
     <etl>
         <![CDATA[
             71388002 |verrichting (verrichting)| : {
@@ -34,20 +37,20 @@
     </etl>
     <slots>
         <slot name="Methode">
-        	<title>Methode</title>
-        	<description>Welke methode van verwijderen?</description>
+            <title>Methode</title>
+            <description>Welke methode van verwijderen?</description>
         </slot>
         <slot name="Locatie">
-        	<title>Locatie</title>
-        	<description>Welke locatie?</description>
+            <title>Locatie</title>
+            <description>Welke locatie?</description>
         </slot>
         <slot name="Laesie">
-        	<title>Laesie</title>
-        	<description>Welk type laesie?</description>
+            <title>Laesie</title>
+            <description>Welk type laesie?</description>
         </slot>
         <slot name="Intentie">
-        	<title>Intentie</title>
-        	<description>Palliatief of therapeutisch?</description>
+            <title>Intentie</title>
+            <description>Palliatief of therapeutisch?</description>
         </slot>
     </slots>
 </template>

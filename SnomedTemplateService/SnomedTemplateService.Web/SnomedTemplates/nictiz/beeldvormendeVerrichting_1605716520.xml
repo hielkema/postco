@@ -15,7 +15,11 @@
     </description>
     <snomedVersion>2020-09-30</snomedVersion>
     <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-    <stringFormat>[0/0] van [0/1]</stringFormat>	<!-- bv. MRI van pols -->
+    <stringFormat>[0/0] van [0/1]</stringFormat>    <!-- bv. MRI van pols -->
+    <tags>
+        <tag>Tag 1</tag>
+        <tag>Tag 2</tag>
+    </tags>
     <etl>
         <![CDATA[
             363679005 |beeldvormende verrichting (verrichting)| : {
@@ -28,12 +32,12 @@
     </etl>
     <slots>
         <slot name="Methode">
-        	<title>Methode</title>
-        	<description>Welk type beeldvorming?</description>
+            <title>Methode</title>
+            <description>Welk type beeldvorming?</description>
         </slot>
         <slot name="Locatie">
-        	<title>Locatie</title>
-        	<description>Welke locatie?</description>
+            <title>Locatie</title>
+            <description>Welke locatie?</description>
         </slot>
     </slots>
 </template>

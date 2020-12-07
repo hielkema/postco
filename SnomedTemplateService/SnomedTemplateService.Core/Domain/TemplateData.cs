@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace SnomedTemplateService.Core.Domain
         private IDictionary<string, string> slotDescriptions;
         private string title;
 
-        public TemplateData(string id, string timestamp, string snomedVersion, string snomedBranch, string etl)
+        public TemplateData(string id, string timestamp, string snomedVersion, string snomedBranch, string etl, IEnumerable<string> tags)
         {
             if (string.IsNullOrEmpty(snomedVersion))
             {
@@ -27,6 +28,18 @@ namespace SnomedTemplateService.Core.Domain
             if (string.IsNullOrEmpty(etl))
             {
                 throw new ArgumentException($"'{nameof(etl)}' cannot be null or empty", nameof(etl));
+            }
+            
+            if(tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            Tags = tags.ToList();
+            
+            if (Tags.Count == 0)
+            {
+                throw new ArgumentException("Template should have at least one tag");
             }
 
             Id = id;
@@ -53,6 +66,7 @@ namespace SnomedTemplateService.Core.Domain
         public string SnomedBranch { get; }
         public string StringFormat { get; set; }
         public string Etl { get; }
+        public ICollection<string> Tags { get; }
         public IDictionary<string, string> SlotTitles
         {
             get => slotTitles;

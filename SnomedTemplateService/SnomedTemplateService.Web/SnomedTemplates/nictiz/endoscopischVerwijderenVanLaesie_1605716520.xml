@@ -14,7 +14,10 @@
     </description>
     <snomedVersion>2020-09-30</snomedVersion>
     <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-    <stringFormat>[0/0] van [0/2] van [0/1] met [0/3]</stringFormat>	<!-- bv. verwijderen van carcinoom van blaas met cystoscoop -->
+    <stringFormat>[0/0] van [0/2] van [0/1] met [0/3]</stringFormat>    <!-- bv. verwijderen van carcinoom van blaas met cystoscoop -->
+    <tags>
+        <tag>Tag 2</tag>
+    </tags>
     <etl>
         <![CDATA[
             71388002 |verrichting (verrichting)| : {
@@ -31,20 +34,20 @@
     </etl>
     <slots>
         <slot name="Methode">
-        	<title>Methode</title>
-        	<description>Welke methode van verwijderen?</description>
+            <title>Methode</title>
+            <description>Welke methode van verwijderen?</description>
         </slot>
         <slot name="Locatie">
-        	<title>Locatie</title>
-        	<description>Welke locatie?</description>
+            <title>Locatie</title>
+            <description>Welke locatie?</description>
         </slot>
         <slot name="Laesie">
-        	<title>Laesie</title>
-        	<description>Welk type laesie?</description>
+            <title>Laesie</title>
+            <description>Welk type laesie?</description>
         </slot>
         <slot name="Scoop">
-        	<title>Scoop</title>
-        	<description>Welk type scoop?</description>
+            <title>Scoop</title>
+            <description>Welk type scoop?</description>
         </slot>
     </slots>
 </template>
