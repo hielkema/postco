@@ -50,9 +50,14 @@ namespace SnomedTemplateService.Web.Controllers
                 handleConceptSlot: s => throw new Exception("slots are not supported for the root expression"),
                 handleExpressionSlot: s => throw new Exception("slots are not supported for the root expression")
                 );
-
+            
             var result = TemplateMetadataToJson(templateData);
-            result["template"] = EtlSubexpressionToJson(rootExpression, templateData.SlotTitles, templateData.SlotDescriptions);
+            var templateJson = EtlSubexpressionToJson(rootExpression, templateData.SlotTitles, templateData.SlotDescriptions);
+            templateJson["definitionStatus"] = parseResult.DefinitionStatus.Handle(
+                lit => lit == DefinitionStatusEnum.subtypeOf ? "<<<" : "===",
+                slot => "slot");
+            
+            result["template"] = templateJson;
 
             return result;
         }
@@ -93,7 +98,7 @@ namespace SnomedTemplateService.Web.Controllers
             return result;
         }
 
-        private object EtlSubexpressionToJson(Subexpression subexpression, IDictionary<string,string> slotTitles, IDictionary<string, string> slotDescriptions)
+        private IDictionary<string, object> EtlSubexpressionToJson(Subexpression subexpression, IDictionary<string,string> slotTitles, IDictionary<string, string> slotDescriptions)
         {
             var focusConceptsJson = new List<object>();  
             foreach (var fc in subexpression.FocusConcepts.Select(fi=>fi.focus))
@@ -211,10 +216,10 @@ namespace SnomedTemplateService.Web.Controllers
                     groupJson.Add(attrJson);
                 }
             }
-            return new
+            return new Dictionary<string, object>
             {
-                focus = focusConceptsJson.ToArray(),
-                groups = groupsListJson.ToArray().ToArray()
+                ["focus"] = focusConceptsJson.ToArray(),
+                ["groups"] = groupsListJson.ToArray().ToArray()
             };
         }
 
