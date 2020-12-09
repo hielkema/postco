@@ -1,48 +1,53 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <template>
-    <time>1605716520</time>
-    <authors>
-        <author>
-            <name>Feikje Hielkema-Raadsveld</name>
-            <contact>hielkema@nictiz.nl</contact>
-        </author>
-    </authors>
-    <title>Beeldvormende verrichting van locatie aan zijde</title>
-    <description>
-        Dit template kan worden gebruikt om een beeldvormende verrichting van elke mogelijke lichaamslocatie te specificeren,
-        met daarbij ook een lateraliteit. Je kunt alleen locaties kiezen die lateraliseerbaar zijn; voor overige locaties, gebruik 
-        template beeldvormendeVerrichting.
-    </description>
-    <snomedVersion>2020-09-30</snomedVersion>
-    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-    <stringFormat>[0/0] van [0/1] [1/0]</stringFormat>    <!-- bv. MRI van pols links -->
-    <tags>
-        <tag>Tag 2</tag>
-    </tags>
-    <etl>
-        <![CDATA[
+  <time>1605716520</time>
+  <authors>
+    <author>
+      <name>Feikje Hielkema-Raadsveld</name>
+      <contact>hielkema@nictiz.nl</contact>
+    </author>
+  </authors>
+  <title>Beeldvormende verrichting van locatie aan zijde</title>
+  <description>
+    Dit template kan worden gebruikt om een beeldvormende verrichting van elke mogelijke lichaamslocatie te specificeren,
+    met daarbij ook een lateraliteit. Je kunt alleen locaties kiezen die lateraliseerbaar zijn; voor overige locaties, gebruik
+    template beeldvormendeVerrichting.
+  </description>
+  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>[0/0] van [0/1] [1/0]</stringFormat>
+  <!-- bv. MRI van pols links -->
+  <tags>
+    <tag>Tag 2</tag>
+  </tags>
+  <etl>
+    <![CDATA[
             363679005 |beeldvormende verrichting (verrichting)| : {
-                260686004 |methode (attribuut)| = 
-                	[[+id (<< 360037004 |beeldvorming (kwalificatiewaarde)|) @Methode ]],
-                405813007 |directe locatie van verrichting (attribuut)| =  
-                    ([[+id (^723264001 |Lateralizable body structure reference set (foundation metadata concept)|) @Locatie ]] : { 
-                            272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) @Lateraliteit ]]
+                [[ @Methode ]] 260686004 |methode (attribuut)| = 
+                [[+id (<< 360037004 |beeldvorming (kwalificatiewaarde)|) ]],
+                [[ @Locatie ]] 405813007 |directe locatie van verrichting (attribuut)| =  
+                    ([[ @LocatieFocus ]][[+id (^723264001 |Lateralizable body structure reference set (foundation metadata concept)|) ]] : { 
+                            [[ @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
                             })
 			}
         ]]>
-    </etl>
-    <slots>
-        <slot name="Methode">
-            <title>Methode</title>
-            <description>Welk type beeldvorming?</description>
-        </slot>
-        <slot name="Locatie">
-            <title>Locatie</title>
-            <description>Welke locatie?</description>
-        </slot>
-        <slot name="Lateraliteit">
-            <title>Lateraliteit</title>
-            <description>Welke zijde?</description>
-        </slot>
-    </slots>
+  </etl>
+  <slots>
+    <slot name="Methode">
+      <title>Methode</title>
+      <description>Welk type beeldvorming?</description>
+    </slot>
+    <slot name="Locatie">
+      <title>Locatie</title>
+      <description>Welke locatie?</description>
+    </slot>
+    <slot name="LocatieFocus">
+      <title>LocatieFocusTitel</title>
+      <description>LocatieFocusOmschrijving</description>
+    </slot>
+    <slot name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
+    </slot>
+  </slots>
 </template>

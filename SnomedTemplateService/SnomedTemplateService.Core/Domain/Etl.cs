@@ -125,10 +125,10 @@ namespace SnomedTemplateService.Core.Domain.Etl
         public Subexpression(ConceptReference concept)
         {
             if (concept == null) throw new ArgumentNullException(nameof(concept));
-            FocusConcepts = new List<(TemplateInformationSlot info, IConceptReferenceOrSlot focus)> { (new EmptyInformationSlot(), concept) };
+            FocusConcepts = new List<(TemplateInformationSlot info, IConceptReferenceOrSlot focus)> { (new TemplateInformationSlot() { SubjectContainsSlot = false }, concept) };
             Refinement = null;
         }
-        
+
         public Subexpression(IList<(TemplateInformationSlot info, IConceptReferenceOrSlot focus)> focusConcepts, IAttributeSetOrGroupRefinement refinement)
         {
             if (focusConcepts is null)
@@ -140,10 +140,11 @@ namespace SnomedTemplateService.Core.Domain.Etl
                 throw new ArgumentException($"{nameof(focusConcepts)} should be non-empty", nameof(focusConcepts));
             }
             FocusConcepts = focusConcepts.Select(fc =>
-                (fc.focus.ContainsSlot() ? fc.info ?? new TemplateInformationSlot()
-                        : new EmptyInformationSlot(), 
-                        fc.focus)
-                ).ToList();
+                {
+                    fc.info.SubjectContainsSlot = fc.focus.ContainsSlot();
+                    return fc;
+                }
+            ).ToList();
             Refinement = refinement;
         }
 
@@ -224,10 +225,10 @@ namespace SnomedTemplateService.Core.Domain.Etl
         {
             AttributeSet = attributeSet ?? throw new ArgumentNullException(nameof(attributeSet));
             AttributeGroups = attributeGroups?.Select(ag =>
-                ( info: ag.group.ContainsSlot() 
-                    ? ag.info ?? new TemplateInformationSlot()
-                    : new EmptyInformationSlot(), ag.group
-                )
+                {
+                    ag.info.SubjectContainsSlot = ag.group.ContainsSlot();
+                    return ag;
+                }
             )?.ToList();
         }
 
@@ -255,11 +256,11 @@ namespace SnomedTemplateService.Core.Domain.Etl
             {
                 throw new ArgumentException($"{nameof(attributeGroups)} should be non-empty", nameof(attributeGroups));
             }
-            AttributeGroups = attributeGroups.Select(ag => 
-                (info: ag.group.ContainsSlot() ?
-                    ag.info ?? new TemplateInformationSlot()
-                    : new EmptyInformationSlot(), 
-                ag.group)
+            AttributeGroups = attributeGroups.Select(ag =>
+                {
+                    ag.info.SubjectContainsSlot = ag.group.ContainsSlot();
+                    return ag;
+                }
             ).ToList();
         }
 
@@ -291,11 +292,11 @@ namespace SnomedTemplateService.Core.Domain.Etl
                 throw new ArgumentException($"{nameof(attributes)} should be non-empty", nameof(attributes));
             }
             Attributes = attributes.Select(
-                ia => (
-                    info: ia.attr.ContainsSlot() ?
-                        ia.info ?? new TemplateInformationSlot()
-                        : new EmptyInformationSlot(),
-                    ia.attr)).ToList();
+                ia => { 
+                    ia.info.SubjectContainsSlot = ia.attr.ContainsSlot();
+                    return ia;
+                }
+                ).ToList();
         }
 
         public IList<(TemplateInformationSlot info, EtlAttribute attr)> Attributes { get; }
@@ -361,39 +362,31 @@ namespace SnomedTemplateService.Core.Domain.Etl
 
     public class TemplateInformationSlot : TemplateSlot
     {
-        public TemplateInformationSlot() : this(null, null)
-        {            
-        }
-        public TemplateInformationSlot(Cardinality cardinality, string slotName) : base(slotName)
+        private readonly Cardinality cardinality;
+
+        public TemplateInformationSlot(Cardinality cardinality = null, string slotName = null) : base(slotName)
         {
-            Cardinality = cardinality ?? new Cardinality();
+            this.cardinality = cardinality;
         }
 
-        public virtual Cardinality Cardinality { get; }
-
-        public virtual bool IsEmpty()
+        public Cardinality Cardinality 
         {
-            return false;
+            get
+            {
+                return cardinality ?? (SubjectContainsSlot ? new Cardinality(1, null) : new Cardinality(1, 1));
+            }
         }
 
         public override bool ContainsSlot()
         {
             return false;
         }
-    }
 
-    public class EmptyInformationSlot : TemplateInformationSlot
-    {
-        public EmptyInformationSlot()
+        internal bool SubjectContainsSlot
         {
+            get;
+            set;
         }
-
-        public override bool IsEmpty()
-        {
-            return true;   
-        }
-
-        public override Cardinality Cardinality => new Cardinality(1, 1);
     }
 
     public class TokenReplacementSlot : TemplateSlot, IDefinitionStatusOrSlot

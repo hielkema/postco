@@ -9,9 +9,9 @@
   </tags>
   <etl>
     <![CDATA[
-[[+tok (=== <<<) @DefStatus]]  64572001 |Disease| :
-         {  363698007 |Finding site|   =  [[+id (< 442083009 |Anatomical or acquired body structure (body structure)| )  @Site]],
-            116676008 |Associated morphology|   =  [[+id (<<  6081001 |deformiteit (afwijkende morfologie)| ) @Morphology]],
+[[+tok (=== <<<)]]  64572001 |Disease| :
+         {  [[ @Site ]] 363698007 |Finding site|   =  [[+id (< 442083009 |Anatomical or acquired body structure (body structure)| )]],
+            [[ @Morphology ]] 116676008 |Associated morphology|   =  [[+id (<<  6081001 |deformiteit (afwijkende morfologie)| )]],
 246454002 |levensperiode (attribuut)| = 767023003 |levensperiode tussen geboorte en dood (kwalificatiewaarde)| }
       ]]>
   </etl>

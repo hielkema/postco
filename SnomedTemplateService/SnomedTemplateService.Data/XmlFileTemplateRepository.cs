@@ -104,7 +104,7 @@ namespace SnomedTemplateService.Data
 
         public IList<TemplateData> GetTemplates()
         {
-            return templates.Values.ToList();
+            return templates.OrderBy(kv => kv.Key).Select(kv => kv.Value).ToList();
         }
 
 

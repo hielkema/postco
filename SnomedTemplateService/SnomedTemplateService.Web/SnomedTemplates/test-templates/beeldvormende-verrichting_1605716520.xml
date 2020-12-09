@@ -19,9 +19,9 @@
   </tags>
   <etl>
     <![CDATA[
-[[+tok (=== <<<) @DefStatus]] 71388002 |Procedure (procedure)| :
-         {  260686004 |Method (attribute)|   =  [[+id (< 360037004 |beeldvorming (kwalificatiewaarde)| ) @ImagingMethod]],
-            405813007 |Procedure site - Direct (attribute)|   =  [[+id (< 442083009 |Anatomical or acquired body structure (body structure)|  ) @Site]] }
+[[+tok (=== <<<)]] 71388002 |Procedure (procedure)| :
+         {  260686004 |Method (attribute)|   =  [[+id (< 360037004 |beeldvorming (kwalificatiewaarde)| )]],
+            405813007 |Procedure site - Direct (attribute)|   =  [[+id (< 442083009 |Anatomical or acquired body structure (body structure)|  )]] }
       ]]>
   </etl>
 </template>

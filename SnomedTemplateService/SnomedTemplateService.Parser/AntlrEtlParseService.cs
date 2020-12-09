@@ -117,7 +117,7 @@ namespace SnomedTemplateService.Parser
                         currentInformationSlot = null;
                         break;
                     default:
-                        if (!Regex.IsMatch(child.GetText(), @"^(?:[\u0020\t\r\n]+|\+)$"))
+                        if (!Regex.IsMatch(child.GetText(), @"^(?:[\u0020\t\r\n]*|\+)$"))
                         {
                             throw new ParserException();
                         }
@@ -128,7 +128,7 @@ namespace SnomedTemplateService.Parser
             {
                 throw new ParserException();
             }
-            return result;
+            return result.Select(f=> (f.info ?? new TemplateInformationSlot(), f.focusConcept)).ToList();
         }
 
         private IConceptReferenceOrSlot ConvertConceptreference(ConceptreferenceContext context)
@@ -206,7 +206,7 @@ namespace SnomedTemplateService.Parser
 
         private (TemplateInformationSlot info, AttributeSet group) ConvertAttributegroup(AttributegroupContext context)
         {
-            return (context.templateinformationslot() switch { null => null, var ti => ConvertTemplateinformationslot(ti) },
+            return (context.templateinformationslot() switch { null => new TemplateInformationSlot(), var ti => ConvertTemplateinformationslot(ti) },
                 ConvertAttributeset(context.attributeset()));
         }
 
@@ -227,7 +227,7 @@ namespace SnomedTemplateService.Parser
             return (
                 context.templateinformationslot() switch
                 {
-                    null => null,
+                    null => new TemplateInformationSlot(),
                     var ti => ConvertTemplateinformationslot(ti)
                 },
                 new EtlAttribute(
@@ -607,7 +607,8 @@ namespace SnomedTemplateService.Parser
 
             return new TemplateInformationSlot(
                 cardinality switch { null => null, var x => ConvertCardinality(x) },
-                slotname switch { null => null, var x => ConvertSlotname(x) });
+                slotname switch { null => null, var x => ConvertSlotname(x) }
+            );
         }
 
         private string ConvertSlotexpressionconstraint(SlotexpressionconstraintContext context)

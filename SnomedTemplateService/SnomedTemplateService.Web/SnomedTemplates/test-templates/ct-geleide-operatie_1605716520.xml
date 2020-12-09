@@ -19,12 +19,12 @@
   </tags>
   <etl>
     <![CDATA[
-[[+tok (=== <<<) @DefStatus]] 71388002 |Procedure (procedure)| :
-        [[1..1 @GuidanceGroup]] {  260686004 |Method (attribute)|   =  312251004 |Computed tomography imaging - action (qualifier value)|,
-                      405813007 |Procedure site - Direct (attribute)|   =  [[+id (< 442083009 |Anatomical or acquired body structure (body structure)|  ) @Site]],
+[[+tok (=== <<<)]] 71388002 |Procedure (procedure)| :
+        [[1..1]] {  260686004 |Method (attribute)|   =  312251004 |Computed tomography imaging - action (qualifier value)|,
+                      405813007 |Procedure site - Direct (attribute)|   =  [[+id (< 442083009 |Anatomical or acquired body structure (body structure)|  )]],
 363703001 |Has intent (attribute)| = 429892002 |Guidance intent (qualifier value)|  }
-[[1..1 @SurgeryGroup]] { 260686004 |Method (attribute)| = [[+id (<< 129284003 |Surgical action (qualifier value)| ) @Method]],
-405813007 |Procedure site - Direct (attribute)|  = [[+id (< 442083009 |Anatomical or acquired body structure (body structure)| ) @Site]] }
+[[1..1]] { 260686004 |Method (attribute)| = [[+id (<< 129284003 |Surgical action (qualifier value)| )]],
+405813007 |Procedure site - Direct (attribute)|  = [[+id (< 442083009 |Anatomical or acquired body structure (body structure)| )]] }
       ]]>
   </etl>
 </template>

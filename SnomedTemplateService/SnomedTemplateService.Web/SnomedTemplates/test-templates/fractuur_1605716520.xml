@@ -19,9 +19,9 @@
   </tags>
   <etl>
     <![CDATA[
-[[+tok (=== <<<) @DefStatus]] 64572001 |Disease| :
-        {  363698007 |Finding site|   =  [[+id (<<  272673000 |Bone structure| ) @Site]],
-           116676008 |Associated morphology|   =  [[+id (<<  72704001 |Fracture|  ) @FractureType]] }
+[[+tok (=== <<<)]] 64572001 |Disease| :
+        {  [[ @Site ]] 363698007 |Finding site|   =  [[+id (<<  272673000 |Bone structure| )]],
+           [[ @FractureType ]] 116676008 |Associated morphology|   =  [[+id (<<  72704001 |Fracture|  )]] }
       ]]>
   </etl>
   <slots>

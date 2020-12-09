@@ -34,37 +34,46 @@ namespace SnomedTemplateService.Web.Controllers
         [HttpGet("{id}")]
         public object Get(string id)
         {
-            var templateData = templateRepository.GetById(id);
-
-            if (templateData == null)
+            try
             {
-                return NotFound();
+                var templateData = templateRepository.GetById(id);
+
+                if (templateData == null)
+                {
+                    return NotFound();
+                }
+
+                var parseResult = parseService.ParseExpressionTemplate(templateData.Etl);
+
+                Subexpression rootExpression = null;
+
+                var subExpression = parseResult.Subexpression.Handle(
+                    handleSubexpression: e => { rootExpression = e; return ValueTuple.Create(); },
+                    handleConceptSlot: s => throw new Exception("slots are not supported for the root expression"),
+                    handleExpressionSlot: s => throw new Exception("slots are not supported for the root expression")
+                    );
+
+                var result = TemplateMetadataToJson(templateData);
+                var templateJson = EtlSubexpressionToJson(rootExpression, templateData.SlotTitles, templateData.SlotDescriptions, true);
+                templateJson["definitionStatus"] = parseResult.DefinitionStatus.Handle(
+                    lit => lit == DefinitionStatusEnum.subtypeOf ? "<<<" : "===",
+                    slot => "slot");
+
+                result["template"] = templateJson;
+
+                return result;
             }
-
-            var parseResult = parseService.ParseExpressionTemplate(templateData.Etl);
-
-            Subexpression rootExpression = null;
-
-            var subExpression = parseResult.Subexpression.Handle(
-                handleSubexpression: e => { rootExpression = e; return ValueTuple.Create(); },
-                handleConceptSlot: s => throw new Exception("slots are not supported for the root expression"),
-                handleExpressionSlot: s => throw new Exception("slots are not supported for the root expression")
-                );
-            
-            var result = TemplateMetadataToJson(templateData);
-            var templateJson = EtlSubexpressionToJson(rootExpression, templateData.SlotTitles, templateData.SlotDescriptions);
-            templateJson["definitionStatus"] = parseResult.DefinitionStatus.Handle(
-                lit => lit == DefinitionStatusEnum.subtypeOf ? "<<<" : "===",
-                slot => "slot");
-            
-            result["template"] = templateJson;
-
-            return result;
+            catch(Exception e)
+            {
+                _logger.LogError(e, $"An Exception occured in {nameof(TemplatesController.Get)}");
+                throw;
+            }
         }
+
         [HttpGet("")]
         public IEnumerable<object> List(string tag)
         {
-           return templateRepository.GetTemplates().Select(t => TemplateMetadataToJson(t, tag)).Where(m=>m != null).ToList();
+            return templateRepository.GetTemplates().Select(t => TemplateMetadataToJson(t, tag)).Where(m => m != null).ToList();
         }
 
         private IDictionary<string, object> TemplateMetadataToJson(TemplateData templateData, string filterTag = null)
@@ -98,25 +107,33 @@ namespace SnomedTemplateService.Web.Controllers
             return result;
         }
 
-        private IDictionary<string, object> EtlSubexpressionToJson(Subexpression subexpression, IDictionary<string,string> slotTitles, IDictionary<string, string> slotDescriptions)
+        private IDictionary<string, object> EtlSubexpressionToJson(
+            Subexpression subexpression, 
+            IDictionary<string,string> slotTitles, IDictionary<string, string> slotDescriptions,
+            bool isRootExpression = false)
         {
-            var focusConceptsJson = new List<object>();  
-            foreach (var fc in subexpression.FocusConcepts.Select(fi=>fi.focus))
+            var focusConceptsJson = new List<object>();
+            foreach (var fc in subexpression.FocusConcepts)
             {
-                fc.Handle(
+                var td = GetConceptOrSlotTitleAndDesc(fc.info, fc.focus, slotTitles, slotDescriptions);
+                if (!isRootExpression && td.title==null)
+                {
+                    throw new Exception("Title is not specified for a focus-concept of a nested expression.");
+                }
+                fc.focus.Handle(
                     handleConceptReference: c =>
                     {
-                        focusConceptsJson.Add(GetPrecoordinatedConceptJson(c.SctId));
+                        focusConceptsJson.Add(GetPrecoordinatedConceptJson(c.SctId, td.title, td.desc));
                         return ValueTuple.Create();
                     },
                     handleConceptSlot: s =>
                     {
-                        focusConceptsJson.Add(GetConceptSlotJson(s.ExpressionConstraint));
+                        focusConceptsJson.Add(GetConceptSlotJson(s.ExpressionConstraint, td.title, td.desc));
                         return ValueTuple.Create();
                     },
                     handleExpressionSlot: s =>
                     {
-                        focusConceptsJson.Add(GetConceptSlotJson(s.ExpressionConstraint));
+                        focusConceptsJson.Add(GetConceptSlotJson(s.ExpressionConstraint, td.title, td.desc));
                         return ValueTuple.Create();
                     }
                 );
@@ -140,53 +157,33 @@ namespace SnomedTemplateService.Web.Controllers
                 groupsListJson.Add(groupJson);
                 foreach (var (info, attr) in grp)
                 {
-                    string attrNameSctId = null;
-                    string attrNameTerm = null;
-                    attr.AttributeName.Handle(
-                        handleConceptReference: 
-                            c => { 
-                                attrNameSctId = c.SctId.ToString();
-                                attrNameTerm = c.Term; 
-                                return new ValueTuple(); 
-                            },
+                    var attrName = attr.AttributeName.Handle(
+                        handleConceptReference: c => c,
                         handleConceptSlot: s => throw new Exception("Replacement slots are not supported for attribute names."),
                         handleExpressionSlot: s => throw new Exception("Replacement slots are not supported for attribute names.")
                     );
-                    
-                    object attrJson = attr.AttributeValue.Handle<object>(
+
+                    object attrJson = attr.AttributeValue.Handle(
                         handleSubexpressionOrSlot: e => e.Handle(
                             handleSubexpression: sub =>
                             {
                                 var result = new Dictionary<string, object>
                                 {
-                                    ["attribute"] = attrNameSctId
+                                    ["attribute"] = attrName.SctId
                                 };
+                                var td = GetConceptOrSlotTitleAndDesc(info, attrName, slotTitles, slotDescriptions);
+                                result["title"] = td.title ?? throw new Exception($"No title specified for {attrName.SctId}");
+                                if (td.desc != null)
+                                {
+                                    result["description"] = td.desc;
+                                }
                                 if (sub.IsConceptReference)
                                 {
-                                    result["title"] = slotTitles.ContainsKey(attrNameSctId)
-                                        ? slotTitles[attrNameSctId] 
-                                        : (attrNameTerm ?? throw new Exception($"The term for \"{attrNameSctId}\" must be specified " +
-                                        "in the conceptreference or there must be an entry for it in the template slots dictionary"));
-                                    if (slotDescriptions.ContainsKey(attrNameSctId))
-                                    {
-                                        result["description"] = slotDescriptions[attrNameSctId];
-                                    }
                                     var concept = sub.GetConceptReference();
                                     result["value"] = GetPrecoordinatedConceptJson(concept.SctId);
                                 }
                                 else
                                 {
-                                    var infoSlotName = info?.SlotName;
-                                    if (infoSlotName != null)
-                                    {
-                                        result["title"] = slotTitles.ContainsKey(infoSlotName) ?
-                                            slotTitles[info?.SlotName] :
-                                            info?.SlotName;
-                                        if (slotDescriptions.ContainsKey(infoSlotName))
-                                        {
-                                            result["description"] = slotDescriptions[infoSlotName];
-                                        }
-                                    }
                                     result["template"] = EtlSubexpressionToJson(sub, slotTitles, slotDescriptions);
                                 }
                                 return result;
@@ -194,7 +191,7 @@ namespace SnomedTemplateService.Web.Controllers
                             handleConceptSlot: s =>
                                 HandleConceptOrExpressionSlotInAttributeValue(
                                     info,
-                                    attrNameSctId,
+                                    attrName,
                                     new FirstOf<ConceptReplacementSlot, ExpressionReplacementSlot>(s),
                                     slotTitles,
                                     slotDescriptions
@@ -202,7 +199,7 @@ namespace SnomedTemplateService.Web.Controllers
                             handleExpressionSlot: s =>
                                 HandleConceptOrExpressionSlotInAttributeValue(
                                     info,
-                                    attrNameSctId,
+                                    attrName,
                                     new SecondOf<ConceptReplacementSlot, ExpressionReplacementSlot>(s),
                                     slotTitles,
                                     slotDescriptions
@@ -225,67 +222,76 @@ namespace SnomedTemplateService.Web.Controllers
 
         private object HandleConceptOrExpressionSlotInAttributeValue(
             TemplateInformationSlot infoSlot,
-            string attributeName,
+            ConceptReference attrName,
             OneOf<ConceptReplacementSlot, ExpressionReplacementSlot> valueSlot,
             IDictionary<string, string> slotTitles,
             IDictionary<string, string> slotDescriptions
             )
         {
+            var td = GetConceptOrSlotTitleAndDesc(infoSlot, attrName, slotTitles, slotDescriptions);
             var result = new Dictionary<string, object>
             {
-                ["attribute"] = attributeName
+                ["attribute"] = attrName.SctId
             };
-
-            var infoSlotName = infoSlot?.SlotName;
-            var valueSlotName = valueSlot.Handle(c => c.SlotName, e=> e.SlotName);
-
-            if (valueSlotName != null && slotTitles.ContainsKey(valueSlotName))
+            
+            result["title"] = td.title ?? throw new Exception($"No title specified for {attrName.SctId}");
+            if (td.desc != null)
             {
-                result["title"] = slotTitles[valueSlotName];
+                result["description"] = td.desc;
             }
-            else if (infoSlotName != null && slotTitles.ContainsKey(infoSlotName))
-            {
-                result["title"] = slotTitles[infoSlotName];
-            }
-            else if (valueSlotName != null)
-            {
-                result["title"] = valueSlotName;
-            }
-            else if (infoSlotName != null)
-            {
-                result["title"] = infoSlotName;
-            }
-
-            if (valueSlotName != null && slotDescriptions.ContainsKey(valueSlotName))
-            {
-                result["description"] = slotDescriptions[valueSlotName];
-            }
-            else if (infoSlotName != null && slotDescriptions.ContainsKey(infoSlotName))
-            {
-                result["description"] = slotDescriptions[infoSlotName];
-            }
-
             result["value"] = GetConceptSlotJson(valueSlot.Handle(c=>c.ExpressionConstraint, e=>e.ExpressionConstraint));
             return result;
         }
 
-        private object GetConceptSlotJson(string constraint)
+        private (string title, string desc) GetConceptOrSlotTitleAndDesc(
+            TemplateInformationSlot info, IConceptReferenceOrSlot conceptOrSlot,
+            IDictionary<string, string> titles, IDictionary<string, string> descriptions)
+        {
+            var name = info?.SlotName;
+            string desc = null;
+            string title = null;
+            if (name != null)
+            {
+                titles.TryGetValue(name, out title);
+                descriptions.TryGetValue(name, out desc);
+            }
+            title ??= conceptOrSlot.Handle(c => c.Term, cs => null, es => null);
+            return (title, desc);
+        }
+
+        private object GetConceptSlotJson(string constraint, string title=null, string description=null)
         {
             var result = new Dictionary<string, object>
             {
                 ["type"] = "conceptSlot",
                 ["constraint"] = constraint
             };
+            if (title != null)
+            {
+                result["title"] = title;
+            }
+            if (description != null)
+            {
+                result["description"] = description;
+            }
             return result;
         }
 
-        private object GetPrecoordinatedConceptJson(ulong sctId)
+        private object GetPrecoordinatedConceptJson(ulong sctId, string title = null, string description = null)
         {
             var result = new Dictionary<string, object>
             {
                 ["type"] = "precoordinatedConcept",
                 ["conceptId"] = sctId.ToString()
             };
+            if (title != null)
+            {
+                result["title"] = title;
+            }
+            if (description != null)
+            {
+                result["description"] = description;
+            }
             return result;
         }
     }

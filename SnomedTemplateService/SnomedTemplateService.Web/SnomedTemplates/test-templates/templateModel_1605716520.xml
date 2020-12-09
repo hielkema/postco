@@ -1,60 +1,64 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <template>
-    <time>1605716520</time>
-    <authors>
-        <author>
-            <name>Test Test</name>
-            <contact>test@test.nl</contact>
-        </author>
-    </authors>
-    <title>Beeldvormende verrichting</title>
-    <description>
-        Bedoeld om te testen. Usecase: Coderen van beeldvormende verrichtingen op een lichaamsstructuur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla mattis lorem id mi venenatis, sed commodo neque tristique. Aliquam eget turpis placerat, aliquet dolor sed, vehicula est. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras sit amet erat semper, hendrerit odio a, molestie lacus. Sed rhoncus sapien leo, nec luctus dolor pretium a. Integer mauris dui, viverra placerat vehicula id, egestas vel elit. Aenean posuere enim eget diam cursus, vel egestas tellus scelerisque. Quisque cursus porta dictum. Donec vel metus libero. Phasellus sollicitudin vel felis in venenatis.
-    </description>
-    <snomedVersion>2020-09-30</snomedVersion>
-    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-    <stringFormat>[0/0] van [0/1] met [1/0]</stringFormat>
-    <tags>
-        <tag>Tag 1</tag>
-        <tag>Tag 2</tag>
-    </tags>
-    <etl>
-        <![CDATA[
+  <time>1605716520</time>
+  <authors>
+    <author>
+      <name>Test Test</name>
+      <contact>test@test.nl</contact>
+    </author>
+  </authors>
+  <title>Beeldvormende verrichting</title>
+  <description>
+    Bedoeld om te testen. Usecase: Coderen van beeldvormende verrichtingen op een lichaamsstructuur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla mattis lorem id mi venenatis, sed commodo neque tristique. Aliquam eget turpis placerat, aliquet dolor sed, vehicula est. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras sit amet erat semper, hendrerit odio a, molestie lacus. Sed rhoncus sapien leo, nec luctus dolor pretium a. Integer mauris dui, viverra placerat vehicula id, egestas vel elit. Aenean posuere enim eget diam cursus, vel egestas tellus scelerisque. Quisque cursus porta dictum. Donec vel metus libero. Phasellus sollicitudin vel felis in venenatis.
+  </description>
+  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>[0/0] van [0/1] met [1/0]</stringFormat>
+  <tags>
+    <tag>Tag 1</tag>
+    <tag>Tag 2</tag>
+  </tags>
+  <etl>
+    <![CDATA[
             71388002 |Procedure (procedure)| : {
-                260686004 |Method| = [[+id (< 360037004 |beeldvorming (kwalificatiewaarde)|) @Methode ]],
-                [[ @Locatie ]] 405813007 |Procedure site - Direct| = 
-                    ([[+id (< 442083009 |Anatomical or acquired body structure (body structure)|) ]] : { 
-                            272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) @Lat1 ]],
-                            272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) @Lat2 ]]    } 
-                        {   272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) @Lat3 ]]    }),
-                363703001 |Has intent| = [[+id (< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|) @Doel ]]
+                [[ @Methode ]] 260686004 |Method| = [[+id (< 360037004 |beeldvorming (kwalificatiewaarde)|)]],
+                [[ @LocatieAttr ]] 405813007 |Procedure site - Direct| = 
+                    ([[ @LocatieFocus ]] [[+id (< 442083009 |Anatomical or acquired body structure (body structure)|) ]] : { 
+                            [[ @Lat1 ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|)]],
+                            [[ @Lat2 ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|)]]    } 
+                        {   [[ @Lat3 ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|)]]    }),
+                [[ @Doel ]] 363703001 |Has intent| = [[+id (< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|)]]
             }
         ]]>
-    </etl>
-    <slots>
-        <slot name="Methode">
-            <title>Methode</title>
-            <description>Welke methode wordt er gebruikt?</description>
-        </slot>
-        <slot name="Locatie">
-            <title>Procedure site</title>
-            <description>Welke locatie?</description>
-        </slot>
-        <slot name="Lat1">
-            <title>Lateraliteit</title>
-            <description>Welke zijde?</description>
-        </slot>
-        <slot name="Lat2">
-            <title>Lateraliteit</title>
-            <description>Welke zijde?</description>
-        </slot>
-        <slot name="Lat3">
-            <title>Lateraliteit 2</title>
-            <description>Welke zijde?</description>
-        </slot>
-        <slot name="Doel">
-            <title>Doel</title>
-            <description>Welke intentie heeft de beeldvormende verrichting?</description>
-        </slot>
-    </slots>
+  </etl>
+  <slots>
+    <slot name="Methode">
+      <title>Methode</title>
+      <description>Welke methode wordt er gebruikt?</description>
+    </slot>
+    <slot name="LocatieAttr">
+      <title>Procedure site</title>
+      <description>Welke locatie?</description>
+    </slot>
+    <slot name="LocatieFocus">
+      <title>Procedure site</title>
+      <description>Welke locatie?</description>
+    </slot>
+    <slot name="Lat1">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
+    </slot>
+    <slot name="Lat2">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
+    </slot>
+    <slot name="Lat3">
+      <title>Lateraliteit 2</title>
+      <description>Welke zijde?</description>
+    </slot>
+    <slot name="Doel">
+      <title>Doel</title>
+      <description>Welke intentie heeft de beeldvormende verrichting?</description>
+    </slot>
+  </slots>
 </template>

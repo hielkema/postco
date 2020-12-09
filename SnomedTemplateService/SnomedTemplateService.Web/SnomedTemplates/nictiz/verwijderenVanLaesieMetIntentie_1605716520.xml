@@ -1,56 +1,57 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <template>
-    <time>1605716520</time>
-    <authors>
-        <author>
-            <name>Feikje Hielkema-Raadsveld</name>
-            <contact>hielkema@nictiz.nl</contact>
-        </author>
-    </authors>
-    <title>Verwijderen van laesie met intentie</title>
-    <description>
-        Dit template kan worden gebruikt om een verwijdering van een type laesie van een lichaamsstructuur met therapeutische 
-        of palliatieve intentie te specificeren.
-        Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen.
-    </description>
-    <snomedVersion>2020-09-30</snomedVersion>
-    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-    <stringFormat>[0/0] van [0/2] van [0/1] met [0/3]</stringFormat>    <!-- bv. verwijderen van carcinoom van blaas met palliatieve intentie -->
-    <tags>
-        <tag>Tag 1</tag>
-    </tags>
-    <etl>
-        <![CDATA[
+  <time>1605716520</time>
+  <authors>
+    <author>
+      <name>Feikje Hielkema-Raadsveld</name>
+      <contact>hielkema@nictiz.nl</contact>
+    </author>
+  </authors>
+  <title>Verwijderen van laesie met intentie</title>
+  <description>
+    Dit template kan worden gebruikt om een verwijdering van een type laesie van een lichaamsstructuur met therapeutische
+    of palliatieve intentie te specificeren.
+    Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen.
+  </description>
+  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>[0/0] van [0/2] van [0/1] met [0/3]</stringFormat>
+  <!-- bv. verwijderen van carcinoom van blaas met palliatieve intentie -->
+  <tags>
+    <tag>Tag 1</tag>
+  </tags>
+  <etl>
+    <![CDATA[
             71388002 |verrichting (verrichting)| : {
-                260686004 |methode (attribuut)| = 
-                	[[+id (<< 129303008 |verwijderen (kwalificatiewaarde)|) @Methode ]],
-                405813007 |directe locatie van verrichting (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]],
-                363700003 |directe morfologie (attribuut)| = 
-                	[[+id (<< 52988006 |afwijkend weefsel (afwijkende morfologie)|) @Laesie ]]
+                [[ @Methode ]] 260686004 |methode (attribuut)| = 
+                	[[+id (<< 129303008 |verwijderen (kwalificatiewaarde)|)]],
+                [[ @Locatie ]] 405813007 |directe locatie van verrichting (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|)]],
+                [[ @Laesie ]] 363700003 |directe morfologie (attribuut)| = 
+                	[[+id (<< 52988006 |afwijkend weefsel (afwijkende morfologie)|)]]
             }
             {
-                363703001 |doel (attribuut)| = 
-                	[[+id (< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|) @Intentie ]]
+                [[ @Intentie ]] 363703001 |doel (attribuut)| = 
+                	[[+id (< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|)]]
 			}
         ]]>
-    </etl>
-    <slots>
-        <slot name="Methode">
-            <title>Methode</title>
-            <description>Welke methode van verwijderen?</description>
-        </slot>
-        <slot name="Locatie">
-            <title>Locatie</title>
-            <description>Welke locatie?</description>
-        </slot>
-        <slot name="Laesie">
-            <title>Laesie</title>
-            <description>Welk type laesie?</description>
-        </slot>
-        <slot name="Intentie">
-            <title>Intentie</title>
-            <description>Palliatief of therapeutisch?</description>
-        </slot>
-    </slots>
+  </etl>
+  <slots>
+    <slot name="Methode">
+      <title>Methode</title>
+      <description>Welke methode van verwijderen?</description>
+    </slot>
+    <slot name="Locatie">
+      <title>Locatie</title>
+      <description>Welke locatie?</description>
+    </slot>
+    <slot name="Laesie">
+      <title>Laesie</title>
+      <description>Welk type laesie?</description>
+    </slot>
+    <slot name="Intentie">
+      <title>Intentie</title>
+      <description>Palliatief of therapeutisch?</description>
+    </slot>
+  </slots>
 </template>

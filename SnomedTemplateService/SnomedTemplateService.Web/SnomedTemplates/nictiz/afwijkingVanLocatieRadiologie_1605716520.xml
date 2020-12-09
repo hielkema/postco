@@ -1,49 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <template>
-    <time>1605716520</time>
-    <authors>
-        <author>
-            <name>Feikje Hielkema-Raadsveld</name>
-            <contact>hielkema@nictiz.nl</contact>
-        </author>
-    </authors>
-    <title>Afwijking van anatomische locatie vastgesteld met beeldvormende verrichting</title>
-    <description>
-        Dit template kan worden gebruikt om een afwijking van een lichaamsstructuur vast te leggen, die 
-        is vastgesteld op basis van een beeldvormende verrichting.
-    </description>
-    <snomedVersion>2020-09-30</snomedVersion>
-    <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-    <stringFormat>[0/0] van [0/1] vastgesteld met [1/0]</stringFormat>    <!-- bv. carcinoom van mamma vastgesteld met MRI -->
-    <tags>
-        <tag>Tag 1</tag>
-        <tag>Tag 2</tag>
-    </tags>
-    <etl>
-        <![CDATA[
+  <time>1605716520</time>
+  <authors>
+    <author>
+      <name>Feikje Hielkema-Raadsveld</name>
+      <contact>hielkema@nictiz.nl</contact>
+    </author>
+  </authors>
+  <title>Afwijking van anatomische locatie vastgesteld met beeldvormende verrichting</title>
+  <description>
+    Dit template kan worden gebruikt om een afwijking van een lichaamsstructuur vast te leggen, die
+    is vastgesteld op basis van een beeldvormende verrichting.
+  </description>
+  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>[0/0] van [0/1] vastgesteld met [1/0]</stringFormat>
+  <!-- bv. carcinoom van mamma vastgesteld met MRI -->
+  <tags>
+    <tag>Tag 1</tag>
+    <tag>Tag 2</tag>
+  </tags>
+  <etl>
+    <![CDATA[
             64572001 |aandoening (aandoening)| : {
-                116676008 |gerelateerde morfologie (attribuut)| = 
-                	[[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) @Afwijking ]],
-                363698007 |locatie van bevinding (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) @Locatie ]]
+                [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| = 
+                	 [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|)]],
+                [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|)]]
             } 
             { 
-                363714003 |interpreteert (attribuut)| = [[+id(< 363679005 |beeldvormende verrichting (verrichting)|) @Verrichting ]]
+                [[ @Verrichting ]] 363714003 |interpreteert (attribuut)| = [[+id(< 363679005 |beeldvormende verrichting (verrichting)|)]]
             }
         ]]>
-    </etl>
-    <slots>
-        <slot name="Afwijking">
-            <title>Afwijking</title>
-            <description>Welke morfologische afwijking?</description>
-        </slot>
-        <slot name="Locatie">
-            <title>Locatie</title>
-            <description>Welke locatie?</description>
-        </slot>
-        <slot name="Verrichting">
-            <title>Verrichting</title>
-            <description>Type beeldvormende verrichting</description>
-        </slot>
-    </slots>
+  </etl>
+  <slots>
+    <slot name="Afwijking">
+      <title>Afwijking</title>
+      <description>Welke morfologische afwijking?</description>
+    </slot>
+    <slot name="Locatie">
+      <title>Locatie</title>
+      <description>Welke locatie?</description>
+    </slot>
+    <slot name="Verrichting">
+      <title>Verrichting</title>
+      <description>Type beeldvormende verrichting</description>
+    </slot>
+  </slots>
 </template>
