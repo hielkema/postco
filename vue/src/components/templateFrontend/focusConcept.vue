@@ -27,6 +27,7 @@
                         :search-input.sync="search"
                         :no-filter="true"
                         :loading="loading"
+                        placeholder="Minimaal 3 tekens"
                         @change="$store.dispatch('templates/saveAttribute', {'groupKey':'focus', 'attributeKey': focusKey, 'attribute' : {'id': 'focus', 'display': 'focus'}, 'concept': select})"
                         >
                       </v-autocomplete>

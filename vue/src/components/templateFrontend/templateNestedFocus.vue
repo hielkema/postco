@@ -20,6 +20,7 @@
                       return-object
                       hide-details
                       hide-no-data
+                      placeholder="Minimaal 3 tekens"
                       v-model="select"
                       :auto-select-first="true"
                       :search-input.sync="search"

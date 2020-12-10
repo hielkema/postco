@@ -21,6 +21,7 @@
                       hide-details
                       hide-no-data
                       v-model="select"
+                      placeholder="Minimaal 3 tekens"
                       :auto-select-first="true"
                       :search-input.sync="search"
                       :no-filter="true"
