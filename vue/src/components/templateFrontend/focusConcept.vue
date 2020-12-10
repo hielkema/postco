@@ -78,7 +78,7 @@ export default {
   },
   watch: {
     search (val) {
-      if (!val) {
+      if (!val | (val.length <3)) {
         return
       }
       this.retrieveEclDebounced()
