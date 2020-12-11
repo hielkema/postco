@@ -9,6 +9,17 @@
                   <td width="350px">
                     <strong>Focusconcept <!-- [{{groupKey}}/{{attributeKey}}] --></strong><br>
                     {{ templateData.title }}: {{ templateData.description }}
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <span
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          <v-icon>mdi-information</v-icon>
+                        </span>
+                      </template>
+                      <pre>{{templateData.template.focus[0].constraint}}</pre>
+                    </v-tooltip>
                   </td>
                   <td>
                     <v-autocomplete

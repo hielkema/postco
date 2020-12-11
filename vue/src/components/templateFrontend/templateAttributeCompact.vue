@@ -9,6 +9,17 @@
                   <td width="350px">
                     <strong>Attribuut {{attributeKey+1}} <!-- [{{groupKey}}/{{attributeKey}}] --></strong><br>
                     {{ thisComponent.title }}: {{ thisComponent.description }}
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <span
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          <v-icon>mdi-information</v-icon>
+                        </span>
+                      </template>
+                      <pre>{{thisComponent.value.constraint}}</pre>
+                    </v-tooltip>
                   </td>
                   <td>
                     <v-autocomplete
