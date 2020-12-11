@@ -26,7 +26,6 @@
 									attach
 									chips
 									label="Tags"
-									multiple
 									dense
 								></v-select>
 							</v-col>
@@ -39,7 +38,6 @@
 									attach
 									chips
 									label="SNOMED versie"
-									multiple
 									dense
 								></v-select>
 							</v-col>
@@ -52,7 +50,6 @@
 									attach
 									chips
 									label="Organisatie"
-									multiple
 									dense
 								></v-select>
 							</v-col>
