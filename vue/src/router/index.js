@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/template/:templateID',
     name: 'Template',
-    component: () => import('@/views/templates/frontend.vue')
+    component: () => import('@/views/templates/templateDetail.vue')
   }
 ]
 
