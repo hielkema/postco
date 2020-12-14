@@ -44,7 +44,7 @@ export default {
               return (o.groupKey == 'focus')
           })
 
-        expression += '=== '
+        expression += this.selectedTemplate.template.definitionStatus + ' '
         expression += focusConcepts.map(function(concept){
                           return concept.concept.id + ' |' + concept.concept.display + '|';
                       }).join('+')
@@ -153,6 +153,9 @@ export default {
     }
   },
   mounted: function(){
+    if(this.selectedTemplate.template.definitionStatus == 'slot'){
+			this.$store.dispatch('templates/addErrormessage', "De frontend heeft nog geen ondersteuning voor definitionStatus 'slot'. De gegenereerde syntax is niet geldig.")
+		}
   }
   
 }
