@@ -4,6 +4,7 @@
   <authors>
     <author>
       <name>Alice</name>
+      <contact></contact>
     </author>
     <author>
       <name>John Doe</name>
@@ -11,7 +12,9 @@
     </author>
   </authors>
   <title>CT-geleide operatie van lichaamsstructuur</title>
-  <snomedVersion>2020-09-30</snomedVersion>
+  <description></description>
+  <stringFormat></stringFormat>
+    <snomedVersion>2020-09-30</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <tags>
     <tag>Tag 1</tag>

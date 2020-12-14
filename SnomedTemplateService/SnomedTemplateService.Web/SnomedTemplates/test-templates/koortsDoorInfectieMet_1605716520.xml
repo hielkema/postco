@@ -29,14 +29,14 @@
             }
         ]]>
   </etl>
-  <slots>
-    <slot name="DefStatus">
+  <items>
+    <item name="DefStatus">
       <title>Definitiestatus</title>
       <description>Voldoende of onvoldoende gedefinieerd?</description>
-    </slot>
-    <slot name="Organism">
+    </item>
+    <item name="Organism">
       <title>Ziekteverwekker</title>
       <description>Welke ziekteverwekker?</description>
-    </slot>
-  </slots>
+    </item>
+  </items>
 </template>

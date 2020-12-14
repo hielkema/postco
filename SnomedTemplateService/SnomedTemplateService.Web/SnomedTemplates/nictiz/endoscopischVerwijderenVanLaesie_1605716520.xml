@@ -33,22 +33,22 @@
 			}
         ]]>
   </etl>
-  <slots>
-    <slot name="Methode">
+  <items>
+    <item name="Methode">
       <title>Methode</title>
       <description>Welke methode van verwijderen?</description>
-    </slot>
-    <slot name="Locatie">
+    </item>
+    <item name="Locatie">
       <title>Locatie</title>
       <description>Welke locatie?</description>
-    </slot>
-    <slot name="Laesie">
+    </item>
+    <item name="Laesie">
       <title>Laesie</title>
       <description>Welk type laesie?</description>
-    </slot>
-    <slot name="Scoop">
+    </item>
+    <item name="Scoop">
       <title>Scoop</title>
       <description>Welk type scoop?</description>
-    </slot>
-  </slots>
+    </item>
+  </items>
 </template>

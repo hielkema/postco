@@ -32,18 +32,18 @@
 			}
         ]]>
   </etl>
-  <slots>
-    <slot name="Methode">
+  <items>
+    <item name="Methode">
       <title>Methode</title>
       <description>Welk type scintigrafie?</description>
-    </slot>
-    <slot name="Locatie">
+    </item>
+    <item name="Locatie">
       <title>Locatie</title>
       <description>Welke locatie?</description>
-    </slot>
-    <slot name="Isotoop">
+    </item>
+    <item name="Isotoop">
       <title>Isotoop</title>
       <description>Welke isotoop?</description>
-    </slot>
-  </slots>
+    </item>
+  </items>
 </template>

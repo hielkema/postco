@@ -133,10 +133,10 @@ namespace SnomedTemplateService.Data
                 result.Title = title;
             }
             result.StringFormat = templateNode.SelectSingleNode("stringFormat")?.InnerText?.Trim();
-            result.SlotTitles = templateNode.SelectNodes("slots/slot").Cast<XmlElement>().ToDictionary(e => e.GetAttribute("name"), e => e.SelectSingleNode("title")?.InnerText ?? e.GetAttribute("name"));
-            result.SlotTitles = result.SlotTitles.Where(kv => kv.Value != null).ToDictionary(kv => kv.Key, kv => kv.Value);
-            result.SlotDescriptions = templateNode.SelectNodes("slots/slot").Cast<XmlElement>().ToDictionary(e => e.GetAttribute("name"), e => e.SelectSingleNode("description")?.InnerText);
-            result.SlotDescriptions = result.SlotDescriptions.Where(kv => kv.Value != null).ToDictionary(kv => kv.Key, kv => kv.Value);
+            result.ItemTitles = templateNode.SelectNodes("items/item").Cast<XmlElement>().ToDictionary(e => e.GetAttribute("name"), e => e.SelectSingleNode("title")?.InnerText ?? e.GetAttribute("name"));
+            result.ItemTitles = result.ItemTitles.Where(kv => kv.Value != null).ToDictionary(kv => kv.Key, kv => kv.Value);
+            result.ItemDescriptions = templateNode.SelectNodes("items/item").Cast<XmlElement>().ToDictionary(e => e.GetAttribute("name"), e => e.SelectSingleNode("description")?.InnerText);
+            result.ItemDescriptions = result.ItemDescriptions.Where(kv => kv.Value != null).ToDictionary(kv => kv.Key, kv => kv.Value);
             result.Authors = templateNode.SelectNodes("authors/author")
                 .Cast<XmlElement>()
                 .Select(a => new TemplateAuthor(a.SelectSingleNode("name")?.InnerText?.Trim())

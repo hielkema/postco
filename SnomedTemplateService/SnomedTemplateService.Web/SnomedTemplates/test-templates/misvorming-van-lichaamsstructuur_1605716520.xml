@@ -2,6 +2,14 @@
 <template>
   <time>1605716520</time>
   <title>Congenitale/verworven misvorming van lichaamsstructuur</title>
+  <description></description>
+  <stringFormat></stringFormat>
+  <authors>
+    <author>  
+      <name>Richard Roe</name>
+      <contact></contact>
+    </author>
+  </authors>    
   <snomedVersion>2020-09-30</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <tags>
@@ -15,17 +23,17 @@
 246454002 |levensperiode (attribuut)| = 767023003 |levensperiode tussen geboorte en dood (kwalificatiewaarde)| }
       ]]>
   </etl>
-  <slots>
-    <slot name="Site">
+  <items>
+    <item name="Site">
       <title>SiteTitle</title>
       <description>SiteDescription</description>
-    </slot>
-    <slot name="Morphology">
+    </item>
+    <item name="Morphology">
       <title>TitleNoDesc</title>
-    </slot>
-    <slot name="NoMatch">
+    </item>
+    <item name="NoMatch">
       <title>NoMatch</title>
       <description>NoMatch</description>
-    </slot>
-  </slots>
+    </item>
+  </items>
 </template>

@@ -4,6 +4,7 @@
   <authors>
     <author>
       <name>Alice</name>
+      <contact></contact>
     </author>
     <author>
       <name>Bob</name>
@@ -12,6 +13,7 @@
   </authors>
   <title>Fractuur</title>
   <description>Beschrijving Fractuur Template</description>
+  <stringFormat></stringFormat>
   <snomedVersion>2020-09-30</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <tags>
@@ -24,13 +26,12 @@
            [[ @FractureType ]] 116676008 |Associated morphology|   =  [[+id (<<  72704001 |Fracture|  )]] }
       ]]>
   </etl>
-  <slots>
-    <slot name="Site">
-      <title>SiteTitle</title>
-      <description>SiteDescription</description>
-    </slot>
-    <slot name="FractureType">
-      <description>DescNoTitle</description>
-    </slot>
-  </slots>
+  <items>
+    <item name="Site">
+      <title>site</title>
+    </item>
+    <item name="FractureType">
+      <title>fracture type</title>  
+    </item>
+  </items>
 </template>

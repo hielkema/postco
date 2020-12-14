@@ -54,7 +54,7 @@ namespace SnomedTemplateService.Web.Controllers
                     );
 
                 var result = TemplateMetadataToJson(templateData);
-                var templateJson = EtlSubexpressionToJson(rootExpression, templateData.SlotTitles, templateData.SlotDescriptions, true);
+                var templateJson = EtlSubexpressionToJson(rootExpression, templateData.ItemTitles, templateData.ItemDescriptions, true);
                 templateJson["definitionStatus"] = parseResult.DefinitionStatus.Handle(
                     lit => lit == DefinitionStatusEnum.subtypeOf ? "<<<" : "===",
                     slot => "slot");
@@ -109,13 +109,13 @@ namespace SnomedTemplateService.Web.Controllers
 
         private IDictionary<string, object> EtlSubexpressionToJson(
             Subexpression subexpression, 
-            IDictionary<string,string> slotTitles, IDictionary<string, string> slotDescriptions,
+            IDictionary<string,string> itemTitles, IDictionary<string, string> itemDescriptions,
             bool isRootExpression = false)
         {
             var focusConceptsJson = new List<object>();
             foreach (var fc in subexpression.FocusConcepts)
             {
-                var td = GetConceptOrSlotTitleAndDesc(fc.info, fc.focus, slotTitles, slotDescriptions);
+                var td = GetConceptOrSlotTitleAndDesc(fc.info, fc.focus, itemTitles, itemDescriptions);
                 if (!isRootExpression && td.title==null)
                 {
                     throw new Exception("Title is not specified for a focus-concept of a nested expression.");
@@ -171,7 +171,7 @@ namespace SnomedTemplateService.Web.Controllers
                                 {
                                     ["attribute"] = attrName.SctId
                                 };
-                                var td = GetConceptOrSlotTitleAndDesc(info, attrName, slotTitles, slotDescriptions);
+                                var td = GetConceptOrSlotTitleAndDesc(info, attrName, itemTitles, itemDescriptions);
                                 result["title"] = td.title ?? throw new Exception($"No title specified for {attrName.SctId}");
                                 if (td.desc != null)
                                 {
@@ -184,7 +184,7 @@ namespace SnomedTemplateService.Web.Controllers
                                 }
                                 else
                                 {
-                                    result["template"] = EtlSubexpressionToJson(sub, slotTitles, slotDescriptions);
+                                    result["template"] = EtlSubexpressionToJson(sub, itemTitles, itemDescriptions);
                                 }
                                 return result;
                             },
@@ -193,16 +193,16 @@ namespace SnomedTemplateService.Web.Controllers
                                     info,
                                     attrName,
                                     new FirstOf<ConceptReplacementSlot, ExpressionReplacementSlot>(s),
-                                    slotTitles,
-                                    slotDescriptions
+                                    itemTitles,
+                                    itemDescriptions
                                     ),
                             handleExpressionSlot: s =>
                                 HandleConceptOrExpressionSlotInAttributeValue(
                                     info,
                                     attrName,
                                     new SecondOf<ConceptReplacementSlot, ExpressionReplacementSlot>(s),
-                                    slotTitles,
-                                    slotDescriptions
+                                    itemTitles,
+                                    itemDescriptions
                                     )
                         ),
                         handleStringOrSlot: s => throw new Exception("Concrete slots/values are not supported"),
@@ -224,11 +224,11 @@ namespace SnomedTemplateService.Web.Controllers
             TemplateInformationSlot infoSlot,
             ConceptReference attrName,
             OneOf<ConceptReplacementSlot, ExpressionReplacementSlot> valueSlot,
-            IDictionary<string, string> slotTitles,
-            IDictionary<string, string> slotDescriptions
+            IDictionary<string, string> itemTitles,
+            IDictionary<string, string> itemDescriptions
             )
         {
-            var td = GetConceptOrSlotTitleAndDesc(infoSlot, attrName, slotTitles, slotDescriptions);
+            var td = GetConceptOrSlotTitleAndDesc(infoSlot, attrName, itemTitles, itemDescriptions);
             var result = new Dictionary<string, object>
             {
                 ["attribute"] = attrName.SctId

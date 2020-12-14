@@ -30,14 +30,14 @@
 			}
         ]]>
   </etl>
-  <slots>
-    <slot name="Afwijking">
+  <items>
+    <item name="Afwijking">
       <title>Afwijking</title>
       <description>Welk type proliferatieve massa?</description>
-    </slot>
-    <slot name="Locatie">
+    </item>
+    <item name="Locatie">
       <title>Procedure site</title>
       <description>Welke locatie?</description>
-    </slot>
-  </slots>
+    </item>
+  </items>
 </template>

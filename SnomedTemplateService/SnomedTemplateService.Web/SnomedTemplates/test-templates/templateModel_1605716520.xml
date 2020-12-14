@@ -31,34 +31,34 @@
             }
         ]]>
   </etl>
-  <slots>
-    <slot name="Methode">
+  <items>
+    <item name="Methode">
       <title>Methode</title>
       <description>Welke methode wordt er gebruikt?</description>
-    </slot>
-    <slot name="LocatieAttr">
+    </item>
+    <item name="LocatieAttr">
       <title>Procedure site</title>
       <description>Welke locatie?</description>
-    </slot>
-    <slot name="LocatieFocus">
+    </item>
+    <item name="LocatieFocus">
       <title>Procedure site</title>
       <description>Welke locatie?</description>
-    </slot>
-    <slot name="Lat1">
+    </item>
+    <item name="Lat1">
       <title>Lateraliteit</title>
       <description>Welke zijde?</description>
-    </slot>
-    <slot name="Lat2">
+    </item>
+    <item name="Lat2">
       <title>Lateraliteit</title>
       <description>Welke zijde?</description>
-    </slot>
-    <slot name="Lat3">
+    </item>
+    <item name="Lat3">
       <title>Lateraliteit 2</title>
       <description>Welke zijde?</description>
-    </slot>
-    <slot name="Doel">
+    </item>
+    <item name="Doel">
       <title>Doel</title>
       <description>Welke intentie heeft de beeldvormende verrichting?</description>
-    </slot>
-  </slots>
+    </item>
+  </items>
 </template>

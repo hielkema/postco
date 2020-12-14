@@ -31,14 +31,14 @@
 			}
         ]]>
   </etl>
-  <slots>
-    <slot name="Methode">
+  <items>
+    <item name="Methode">
       <title>Methode</title>
       <description>Welk type beeldvorming?</description>
-    </slot>
-    <slot name="Locatie">
+    </item>
+    <item name="Locatie">
       <title>Locatie</title>
       <description>Welke locatie?</description>
-    </slot>
-  </slots>
+    </item>
+  </items>
 </template>

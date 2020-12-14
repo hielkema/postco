@@ -12,9 +12,10 @@
     </author>
   </authors>
   <title>Allergische reactie door substantie</title>
+  <description></description>
+  <stringFormat>[0/1] veroorzaakt door [0/0]</stringFormat>
   <snomedVersion>2020-09-30</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/1] veroorzaakt door [0/0]</stringFormat>
   <tags>
     <tag>Tag 1</tag>
   </tags>

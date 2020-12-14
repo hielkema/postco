@@ -36,18 +36,18 @@
 			}
         ]]>
   </etl>
-  <slots>
-    <slot name="Afwijking">
+  <items>
+    <item name="Afwijking">
       <title>Afwijking</title>
       <description>Welke morfologische afwijking?</description>
-    </slot>
-    <slot name="Locatie">
+    </item>
+    <item name="Locatie">
       <title>Locatie</title>
       <description>Welke locatie?</description>
-    </slot>
-    <slot name="Monster">
+    </item>
+    <item name="Monster">
       <title>Monster</title>
       <description>Biopt, aspiraat, FNAB?</description>
-    </slot>
-  </slots>
+    </item>
+  </items>
 </template>

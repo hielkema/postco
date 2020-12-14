@@ -9,8 +9,8 @@ namespace SnomedTemplateService.Core.Domain
     public class TemplateData
     {
         private IList<TemplateAuthor> authors;
-        private Dictionary<string, string> slotTitles;
-        private IDictionary<string, string> slotDescriptions;
+        private IDictionary<string, string> itemTitles;
+        private IDictionary<string, string> itemDescriptions;
         private string title;
 
         public TemplateData(string id, string timestamp, string snomedVersion, string snomedBranch, string etl, IEnumerable<string> tags)
@@ -49,8 +49,8 @@ namespace SnomedTemplateService.Core.Domain
             SnomedBranch = snomedBranch.Trim();
             Etl = etl.Trim();
             Authors = new List<TemplateAuthor>();
-            SlotTitles = new Dictionary<string, string>();
-            SlotDescriptions = new Dictionary<string, string>();
+            itemTitles = new Dictionary<string, string>();
+            itemDescriptions = new Dictionary<string, string>();
         }
 
         public string Id { get; }
@@ -67,15 +67,15 @@ namespace SnomedTemplateService.Core.Domain
         public string StringFormat { get; set; }
         public string Etl { get; }
         public ICollection<string> Tags { get; }
-        public IDictionary<string, string> SlotTitles
+        public IDictionary<string, string> ItemTitles
         {
-            get => slotTitles;
-            set => slotTitles = new Dictionary<string, string>(value ?? throw new ArgumentNullException(nameof(SlotTitles)));
+            get => itemTitles;
+            set => itemTitles = new Dictionary<string, string>(value ?? throw new ArgumentNullException(nameof(ItemTitles)));
         }
-        public IDictionary<string, string> SlotDescriptions
+        public IDictionary<string, string> ItemDescriptions
         {
-            get => slotDescriptions;
-            set => slotDescriptions = new Dictionary<string, string>(value ?? throw new ArgumentNullException(nameof(SlotDescriptions)));
+            get => itemDescriptions;
+            set => itemDescriptions = new Dictionary<string, string>(value ?? throw new ArgumentNullException(nameof(ItemDescriptions)));
         }
 
     }

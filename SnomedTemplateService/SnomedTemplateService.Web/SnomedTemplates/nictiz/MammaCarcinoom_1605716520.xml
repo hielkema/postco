@@ -28,14 +28,14 @@
 			}
         ]]>
   </etl>
-  <slots>
-    <slot name="Afwijking">
+  <items>
+    <item name="Afwijking">
       <title>Afwijking</title>
       <description>Welke type carcinoom?</description>
-    </slot>
-    <slot name="Locatie">
+    </item>
+    <item name="Locatie">
       <title>Locatie</title>
       <description>Welk kwadrant?</description>
-    </slot>
-  </slots>
+    </item>
+  </items>
 </template>

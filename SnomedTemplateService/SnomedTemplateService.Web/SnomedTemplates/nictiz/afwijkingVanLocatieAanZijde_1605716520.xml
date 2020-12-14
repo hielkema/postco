@@ -32,22 +32,22 @@
 			}
         ]]>
   </etl>
-  <slots>
-    <slot name="Afwijking">
+  <items>
+    <item name="Afwijking">
       <title>Afwijking</title>
       <description>Welke morfologische afwijking?</description>
-    </slot>
-    <slot name="LocatieFocus">
+    </item>
+    <item name="LocatieFocus">
       <title>Locatie</title>
       <description>Welke locatie? Kies een locatie die lateraliseerbaar is.</description>
-    </slot>
-    <slot name="LocatieAttr">
+    </item>
+    <item name="LocatieAttr">
       <title>Locatie</title>
       <description>Welke locatie? Kies een locatie die lateraliseerbaar is.</description>
-    </slot>
-    <slot name="Lateraliteit">
+    </item>
+    <item name="Lateraliteit">
       <title>Lateraliteit</title>
       <description>Welke zijde?</description>
-    </slot>
-  </slots>
+    </item>
+  </items>
 </template>

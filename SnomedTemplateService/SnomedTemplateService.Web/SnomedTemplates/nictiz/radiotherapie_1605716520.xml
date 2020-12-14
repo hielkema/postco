@@ -33,18 +33,18 @@
 			}
         ]]>
   </etl>
-  <slots>
-    <slot name="Methode">
+  <items>
+    <item name="Methode">
       <title>Methode</title>
       <description>Welk type radiotherapie?</description>
-    </slot>
-    <slot name="Locatie">
+    </item>
+    <item name="Locatie">
       <title>Locatie</title>
       <description>Welke locatie?</description>
-    </slot>
-    <slot name="Intentie">
+    </item>
+    <item name="Intentie">
       <title>Intentie</title>
       <description>Palliatief of therapeutisch?</description>
-    </slot>
-  </slots>
+    </item>
+  </items>
 </template>
