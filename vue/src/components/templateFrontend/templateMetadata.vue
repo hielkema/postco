@@ -27,7 +27,7 @@
                 Tijd aanmaken template
               </th>
               <td>
-                {{new Date(requestedTemplate.time).toLocaleString('nl-NL')}}
+                {{new Date(requestedTemplate.time * 1000).toLocaleString('nl-NL', {'dateStyle': 'short'})}}
               </td>
             </tr>
           </table>
