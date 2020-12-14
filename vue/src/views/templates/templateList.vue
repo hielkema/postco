@@ -158,6 +158,7 @@ export default {
 	methods: {
 		openTemplate(id){
 			this.$store.dispatch('templates/clearTemplate')
+			this.$store.dispatch('templates/dismissErrormessage')
 			this.$router.push({ path: `/template/`+id });
 		}
 	},

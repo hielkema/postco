@@ -144,6 +144,7 @@ export default {
 		},
 		backToList(){
 			this.$store.dispatch('templates/clearTemplate')
+			this.$store.dispatch('templates/dismissErrormessage')
 			this.$router.push({ path: `/templates/` });
 		},
 	},
