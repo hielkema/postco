@@ -1,51 +1,27 @@
 <template>
   <div>
-    <v-card>
-        <v-card-title class="ma-1">
-          Attribuut {{attributeKey + 1}}
-        </v-card-title>
-        <v-card-text>            
+    <v-card class="mb-2">
+        <v-card-text>     
           <v-simple-table>
             <template v-slot:default>
               <tbody>
                 <tr>
-                  <th>
-                    Groep / Attribuut ID
-                  </th>
-                  <td>
-                    {{groupKey}} / {{attributeKey}}
+                  <td width="350px">
+                    <strong>Focusconcept <!-- [{{groupKey}}/{{attributeKey}}] --></strong><br>
+                    {{ templateData.template.focus[0].title }}: {{ templateData.template.focus[0].description }}
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <span
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          <v-icon>mdi-information</v-icon>
+                        </span>
+                      </template>
+                      <pre>{{templateData.template.focus[0].constraint}}</pre>
+                    </v-tooltip>
                   </td>
-                </tr>
-                <tr>
-                  <th>
-                    Informatie
-                  </th>
                   <td>
-                    {{ thisComponent.title }}: {{ thisComponent.description }}
-                  </td>
-                </tr>
-                <tr>
-                  <th>
-                    Attribuut
-                  </th>
-                  <td>
-                    {{ thisComponent.attribute }} | {{attributeFSN}} |
-                  </td>
-                </tr>
-                <tr>
-                  <th>
-                    Valide waarden
-                  </th>
-                  <td>
-                    {{thisComponent.value}}
-                  </td>
-                </tr>
-                <tr>
-                  <th>
-                    Zoek attribuutwaarde
-                  </th>
-                  <td>
-                    <b v-if="loading">Resultaat wordt geladen...<br></b>
                     <v-autocomplete
                       light
                       dense
@@ -55,20 +31,27 @@
                       return-object
                       hide-details
                       hide-no-data
+                      placeholder="Minimaal 3 tekens"
                       v-model="select"
+                      :auto-select-first="true"
                       :search-input.sync="search"
+                      :no-filter="true"
                       :loading="loading"
-                      @change="$store.dispatch('templates/saveAttribute', {'groupKey':groupKey, 'attributeKey': attributeKey, 'attribute' : {'id':thisComponent.attribute, 'display':attributeFSN}, 'concept': select})"
+                      @change="$store.dispatch('templates/saveAttribute', {'groupKey':groupKey, 'attributeKey': attributeKey, 'attribute' : {'id':templateData.attribute, 'display':attributeFSN}, 'concept': select})"
                       >
                     </v-autocomplete>
                   </td>
-                </tr>
-                <tr v-if="select">
-                  <th>
-                    Gekozen waarde
-                  </th>
-                  <td>
-                    <pre> {{ thisComponent.attribute }} | {{attributeFSN}} | => {{select.id}} |{{select.display}}|</pre>
+                  <td v-if="!loading">
+                    <v-btn small target="_blank" v-if="select" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+select.id">
+                      <v-icon>link</v-icon>
+                    </v-btn>
+                  </td>
+                  <td v-else>
+                    <v-progress-circular
+                      v-if="loading"
+                      indeterminate
+                      color="primary"
+                    ></v-progress-circular>
                   </td>
                 </tr>
               </tbody>
@@ -91,7 +74,7 @@ export default {
       loading: false,
     }
   },
-  props: ['componentData', 'attributeKey', 'groupKey'],
+  props: ['templateData', 'attributeKey', 'groupKey'],
   methods: {
     retrieveFSN (conceptid) {
       var branchVersion = encodeURI(this.requestedTemplate.snomedBranch + '/' + this.requestedTemplate.snomedVersion)
@@ -104,7 +87,7 @@ export default {
     retrieveECL (term) {
       this.loading = true;
       var branchVersion = encodeURI(this.requestedTemplate.snomedBranch + '/' + this.requestedTemplate.snomedVersion)
-      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/?term='+ encodeURI(term) +'&offset=0&limit=10000&ecl='+encodeURI(this.thisComponent.value))
+      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/?term='+ encodeURI(term) +'&offset=0&limit=100&ecl='+encodeURI(this.templateData.template.focus[0].constraint))
       .then((response) => {
          this.setItems(response.data['items'])
         return true;
@@ -116,7 +99,9 @@ export default {
       for (i=0; i < response.length; i++){
         output.push({
           'id' : response[i]['conceptId'],
+          'searchString' : response[i]['fsn']['term'] + ' ' + response[i]['pt']['term'],
           'display' : response[i]['fsn']['term'],
+          'preferred' : response[i]['pt']['term'],
         })
       }
       this.items = output
@@ -133,7 +118,7 @@ export default {
   },
   watch: {
     search (val) {
-      if (!val) {
+      if (!val | (val.length <3)) {
         return
       }
       this.retrieveEclDebounced()
@@ -148,7 +133,20 @@ export default {
     }
   },
   mounted: function(){
-    this.retrieveFSN(this.thisComponent.attribute)
+    this.$store.dispatch('templates/saveAttribute', 
+      {
+        'groupKey':this.groupKey, 
+        'attributeKey': this.attributeKey, 
+        'attribute' : {
+          'id':'....', 
+          'display':'....',
+          }, 
+        'concept': {
+          'id' : '.....',
+          'display' : '....',
+        },
+      })
+    this.retrieveFSN(this.templateData.attribute)
     this.retrieved = true
   }
 }

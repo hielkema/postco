@@ -7,8 +7,25 @@
         <v-card-text>
             <pre>Template:    {{selectedTemplate.stringFormat}}</pre>
             <pre>Gegenereerd: {{formatted}}</pre>
+            <v-btn @click="copyText()">Copy</v-btn>
         </v-card-text>
     </v-card>
+    
+    <v-expansion-panels>
+      <v-expansion-panel
+        key="descriptionGeneratorData"
+      >
+        <v-expansion-panel-header
+          class="grey lighten-5">
+          <small>[DEBUG] Identifiers voor gebruik in leesbare titel</small>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <li v-for="(value, key) in postcoData" :key="key">
+            [{{value.groupKey}}/{{value.attributeKey}}]: {{value.attribute.display}} = {{value.concept.display}}
+          </li>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
   </div>
 </template>
 
@@ -31,28 +48,38 @@ export default {
     postcoData(){
         return this.$store.state.templates.expressionParts
     },
+    debug(){
+        return this.$store.state.debug
+    },
     formatted(){
-        var stringFormat = this.selectedTemplate.stringFormat
+        if(this.selectedTemplate.stringFormat){
+          var stringFormat = this.selectedTemplate.stringFormat
+        }else{
+          stringFormat = "Niet beschikbaar voor deze template."
+        }
+
+
         console.log("String in template = " + stringFormat)
        
         //eslint-disable-next-line
         const regex2 = /\[(.*?)\]/g;
         const array = [...stringFormat.matchAll(regex2)]
-
+        console.log(array)
         array.forEach((value)=>{
-          var ident = value[1].split("/")
-          console.log("Looking for Group: " + ident[0] + " / Key: " + ident[1] )
+          var lastindex = value[1].lastIndexOf('/')
+          var group = value[1].toString().substr(0, lastindex)
+          var attribute = value[1].toString().substr(lastindex+1)
+          console.log("Looking for Group: " + group + " / Key: " + attribute )
 
-          // Dus nu: in template, vervang value[1] door de waarde in this.postcoData met group ident[0] en key ident[1]
+          // Dus nu: in template, vervang value[1] door de waarde in this.postcoData met group en attribute
           var regex = new RegExp(value[1]);
           console.log("Handling portion: " + value[1])
           var replace_string = this.postcoData.filter(obj => {
-            return ((obj.groupKey == ident[0]) && (obj.attributeKey == ident[1]))
+            return ((obj.groupKey == group) && (obj.attributeKey == attribute))
           })
           
           // Als er iets gevonden is; vervang het betreffende deel in de template string
           if(replace_string.length > 0) {
-            console.log(replace_string[0].concept.preferred)
             stringFormat = stringFormat.replace(regex, replace_string[0].concept.preferred);
           }else{
             console.log("Niks gevonden")
@@ -63,20 +90,11 @@ export default {
     }
   },
   methods: {
-    retrieveFocusFSN (conceptids) {
-      conceptids.forEach((conceptid, key, set)=>{
-        var branchVersion = encodeURI(this.selectedTemplate.snomedBranch + '/' + this.selectedTemplate.snomedVersion)
-        this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
-        .then((response) => {
-          this.snowstorm.focusConcepts.push(conceptid + ' |'+ response.data.fsn.term + '|');
-          console.log('Focusconcept '+conceptid + ' uit SET ' + set + ' opgehaald')
-          return true;
-        })
-      })
-    },
+    copyText() {
+      navigator.clipboard.writeText(this.formatted);
+    }
   },
   mounted: function(){
-    this.retrieveFocusFSN(this.selectedTemplate.template.focus)
   }
   
 }

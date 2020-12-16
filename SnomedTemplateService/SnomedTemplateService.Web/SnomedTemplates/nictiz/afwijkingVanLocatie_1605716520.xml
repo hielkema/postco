@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <time>1605716520</time>
+  <authors>
+    <author>
+      <name>Feikje Hielkema-Raadsveld</name>
+      <contact>hielkema@nictiz.nl</contact>
+    </author>
+  </authors>
+  <title>Afwijking van anatomische locatie (aandoening)</title>
+  <description>
+    Dit template kan worden gebruikt om elke mogelijke morfologische afwijking van elke mogelijke lichaamslocatie te specificeren.
+    Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen. Gebruik daarvoor
+    template 'afwijkingVanLocatieAanZijde'.
+    Het focusconcept is aandoening: voor bevindingen met een morfologie zou een apart template nodig zijn.
+  </description>
+  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <tags>
+    <tag>Laesie</tag>
+    <tag>Locatie</tag>
+  </tags>
+  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <!-- bv. fractuur van ulna -->
+  <etl>
+    <![CDATA[
+            64572001 |aandoening (aandoening)| : {
+                [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| = 
+                  [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|)]],
+                [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
+                  [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|)]]
+			}
+        ]]>
+  </etl>
+  <items>
+    <item name="Afwijking">
+      <title>Afwijking</title>
+      <description>Welke morfologische afwijking?</description>
+    </item>
+    <item name="Locatie">
+      <title>Locatie</title>
+      <description>Welke locatie?</description>
+    </item>
+  </items>
+</template>

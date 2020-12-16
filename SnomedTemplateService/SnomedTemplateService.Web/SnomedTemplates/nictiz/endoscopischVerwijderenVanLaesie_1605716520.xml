@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <time>1605716520</time>
+  <authors>
+    <author>
+      <name>Feikje Hielkema-Raadsveld</name>
+      <contact>hielkema@nictiz.nl</contact>
+    </author>
+  </authors>
+  <title>Endoscopisch verwijderen van laesie</title>
+  <description>
+    Dit template kan worden gebruikt om een endoscopische verwijdering van een type laesie van een lichaamsstructuur te specificeren.
+    Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen.
+  </description>
+  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>[0/0] van [0/2] van [0/1] met [0/3]</stringFormat>
+  <!-- bv. verwijderen van carcinoom van blaas met cystoscoop -->
+  <tags>
+    <tag>Endoscopisch verwijderen</tag>
+    <tag>Laesie</tag>
+    <tag>Locatie</tag>
+  </tags>
+  <etl>
+    <![CDATA[
+            71388002 |verrichting (verrichting)| : {
+                [[ @Methode ]] 260686004 |methode (attribuut)| = 
+                	[[+id (<< 129303008 |verwijderen (kwalificatiewaarde)|) ]],
+                [[ @Locatie ]] 405813007 |directe locatie van verrichting (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|)]],
+                [[ @Laesie ]] 363700003 |directe morfologie (attribuut)| = 
+                	[[+id (<< 52988006 |afwijkend weefsel (afwijkende morfologie)|)]],
+                [[ @Scoop ]] 425391005 |met gebruik van hulpmiddel voor toegang (attribuut)| = 
+                	[[+id (<< 37270008 |endoscoop (fysiek object)|)]]
+			}
+        ]]>
+  </etl>
+  <items>
+    <item name="Methode">
+      <title>Methode</title>
+      <description>Welke methode van verwijderen?</description>
+    </item>
+    <item name="Locatie">
+      <title>Locatie</title>
+      <description>Welke locatie?</description>
+    </item>
+    <item name="Laesie">
+      <title>Laesie</title>
+      <description>Welk type laesie?</description>
+    </item>
+    <item name="Scoop">
+      <title>Scoop</title>
+      <description>Welk type scoop?</description>
+    </item>
+  </items>
+</template>

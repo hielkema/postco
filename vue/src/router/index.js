@@ -5,10 +5,25 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
+  // {
+  //   path: '/',
+  //   name: 'Welcome',
+  //   component: () => import('@/views/templates/welcome.vue')
+  // },
   {
-    path: '/test/:templateID',
+    path: '/',
+    name: 'TemplateList',
+    component: () => import('@/views/templates/templateList.vue')
+  },
+  {
+    path: '/templates/',
+    name: 'TemplateList',
+    component: () => import('@/views/templates/templateList.vue')
+  },
+  {
+    path: '/template/:templateID',
     name: 'Template',
-    component: () => import('@/views/templates/frontend.vue')
+    component: () => import('@/views/templates/templateDetail.vue')
   }
 ]
 

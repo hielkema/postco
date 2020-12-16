@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <time>1605716520</time>
+  <authors>
+    <author>
+      <name>Feikje Hielkema-Raadsveld</name>
+      <contact>hielkema@nictiz.nl</contact>
+    </author>
+  </authors>
+  <title>Beeldvormende verrichting van locatie</title>
+  <description>
+    Dit template kan worden gebruikt om een beeldvormende verrichting van elke mogelijke lichaamslocatie te specificeren.
+    Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen. Gebruik daarvoor
+    template 'beeldvormendeVerrichtingAanZijde'.
+  </description>
+  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <!-- bv. MRI van pols -->
+  <tags>
+    <tag>Beeldvorming</tag>
+  </tags>
+  <etl>
+    <![CDATA[
+            363679005 |beeldvormende verrichting (verrichting)| : {
+                [[ @Methode ]] 260686004 |methode (attribuut)| = 
+                [[+id (<< 360037004 |beeldvorming (kwalificatiewaarde)|)]],
+                [[ @Locatie ]] 405813007 |directe locatie van verrichting (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|)]]
+			}
+        ]]>
+  </etl>
+  <items>
+    <item name="Methode">
+      <title>Methode</title>
+      <description>Welk type beeldvorming?</description>
+    </item>
+    <item name="Locatie">
+      <title>Locatie</title>
+      <description>Welke locatie?</description>
+    </item>
+  </items>
+</template>

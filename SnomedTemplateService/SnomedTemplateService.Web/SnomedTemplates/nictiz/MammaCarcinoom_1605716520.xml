@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <time>1605716520</time>
+  <authors>
+    <author>
+      <name>Feikje Hielkema-Raadsveld</name>
+      <contact>hielkema@nictiz.nl</contact>
+    </author>
+  </authors>
+  <title>MammaCarcinoom</title>
+  <description>
+    Dit template kan worden gebruikt om een type carcinoom van een specifieke locatie in de mammma vast te leggen.
+  </description>
+  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
+  <tags>
+    <tag>Mammacarcinoom</tag>
+  </tags>
+  <etl>
+    <![CDATA[
+            64572001 |aandoening (aandoening)| : {
+                [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| = 
+                    [[+id (< 68453008 |carcinoom - geen subtype (afwijkende morfologie)|) ]],
+                [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
+                    [[+id (< 76752008 |structuur van mamma (lichaamsstructuur)|) ]]
+			}
+        ]]>
+  </etl>
+  <items>
+    <item name="Afwijking">
+      <title>Afwijking</title>
+      <description>Welke type carcinoom?</description>
+    </item>
+    <item name="Locatie">
+      <title>Locatie</title>
+      <description>Welk kwadrant?</description>
+    </item>
+  </items>
+</template>

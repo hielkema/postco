@@ -2,6 +2,7 @@
   <div id="app" data-app>
     <v-app>
       <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
+      <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
       <!-- <v-navigation-drawer
         v-model="drawer"
         app

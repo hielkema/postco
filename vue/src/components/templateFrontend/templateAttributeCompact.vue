@@ -7,11 +7,21 @@
               <tbody>
                 <tr>
                   <td width="350px">
-                    <strong>Attribuut {{attributeKey + 1}}</strong><br>
+                    <strong>Attribuut {{attributeKey+1}} <!-- [{{groupKey}}/{{attributeKey}}] --></strong><br>
                     {{ thisComponent.title }}: {{ thisComponent.description }}
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <span
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          <v-icon>mdi-information</v-icon>
+                        </span>
+                      </template>
+                      <pre>{{thisComponent.value.constraint}}</pre>
+                    </v-tooltip>
                   </td>
                   <td>
-                    <b v-if="loading">Resultaat wordt geladen...<br></b>
                     <v-autocomplete
                       light
                       dense
@@ -22,6 +32,7 @@
                       hide-details
                       hide-no-data
                       v-model="select"
+                      placeholder="Minimaal 3 tekens"
                       :auto-select-first="true"
                       :search-input.sync="search"
                       :no-filter="true"
@@ -30,10 +41,17 @@
                       >
                     </v-autocomplete>
                   </td>
-                  <td>
+                  <td v-if="!loading">
                     <v-btn small target="_blank" v-if="select" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+select.id">
                       <v-icon>link</v-icon>
                     </v-btn>
+                  </td>
+                  <td v-else>
+                    <v-progress-circular
+                      v-if="loading"
+                      indeterminate
+                      color="primary"
+                    ></v-progress-circular>
                   </td>
                 </tr>
               </tbody>
@@ -64,15 +82,27 @@ export default {
       .then((response) => {
         this.attributeFSN = response.data.fsn.term
         return true;
+      }).catch(() => {
+        this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributeCompact]')
+        
+        setTimeout(() => {
+          this.retrieveFSN (conceptid)
+        }, 5000)
       })
     },
     retrieveECL (term) {
       this.loading = true;
       var branchVersion = encodeURI(this.requestedTemplate.snomedBranch + '/' + this.requestedTemplate.snomedVersion)
-      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/?term='+ encodeURI(term) +'&offset=0&limit=100&ecl='+encodeURI(this.thisComponent.value))
+      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/?term='+ encodeURI(term) +'&offset=0&limit=100&ecl='+encodeURI(this.thisComponent.value.constraint))
       .then((response) => {
          this.setItems(response.data['items'])
         return true;
+      }).catch(() => {
+        this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een antwoordlijst. [templateAttributeCompact]')
+        
+        setTimeout(() => {
+          this.retrieveECL (term)
+        }, 5000)
       })
     },
     setItems(response) {
@@ -100,7 +130,7 @@ export default {
   },
   watch: {
     search (val) {
-      if (!val) {
+      if (!val | (val.length <3)) {
         return
       }
       this.retrieveEclDebounced()
@@ -115,6 +145,21 @@ export default {
     }
   },
   mounted: function(){
+    this.$store.dispatch('templates/saveAttribute', 
+      {
+        'groupKey':this.groupKey, 
+        'attributeKey': this.attributeKey, 
+        'attribute' : {
+          'id':'....', 
+          'display':'....',
+          'preferred':'....',
+          }, 
+        'concept': {
+          'id' : '.....',
+          'display' : '....',
+          'preferred':'....',
+        },
+      })
     this.retrieveFSN(this.thisComponent.attribute)
     this.retrieved = true
   }

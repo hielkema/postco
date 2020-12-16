@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <time>1605716520</time>
+  <authors>
+    <author>
+      <name>John Doe</name>
+      <contact>j.doe@example.org</contact>
+    </author>
+    <author>
+      <name>Bob</name>
+      <contact>bob@example.org</contact>
+    </author>
+  </authors>
+  <title>Beeldvormende verrichting van lichaamsstructuur</title>
+  <description></description>
+  <stringFormat></stringFormat>
+  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <tags>
+    <tag>Tag 1</tag>
+  </tags>
+  <etl>
+    <![CDATA[
+[[+tok (=== <<<)]] 71388002 |Procedure (procedure)| :
+         {  260686004 |Method (attribute)|   =  [[+id (< 360037004 |beeldvorming (kwalificatiewaarde)| )]],
+            405813007 |Procedure site - Direct (attribute)|   =  [[+id (< 442083009 |Anatomical or acquired body structure (body structure)|  )]] }
+      ]]>
+  </etl>
+</template>

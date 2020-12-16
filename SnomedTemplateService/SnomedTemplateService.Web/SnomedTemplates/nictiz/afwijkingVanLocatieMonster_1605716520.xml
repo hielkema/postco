@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <time>1605716520</time>
+  <authors>
+    <author>
+      <name>Feikje Hielkema-Raadsveld</name>
+      <contact>hielkema@nictiz.nl</contact>
+    </author>
+  </authors>
+  <title>Afwijking van anatomische locatie vastgesteld met analyse van monster</title>
+  <description>
+    Dit template kan worden gebruikt om een afwijking van een lichaamsstructuur vast te leggen, die
+    is vastgesteld op basis van een bepaald type monster, bv. een biopt, FNAB of aspiraat.
+  </description>
+  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>[0/0] van [0/1] vastgesteld met analyse van [1/0]</stringFormat>
+  <!-- bv. carcinoom van mamma vastgesteld met analyse van biopt -->
+  <tags>
+    <tag>Monster</tag>
+    <tag>Laesie</tag>
+    <tag>Locatie</tag>
+  </tags>
+  <etl>
+    <![CDATA[
+            64572001 |aandoening (aandoening)| : {
+                [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| = 
+                	 [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
+                [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
+                   [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]]
+            }
+            {
+                [[ @Interpretatie ]] 363714003 |interpreteert (attribuut)| = ( [[ @InterpretatieFocus ]] 386053000 |beoordeling (verrichting)|: 
+                    { [[ @Monster ]] 116686009 |uitgevoerd in monster (attribuut)| = [[+id(< 123038009 |monster (monster)|)]] }
+                    { [[ @Methode ]] 260686004 |methode (attribuut)| = 129265001 |evaluatie (kwalificatiewaarde)| }
+                    )
+			}
+        ]]>
+  </etl>
+  <items>
+    <item name="Afwijking">
+      <title>Afwijking</title>
+      <description>Welke morfologische afwijking?</description>
+    </item>
+    <item name="Locatie">
+      <title>Locatie</title>
+      <description>Welke locatie?</description>
+    </item>
+    <item name="Monster">
+      <title>Monster</title>
+      <description>Biopt, aspiraat, FNAB?</description>
+    </item>
+    <item name="Methode">
+      <title>Methode</title>
+      <description>Methode is altijd evaluatie</description>
+    </item>
+    <item name="Interpretatie">
+      <title>Interpretatie</title>
+      <description>Interpretatie is altijd beoordeling</description>
+    </item>
+    <item name="InterpretatieFocus">
+      <title>Uitgevoerde verrichting</title>
+    </item>
+  </items>
+</template>

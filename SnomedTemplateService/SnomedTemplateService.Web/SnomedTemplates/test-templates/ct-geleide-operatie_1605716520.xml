@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <time>1605716520</time>
+  <authors>
+    <author>
+      <name>Alice</name>
+      <contact></contact>
+    </author>
+    <author>
+      <name>John Doe</name>
+      <contact>j.doe@example.org</contact>
+    </author>
+  </authors>
+  <title>CT-geleide operatie van lichaamsstructuur</title>
+  <description></description>
+  <stringFormat></stringFormat>
+    <snomedVersion>2020-09-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <tags>
+    <tag>Tag 1</tag>
+    <tag>Tag 2</tag>
+  </tags>
+  <etl>
+    <![CDATA[
+[[+tok (=== <<<)]] 71388002 |Procedure (procedure)| :
+        [[1..1]] {  260686004 |Method (attribute)|   =  312251004 |Computed tomography imaging - action (qualifier value)|,
+                      405813007 |Procedure site - Direct (attribute)|   =  [[+id (< 442083009 |Anatomical or acquired body structure (body structure)|  )]],
+363703001 |Has intent (attribute)| = 429892002 |Guidance intent (qualifier value)|  }
+[[1..1]] { 260686004 |Method (attribute)| = [[+id (<< 129284003 |Surgical action (qualifier value)| )]],
+405813007 |Procedure site - Direct (attribute)|  = [[+id (< 442083009 |Anatomical or acquired body structure (body structure)| )]] }
+      ]]>
+  </etl>
+</template>
