@@ -43,8 +43,8 @@
       <description>Specificeer de locatie en lateraliteit apart, bv. 'nier' en 'links'.</description>
     </item>
     <item name="LocatieFocus">
-      <title>LocatieFocusTitel</title>
-      <description>Welke locatie? Gebruik een lateraliseerbare structuur.</description>
+      <title>Welke locatie</title>
+      <description>Kies een lateraliseerbare structuur.</description>
     </item>
     <item name="Lateraliteit">
       <title>Lateraliteit</title>
