@@ -39,11 +39,11 @@
     </item>
     <item name="Locatie">
       <title>Locatie</title>
-      <description>Welke locatie?</description>
+      <description>Specificeer de locatie en lateraliteit apart, bv. 'nier' en 'links'.</description>
     </item>
     <item name="LocatieFocus">
       <title>LocatieFocusTitel</title>
-      <description>LocatieFocusOmschrijving</description>
+      <description>Welke locatie? Gebruik een lateraliseerbare structuur.</description>
     </item>
     <item name="Lateraliteit">
       <title>Lateraliteit</title>
