@@ -18,7 +18,10 @@
   <stringFormat>[0/0] van [0/2] van [0/1] met [0/3]</stringFormat>
   <!-- bv. verwijderen van carcinoom van blaas met palliatieve intentie -->
   <tags>
-    <tag>Tag 1</tag>
+    <tag>Verwijderen</tag>
+    <tag>Laesie</tag>
+    <tag>Intentie</tag>
+    <tag>Locatie</tag>
   </tags>
   <etl>
     <![CDATA[

@@ -18,7 +18,9 @@
   <stringFormat>[0/0] van [0/1] met [0/2]</stringFormat>
   <!-- bv. SPECT-CT van schildklier met jodium-131 -->
   <tags>
-    <tag>Tag 1</tag>
+    <tag>Scintigrafie</tag>
+    <tag>Isotoop</tag>
+    <tag>Locatie</tag>
   </tags>
   <etl>
     <![CDATA[

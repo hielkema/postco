@@ -18,7 +18,8 @@
   <stringFormat>[0/0] van [0/1]</stringFormat>
   <!-- bv. benigne neoplasma van huid -->
   <tags>
-    <tag>Tag 1</tag>
+    <tag>Proliferatieve massa</tag>
+    <tag>Locatie</tag>
   </tags>
   <etl>
     <![CDATA[

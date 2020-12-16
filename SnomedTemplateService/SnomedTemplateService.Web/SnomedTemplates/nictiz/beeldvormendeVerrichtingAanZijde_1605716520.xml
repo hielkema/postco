@@ -18,7 +18,8 @@
   <stringFormat>[0/0] van [0/1] [1/0]</stringFormat>
   <!-- bv. MRI van pols links -->
   <tags>
-    <tag>Tag 2</tag>
+    <tag>Beeldvorming</tag>
+    <tag>Lateraliteit</tag>
   </tags>
   <etl>
     <![CDATA[

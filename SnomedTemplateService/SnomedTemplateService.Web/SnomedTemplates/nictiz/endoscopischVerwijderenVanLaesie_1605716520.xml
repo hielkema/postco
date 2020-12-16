@@ -17,7 +17,9 @@
   <stringFormat>[0/0] van [0/2] van [0/1] met [0/3]</stringFormat>
   <!-- bv. verwijderen van carcinoom van blaas met cystoscoop -->
   <tags>
-    <tag>Tag 2</tag>
+    <tag>Endoscopisch verwijderen</tag>
+    <tag>Laesie</tag>
+    <tag>Locatie</tag>
   </tags>
   <etl>
     <![CDATA[

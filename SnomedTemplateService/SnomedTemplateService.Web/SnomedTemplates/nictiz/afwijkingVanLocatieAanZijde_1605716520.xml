@@ -19,7 +19,8 @@
   <stringFormat>[0/0] van [0/1] [1/0]</stringFormat>
   <!-- bv. fractuur van ulna links -->
   <tags>
-    <tag>Tag 2</tag>
+    <tag>Lateraliteit</tag>
+    <tag>Laesie</tag>
   </tags>
   <etl>
     <![CDATA[

@@ -17,8 +17,9 @@
   <stringFormat>[0/0] van [0/1] vastgesteld met [1/0]</stringFormat>
   <!-- bv. carcinoom van mamma vastgesteld met MRI -->
   <tags>
-    <tag>Tag 1</tag>
-    <tag>Tag 2</tag>
+    <tag>Beeldvorming</tag>
+    <tag>Locatie</tag>
+    <tag>Laesie</tag>
   </tags>
   <etl>
     <![CDATA[

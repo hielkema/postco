@@ -18,8 +18,7 @@
   <stringFormat>[0/0] van [0/1]</stringFormat>
   <!-- bv. MRI van pols -->
   <tags>
-    <tag>Tag 1</tag>
-    <tag>Tag 2</tag>
+    <tag>Beeldvorming</tag>
   </tags>
   <etl>
     <![CDATA[
