@@ -8,7 +8,7 @@
                 <tr>
                   <td width="350px">
                     <strong>Focusconcept <!-- [{{groupKey}}/{{attributeKey}}] --></strong><br>
-                    {{ templateData.title }}: {{ templateData.description }}
+                    {{ templateData.template.focus[0].title }}: {{ templateData.template.focus[0].description }}
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
                         <span
