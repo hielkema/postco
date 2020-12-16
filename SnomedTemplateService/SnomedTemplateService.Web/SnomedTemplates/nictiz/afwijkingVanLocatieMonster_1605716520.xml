@@ -31,7 +31,7 @@
             {
                 363714003 |interpreteert (attribuut)| = ( 386053000 |beoordeling (verrichting)|: 
                     { [[ @Monster ]] 116686009 |uitgevoerd in monster (attribuut)| = [[+id(< 123038009 |monster (monster)|)]] }
-                    { 260686004 |methode (attribuut)| = 129265001 |evaluatie (kwalificatiewaarde)| }
+                    { [[ @Methode ]] 260686004 |methode (attribuut)| = 129265001 |evaluatie (kwalificatiewaarde)| }
                     )
 			}
         ]]>
@@ -48,6 +48,10 @@
     <item name="Monster">
       <title>Monster</title>
       <description>Biopt, aspiraat, FNAB?</description>
+    </item>
+    <item name="Methode">
+      <title>Methode</title>
+      <description>Methode is altijd evaluatie</description>
     </item>
   </items>
 </template>
