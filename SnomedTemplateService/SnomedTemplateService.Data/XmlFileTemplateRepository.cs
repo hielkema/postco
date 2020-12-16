@@ -75,9 +75,14 @@ namespace SnomedTemplateService.Data
                     {
                         try
                         {
-                            var key = $"{subdir.Name}_{Regex.Replace(file.Name, @"\.xml$", "", RegexOptions.IgnoreCase)}";
-                            using var fileStream = file.CreateReadStream();
-                            _templates[key] = GetTemplateData(key, fileStream);
+                            var match = Regex.Match(file.Name, @"^(.*?_(-?[1-9]\d*))\.xml$", RegexOptions.IgnoreCase);
+                            if (match.Success)
+                            {
+                                var key = $"{subdir.Name}_{match.Groups[1].Value}";
+                                using var fileStream = file.CreateReadStream();
+                                _templates[key] = GetTemplateData(key, match.Groups[2].Value, fileStream);
+
+                            }
                         }
                         catch (Exception e)
                         {
@@ -108,7 +113,7 @@ namespace SnomedTemplateService.Data
         }
 
 
-        private static TemplateData GetTemplateData(string key, Stream stream)
+        private static TemplateData GetTemplateData(string key, string timestamp, Stream stream)
         {
             var doc = new XmlDocument();
             doc.Load(stream);
@@ -117,7 +122,7 @@ namespace SnomedTemplateService.Data
 
             var result = new TemplateData(
                 key,
-                templateNode.SelectSingleNode("time")?.InnerText?.Trim(),
+                timestamp,
                 templateNode.SelectSingleNode("snomedVersion")?.InnerText?.Trim(),
                 templateNode.SelectSingleNode("snomedBranch")?.InnerText?.Trim(),
                 templateNode.SelectSingleNode("etl")?.InnerText?.Trim(),
