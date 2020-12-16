@@ -8,7 +8,7 @@
                 <tr>
                   <td width="350px">
                     <strong>Focusconcept <!-- [{{groupKey}}/{{attributeKey}}] --></strong><br>
-                    {{ templateData.attribute }} | {{attribute.display}} |
+                    {{ templateData.template.focus[0].title }}: {{templateData.template.focus[0].display}}
                   </td>
                   <td>
                     {{templateData.template.focus[0].conceptId}} | {{attributeValue.display}} |

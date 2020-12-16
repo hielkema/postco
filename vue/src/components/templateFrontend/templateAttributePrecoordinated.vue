@@ -11,7 +11,7 @@
                     {{ componentData.title }}: {{ componentData.description }}
                   </td>
                   <td>
-                    {{thisComponent.value.conceptId}} <strong>| {{attributeValue.display}} |</strong>
+                    {{thisComponent.value.conceptId}} | {{attributeValue.display}} |
                   </td>
                   <td v-if="!loading.attributeValue">
                     <v-btn small target="_blank" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+thisComponent.value.conceptId">
