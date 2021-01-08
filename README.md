@@ -92,7 +92,7 @@ In this proof of concept, many URI's have been hardcoded. In the future this wil
 Change the URI (https://snowstorm.test-nictiz.nl/) to your own preferred Snowstorm server (https://github.com/IHTSDO/snowstorm/) in all files in the folder vue/src/components/templateFrontend/. Using the default snowstorm server for anything other than very infrequent testing is not allowed.
 
 # Contributions
-This service has been created as a proof of concept by people with an interest in postcoordination. We are not trained software developers, and will definitely have made some mistakes.
+This service has been created as a proof of concept by people with an interest in postcoordination. Not all of us are trained software developers, and will definitely have made some mistakes.
 
 First things first: we *welcome all contributions to the project*. Be it philosophical in nature or by improving the codebase.
 
