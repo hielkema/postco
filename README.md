@@ -8,7 +8,65 @@ The aim of this tool is to simplify working with SNOMED postcoordination. The me
 After filling the required slots in the ETL, the GUI generates both a string that can be used as a readable string for the postcoordination string, and the postcoordination string.
 
 # Adding templates
+##### Location and file name
+Each template is stored as a separate xml-file in /SnomedTemplateService.Web/SnomedTemplates/nictiz/. An example and xsd are provided in /model/. The filename should contain a descripion of the template's purpose followed by a timestamp.
+
+##### Metadata
+Each template should contain the following metadata:
+* One or more *authors*, with name and contact email
+* Title
+* Description
+* Snomed version
+* Snomed branch
+* One or more tags, to improve the templates findability
+
+##### Template language
+The *etl* element should contain the template, composed in *Expression Template Language* (ETL). The specification of this syntax can be read at 
+https://confluence.ihtsdotools.org/display/DOCSTS/6.1.+Expression+Template+Language. It is a member of a syntax family that was developed 
+by Snomed International to support postcoordination and analysis using SNOMED.
+
+An ETL expression is basically a postcoordination, where some of the focus concepts, attributes or target values have been replaced by 
+an expression constraint. This is especially useful if you need to create multiple complex but similar postcoordinations, for instance 
+30 separate postcoordinations for the OREF (open reducation and external fixation) of a fracture of 30 different bones in the body. The template for that 
+comes down to the postcoordination for OREF of fracture, with as procedure site an expression constraint encompassing all bones:
+
+&lsaquo;etl&rsaquo; 
+    &lsaquo;![CDATA[ <br>
+=== 86480004 |open reductie van fractuur (verrichting)| : <br>
+	{  *[[ @Locatie ]]* 405813007 |directe locatie van verrichting (attribuut)| = *[[+id(<< 272673000 |botstructuur (lichaamsstructuur)|)*, <br>
+	424226004 |met gebruik van hulpmiddel (attribuut)| = 261200006 |extern fixatiesysteem (fysiek object)|, <br>
+	260686004 |methode (attribuut)| = 129371009 |fixatie (kwalificatiewaarde)|, <br>
+	363700003 |directe morfologie (attribuut)| = 72704001 |fractuur (afwijkende morfologie)| } <br>
+	{ *[[ @Locatie ]]* 405813007 |directe locatie van verrichting (attribuut)| = *[[+id(<< 272673000 |botstructuur (lichaamsstructuur)|)*, <br>
+	363700003 |directe morfologie (attribuut)| = 72704001 |fractuur (afwijkende morfologie)|, <br>
+	260686004 |methode (attribuut)| = 426530000 |open reduceren (kwalificatiewaarde)| } <br>
+]]&rsaquo; <br>
+&lsaquo;/etl&rsaquo;
+
+Square brackets mark the places where expression constraints and interface annotations are inserted.
+
 Always check your ETL syntax against https://apg.ihtsdotools.org/SCT-etl.html before deploying, in order to ensure that your syntax is valid.
+
+##### Interface annotations
+You can use @ to mark where annotations are applicable, which will be shown in the interface. For instance, the template in the example contains
+a single annotation which should be shown in two places, i.e. each of the location slots. The annotation's identifier is *Locatie*. You can specify the text to
+show in the user interface in an *item* element:
+
+&lsaquo;items&rsaquo; <br>
+	&lsaquo;item&rsaquo; <br>
+		&lsaquo;title&rsaquo;Locatie&lsaquo;/title&rsaquo; <br>
+      	&lsaquo;description&rsaquo;Welk bot?&lsaquo;/description&rsaquo; <br>
+    &lsaquo;/item&rsaquo; <br>
+&lsaquo;/items&rsaquo; <br>
+
+##### Natural language representation
+The *stringFormat* element allows you to specify the natural language representation of the template: how the postcoordinations that are created
+with the template should be presented as human-readable text. For instance, the template above might have the format:
+
+&lsaquo;stringFormat&rsaquo;Open reductie van [1/0] en externe fixatie van [0/0]&lsaquo;/stringFormat&rsaquo;
+
+The first number refers to the attribute group, the second to the slot within the attribute group. In this template there are two groups with one
+slot each, hence the identifiers [0/0] and [1/0]. Please note that in this example, the second slot is actually presented first in the human-readable text!
 
 # Deployment
 ## Infrastructure
