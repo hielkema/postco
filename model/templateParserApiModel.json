@@ -1,3 +1,7 @@
+// --------------------------------------------------//
+// Model for output of the templateparser container--//
+// --------------------------------------------------//
+
 // Templates [list / retrieve]
 {
     "id" : int,              // Unique, primary key
