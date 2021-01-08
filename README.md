@@ -30,18 +30,23 @@ an expression constraint. This is especially useful if you need to create multip
 30 separate postcoordinations for the OREF (open reducation and external fixation) of a fracture of 30 different bones in the body. The template for that 
 comes down to the postcoordination for OREF of fracture, with as procedure site an expression constraint encompassing all bones:
 
-&lsaquo;etl&rsaquo; 
-    &lsaquo;![CDATA[ <br>
-=== 86480004 |open reductie van fractuur (verrichting)| : <br>
-	{  *[[ @Locatie ]]* 405813007 |directe locatie van verrichting (attribuut)| = *[[+id(<< 272673000 |botstructuur (lichaamsstructuur)|)*, <br>
-	424226004 |met gebruik van hulpmiddel (attribuut)| = 261200006 |extern fixatiesysteem (fysiek object)|, <br>
-	260686004 |methode (attribuut)| = 129371009 |fixatie (kwalificatiewaarde)|, <br>
-	363700003 |directe morfologie (attribuut)| = 72704001 |fractuur (afwijkende morfologie)| } <br>
-	{ *[[ @Locatie ]]* 405813007 |directe locatie van verrichting (attribuut)| = *[[+id(<< 272673000 |botstructuur (lichaamsstructuur)|)*, <br>
-	363700003 |directe morfologie (attribuut)| = 72704001 |fractuur (afwijkende morfologie)|, <br>
-	260686004 |methode (attribuut)| = 426530000 |open reduceren (kwalificatiewaarde)| } <br>
-]]&rsaquo; <br>
-&lsaquo;/etl&rsaquo;
+```
+‹etl› ‹![CDATA[
+=== 86480004 |open reductie van fractuur (verrichting)| :
+    { 
+        [[ @Locatie ]] 405813007 |directe locatie van verrichting (attribuut)| = [[+id(<< 272673000 |botstructuur (lichaamsstructuur)|),
+        424226004 |met gebruik van hulpmiddel (attribuut)| = 261200006 |extern fixatiesysteem (fysiek object)|,
+        260686004 |methode (attribuut)| = 129371009 |fixatie (kwalificatiewaarde)|,
+        363700003 |directe morfologie (attribuut)| = 72704001 |fractuur (afwijkende morfologie)| 
+    }
+    { 
+        [[ @Locatie ]] 405813007 |directe locatie van verrichting (attribuut)| = [[+id(<< 272673000 |botstructuur (lichaamsstructuur)|),
+        363700003 |directe morfologie (attribuut)| = 72704001 |fractuur (afwijkende morfologie)|,
+        260686004 |methode (attribuut)| = 426530000 |open reduceren (kwalificatiewaarde)| 
+    }
+]]›
+‹/etl›
+```
 
 Square brackets mark the places where expression constraints and interface annotations are inserted.
 
