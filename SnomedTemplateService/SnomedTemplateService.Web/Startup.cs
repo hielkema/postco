@@ -41,7 +41,12 @@ namespace SnomedTemplateService.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
+            IHostApplicationLifetime applicationLifeTime,
+            ILogger<Startup> logger,
+            ITemplateRepository templateRepository)
         {
             if (env.IsDevelopment())
             {
@@ -60,8 +65,12 @@ namespace SnomedTemplateService.Web
             {
                 endpoints.MapControllers();
             });
-            
-            XmlFileTemplateRepository.CheckTemplates(env, Configuration, loggerFactory.CreateLogger<XmlFileTemplateRepository>());
+
+            if (templateRepository.FoundErrorsInTemplates)
+            {
+                Environment.ExitCode = 65;
+                applicationLifeTime.StopApplication();
+            } 
         }
     }
 }

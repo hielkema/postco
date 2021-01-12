@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -18,34 +17,67 @@ namespace SnomedTemplateService.Data
 {
     public class XmlFileTemplateRepository : ITemplateRepository
     {
-        
-        private readonly ImmutableDictionary<string, TemplateData> templates;
+        private static bool foundErrorsInTemplates = false;
+        private readonly TemplateCollection templateCollection;
+        private readonly ILogger<XmlFileTemplateRepository> logger;
         private const string templatesCacheKey = "SNOMEDTEMPLATES";
-        
-        public XmlFileTemplateRepository(IMemoryCache memoryCache, IHostEnvironment hostEnvironment, IConfiguration configuration, ILogger<XmlFileTemplateRepository> logger)
+
+        public XmlFileTemplateRepository(
+            IMemoryCache memoryCache,
+            IHostEnvironment hostEnvironment,
+            IConfiguration configuration,
+            ILogger<XmlFileTemplateRepository> logger,
+            IEtlParseService etlParser
+            )
         {
-            if (!memoryCache.TryGetValue(templatesCacheKey, out templates))
+            this.logger = logger;
+            if (!memoryCache.TryGetValue(templatesCacheKey, out templateCollection))
             {
+                logger.LogInformation("Refreshing templates-dictionary.");
                 var templateDirectoryPath = GetTemplateDirectoryPath(configuration);
-                var templateDirectoryContents = GetTemplateDirectoryContents(templateDirectoryPath, hostEnvironment, logger);
-                templates = ImmutableDictionary.ToImmutableDictionary(GetTemplateDictionary(templateDirectoryContents, logger));
-                
-                memoryCache.Set(templatesCacheKey, templates, hostEnvironment.ContentRootFileProvider.Watch($"{templateDirectoryPath}\\*\\*.xml"));
+                var templateDirectoryContents = GetTemplateDirectoryContents(templateDirectoryPath, hostEnvironment);
+                var foundErrorsInXml = !GetTemplateDictionary(templateDirectoryContents, out var templatesMutableDictionary);
+                bool foundErrorsInEtl = false;
+                if (!foundErrorsInXml)
+                {
+                    foundErrorsInEtl = templatesMutableDictionary.Aggregate(
+                        foundErrorsInEtl,
+                        (foundErrorsInPrecedingTemplates, kv) =>
+                        {
+                            var foundErrorInCurrentTemplate = false;
+                            try
+                            {
+                                etlParser.ParseExpressionTemplate(kv.Value.Etl);
+                            }
+                            catch (Exception e)
+                            {
+                                foundErrorInCurrentTemplate = true;
+                                logger.LogError(e, "The template with key={key} contains an ETL syntax error", kv.Key);
+                            }
+                            return foundErrorsInPrecedingTemplates || foundErrorInCurrentTemplate;
+                        }
+                        );
+                }
+                foundErrorsInTemplates = foundErrorsInXml || foundErrorsInEtl;
+                templateCollection = new TemplateCollection(templatesMutableDictionary, foundErrorsInTemplates);
+                memoryCache.Set(templatesCacheKey, templateCollection, hostEnvironment.ContentRootFileProvider.Watch($"{templateDirectoryPath}\\*\\*.xml"));
             }
         }
 
-        public static void CheckTemplates(IHostEnvironment hostEnvironment, IConfiguration configuration, ILogger logger)
+        public bool FoundErrorsInTemplates
         {
-            var templateDirectoryPath = GetTemplateDirectoryPath(configuration);
-            GetTemplateDictionary(GetTemplateDirectoryContents(templateDirectoryPath, hostEnvironment, logger), logger);
+            get
+            {
+                return templateCollection.FoundErrorsInTemplates;
+            }
         }
 
-        private static string GetTemplateDirectoryPath(IConfiguration configuration)
+        private string GetTemplateDirectoryPath(IConfiguration configuration)
         {
             return configuration["SnomedTemplatesDirectory"]?.TrimEnd('\\') ?? "SnomedTemplates";
         }
 
-        private static IDirectoryContents GetTemplateDirectoryContents(string path, IHostEnvironment hostEnvironment, ILogger logger)
+        private IDirectoryContents GetTemplateDirectoryContents(string path, IHostEnvironment hostEnvironment)
         {
             var result = hostEnvironment.ContentRootFileProvider.GetDirectoryContents(path);
             if (!result.Exists)
@@ -56,51 +88,58 @@ namespace SnomedTemplateService.Data
             return result;
         }
 
-        private static Dictionary<string, TemplateData> GetTemplateDictionary(IDirectoryContents templateDirectory, ILogger logger)
+        private bool GetTemplateDictionary(IDirectoryContents templateDirectory, out Dictionary<string, TemplateData> templates)
         {
-            var _templates = new Dictionary<string, TemplateData>();
+            bool correct = true;
+            templates = new Dictionary<string, TemplateData>();
             foreach (var subdir in templateDirectory.Where(c => c.IsDirectory))
             {
                 try
                 {
                     if (subdir.Name.Contains("_"))
                     {
-                        throw new Exception($"The name of the template directory '{subdir.Name}' contains a underscore.");
+                        logger.LogError("The name of the template directory '{SubdirectoryName}' contains a underscore.", subdir.Name);
+                        correct = false;
                     }
-                    using var subDirFileProvider = new PhysicalFileProvider(subdir.PhysicalPath);
-                    foreach (
-                        var file in subDirFileProvider.GetDirectoryContents("")
-                        .Where(f => !f.IsDirectory && f.Name.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
-                        )
+                    else
                     {
-                        try
+                        using var subDirFileProvider = new PhysicalFileProvider(subdir.PhysicalPath);
+                        foreach (
+                            var file in subDirFileProvider.GetDirectoryContents("")
+                            .Where(f => !f.IsDirectory && f.Name.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
+                            )
                         {
-                            var match = Regex.Match(file.Name, @"^(.*?_(-?[1-9]\d*))\.xml$", RegexOptions.IgnoreCase);
-                            if (match.Success)
+                            try
                             {
-                                var key = $"{subdir.Name}_{match.Groups[1].Value}";
-                                using var fileStream = file.CreateReadStream();
-                                _templates[key] = GetTemplateData(key, match.Groups[2].Value, fileStream);
+                                var match = Regex.Match(file.Name, @"^(.*?_(-?[1-9]\d*))\.xml$", RegexOptions.IgnoreCase);
+                                if (match.Success)
+                                {
+                                    var key = $"{subdir.Name}_{match.Groups[1].Value}";
+                                    using var fileStream = file.CreateReadStream();
+                                    templates[key] = GetTemplateData(key, match.Groups[2].Value, fileStream);
 
+                                }
                             }
-                        }
-                        catch (Exception e)
-                        {
-                            logger.LogWarning(e, "Error in template file {subDirName}\\{fileName}", subdir.Name, file.Name);
+                            catch (Exception e)
+                            {
+                                logger.LogError(e, "Error in template file {subDirName}\\{fileName}", subdir.Name, file.Name);
+                                correct = false;
+                            }
                         }
                     }
                 }
                 catch (Exception e)
                 {
-                    logger.LogWarning(e, "Error in template directory {subDirName}\\.", subdir.Name);
+                    logger.LogError(e, "Error in template directory {subDirName}\\.", subdir.Name);
+                    correct = false;
                 }
             }
-            return _templates;
+            return correct;
         }
 
         public TemplateData GetById(string id)
         {
-            if (templates.TryGetValue(id, out var result))
+            if (templateCollection.Templates.TryGetValue(id, out var result))
             {
                 return result;
             }
@@ -109,11 +148,11 @@ namespace SnomedTemplateService.Data
 
         public IList<TemplateData> GetTemplates()
         {
-            return templates.OrderBy(kv => kv.Key).Select(kv => kv.Value).ToList();
+            return templateCollection.Templates.OrderBy(kv => kv.Key).Select(kv => kv.Value).ToList();
         }
 
 
-        private static TemplateData GetTemplateData(string key, string timestamp, Stream stream)
+        private TemplateData GetTemplateData(string key, string timestamp, Stream stream)
         {
             var doc = new XmlDocument();
             doc.Load(stream);
@@ -151,5 +190,16 @@ namespace SnomedTemplateService.Data
 
             return result;
         }
-    }    
+        private class TemplateCollection
+        {
+            public TemplateCollection(IDictionary<string, TemplateData> templates, bool foundErrorsInTemplates)
+            {
+                Templates = ImmutableDictionary.ToImmutableDictionary(templates);
+                FoundErrorsInTemplates = foundErrorsInTemplates;
+            }
+            public IDictionary<string, TemplateData> Templates { get; }
+            public bool FoundErrorsInTemplates { get; }
+        }
+    }
+
 }
