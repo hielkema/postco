@@ -37,28 +37,25 @@ namespace SnomedTemplateService.Data
                 var templateDirectoryPath = GetTemplateDirectoryPath(configuration);
                 var templateDirectoryContents = GetTemplateDirectoryContents(templateDirectoryPath, hostEnvironment);
                 var foundErrorsInXml = !GetTemplateDictionary(templateDirectoryContents, out var templatesMutableDictionary);
-                bool foundErrorsInEtl = false;
-                if (!foundErrorsInXml)
-                {
-                    foundErrorsInEtl = templatesMutableDictionary.Aggregate(
-                        foundErrorsInEtl,
-                        (foundErrorsInPrecedingTemplates, kv) =>
+                var nrOfItemsBeforeCheckingEtl = templatesMutableDictionary.Count;
+                templatesMutableDictionary = templatesMutableDictionary.Where(
+                    kv =>
+                    {
+                        var foundErrorsInEtl = false;
+                        try
                         {
-                            var foundErrorInCurrentTemplate = false;
-                            try
-                            {
-                                etlParser.ParseExpressionTemplate(kv.Value.Etl);
-                            }
-                            catch (Exception e)
-                            {
-                                foundErrorInCurrentTemplate = true;
-                                logger.LogError(e, "The template with key={key} contains an ETL syntax error", kv.Key);
-                            }
-                            return foundErrorsInPrecedingTemplates || foundErrorInCurrentTemplate;
+                            etlParser.ParseExpressionTemplate(kv.Value.Etl);
                         }
-                        );
-                }
-                foundErrorsInTemplates = foundErrorsInXml || foundErrorsInEtl;
+                        catch (Exception e)
+                        {
+                            foundErrorsInEtl = true;
+                            logger.LogError(e, "The template with key={key} contains an ETL syntax error", kv.Key);
+                            templatesMutableDictionary.Remove(kv.Key);
+                        }
+                        return !foundErrorsInEtl;
+                    }
+                ).ToDictionary(kv=>kv.Key, kv=>kv.Value);
+                foundErrorsInTemplates = foundErrorsInXml || (nrOfItemsBeforeCheckingEtl != templatesMutableDictionary.Count);
                 templateCollection = new TemplateCollection(templatesMutableDictionary, foundErrorsInTemplates);
                 memoryCache.Set(templatesCacheKey, templateCollection, hostEnvironment.ContentRootFileProvider.Watch($"{templateDirectoryPath}\\*\\*.xml"));
             }
