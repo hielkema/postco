@@ -39,6 +39,10 @@
                 "title"          : str,  // Leesbare titel van attribuutslot
                 "description"    : str,  // Beschrijving: hoe moet het vak gebruikt worden?
                 "attribute"      : str,  // SNOMED Concept ID van het attribuut
+                "cardinality"    : {
+                    "min"        : int,        // Benedengrens voor het aantal waarden voor dit attribuutslot
+                    "max"        : int | null  // Bovengrens voor het aantal waarden voor dit attribuutslot (null betekent dat er geen bovengrens is)
+                },
                 "value" : {              // Definieert de methode van bepalen van attribuutwaarde ('conceptSlot' = keuze / 'precoordinatedConcept' = voorgedefinieerd)
                     "type"       : str,  // conceptSlot / precoordinatedConcept
                     "conceptId"  : str,  // SNOMED Concept ID - alleen indien type = precoordinatedConcept
@@ -49,6 +53,10 @@
                 "title"         : str,
                 "description"   : str,
                 "attribute"     : str,
+                "cardinality"    : {
+                    "min"        : int,
+                    "max"        : int | null
+                },
                 "template" : {
                     "focus" : [  // ***LET OP: AFWIJKEND VOOR GENESTE EXPRESSIES***: [1...1]
                                  // ***Ondersteuning voor meerdere focusconcepten in een geneste expressie volgt.***

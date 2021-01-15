@@ -177,6 +177,11 @@ namespace SnomedTemplateService.Web.Controllers
                                 {
                                     result["description"] = td.desc;
                                 }
+                                result["cardinality"] = new
+                                {
+                                    min = info?.Cardinality?.MinCardinality ?? 1,
+                                    max = info?.Cardinality?.MaxCardinality
+                                };
                                 if (sub.IsConceptReference)
                                 {
                                     var concept = sub.GetConceptReference();
@@ -239,6 +244,11 @@ namespace SnomedTemplateService.Web.Controllers
             {
                 result["description"] = td.desc;
             }
+            result["cardinality"] = new
+            {
+                min = infoSlot?.Cardinality?.MinCardinality ?? 1,
+                max = infoSlot?.Cardinality?.MaxCardinality
+            };
             result["value"] = GetConceptSlotJson(valueSlot.Handle(c=>c.ExpressionConstraint, e=>e.ExpressionConstraint));
             return result;
         }
