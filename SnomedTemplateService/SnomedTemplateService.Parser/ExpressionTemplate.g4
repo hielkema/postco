@@ -60,26 +60,24 @@ integerreplacement   : ((CAP_I | I) (CAP_N | N) (CAP_T | T)) ws ( LEFT_PAREN ws 
 decimalreplacement : ((CAP_D | D) (CAP_E | E) (CAP_C | C)) ws ( LEFT_PAREN ws slotdecimalset ws RIGHT_PAREN ws)?;
 booleanreplacement : ((CAP_B | B) (CAP_O | O) (CAP_O | O) (CAP_L | L)) ws ( LEFT_PAREN ws slotbooleanset ws RIGHT_PAREN ws)?;
 slottokenset : slottoken (mws slottoken)*;
-slotstringset : slotstring (mws slotstring)*;
+slotstringset : slotstringvalue (mws slotstringvalue)*;
+slotstringvalue : qm stringvalue qm;
 slotintegerset : ( slotintegervalue | slotintegerrange) (mws (slotintegervalue | slotintegerrange))*;
 slotdecimalset : ( slotdecimalvalue | slotdecimalrange) (mws (slotdecimalvalue | slotdecimalrange))*;
 slotbooleanset : slotbooleanvalue (mws slotbooleanvalue)*;
+slotbooleanvalue : booleanvalue;
 slotintegerrange : ( slotintegerminimum to ( slotintegermaximum )? ) | ( to slotintegermaximum );
 slotintegerminimum : ( exclusiveminimum )? slotintegervalue;
 slotintegermaximum : ( exclusivemaximum )? slotintegervalue;
-slotintegervalue : (HASH digitnonzero digit*) | (HASH zero);
+slotintegervalue : HASH (DASH|PLUS)? integervalue;
 slotdecimalrange : ( slotdecimalminimum to ( slotdecimalmaximum )? ) | ( to slotdecimalmaximum );
 slotdecimalminimum : ( exclusiveminimum )? slotdecimalvalue;
 slotdecimalmaximum : ( exclusivemaximum )? slotdecimalvalue;
-slotdecimalvalue : HASH integervalue PERIOD digit+;
+slotdecimalvalue : HASH (DASH|PLUS)? decimalvalue;
 exclusiveminimum : GREATER_THAN;
 exclusivemaximum : LESS_THAN;
-slotbooleanvalue : true_1 | false_1;
-// true = ("t"/"T") ("r"/"R") ("u"/"U") ("e"/"E")
-// false = ("f"/"F") ("a"/"A") ("l"/"L") ("s"/"S") ("e"/"E")
-slotname : AT (nonquotestringvalue | slotstring);
+slotname : AT (slotstringvalue | nonquotestringvalue);
 slottoken : definitionstatus | memberof | constraintoperator | conjunction | disjunction | exclusion | reverseflag | expressioncomparisonoperator | numericcomparisonoperator | stringcomparisonoperator | booleancomparisonoperator;
-slotstring : qm slotstringvalue qm;
 nonquotestringvalue  : (EXCLAMATION | (HASH | DOLLAR | PERCENT | AMPERSAND) | (ASTERISK | PLUS | COMMA | DASH | PERIOD | SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON | SEMICOLON | LESS_THAN | EQUALS | GREATER_THAN | QUESTION) | (CAP_A | CAP_B | CAP_C | CAP_D | CAP_E | CAP_F | CAP_G | CAP_H | CAP_I | CAP_J | CAP_K | CAP_L | CAP_M | CAP_N | CAP_O | CAP_P | CAP_Q | CAP_R | CAP_S | CAP_T | CAP_U | CAP_V | CAP_W | CAP_X | CAP_Y | CAP_Z) | BACKSLASH | (CARAT | UNDERSCORE | ACCENT | A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z | LEFT_CURLY_BRACE | PIPE | RIGHT_CURLY_BRACE | TILDE))*;   // string with no ws, quotes, at, square brackets or round brackets
 templateinformationslot  : (LEFT_BRACE LEFT_BRACE) ws slotinformation ws (RIGHT_BRACE RIGHT_BRACE);
 slotinformation : (cardinality ws)? (slotname ws)?; 
@@ -119,7 +117,7 @@ slotconjunctionattributeset : (ws conjunction ws slotsubattributeset)+;
 slotdisjunctionattributeset : (ws disjunction ws slotsubattributeset)+;
 slotsubattributeset : sloteclattribute | (LEFT_PAREN ws sloteclattributeset ws RIGHT_PAREN);
 sloteclattributegroup : (LEFT_BRACE cardinality RIGHT_BRACE ws)? LEFT_CURLY_BRACE ws sloteclattributeset ws RIGHT_CURLY_BRACE;
-sloteclattribute : (LEFT_BRACE cardinality RIGHT_BRACE ws)? (reverseflag ws)? sloteclattributename ws ((expressioncomparisonoperator ws slotsubexpressionconstraint) | (numericcomparisonoperator ws slotnumericvalue) | (stringcomparisonoperator ws slotstringvalue) | (booleancomparisonoperator ws booleanvalue));
+sloteclattribute : (LEFT_BRACE cardinality RIGHT_BRACE ws)? (reverseflag ws)? sloteclattributename ws ((expressioncomparisonoperator ws slotsubexpressionconstraint) | (numericcomparisonoperator ws (slotintegervalue | slotdecimalvalue)) | (stringcomparisonoperator ws slotstringvalue) | (booleancomparisonoperator ws slotbooleanvalue));
 cardinality : minvalue to maxvalue;
 minvalue : nonnegativeintegervalue;
 to : (PERIOD PERIOD);
@@ -131,8 +129,7 @@ expressioncomparisonoperator : EQUALS | (EXCLAMATION EQUALS);
 numericcomparisonoperator : EQUALS | (EXCLAMATION EQUALS) | (LESS_THAN EQUALS) | LESS_THAN | (GREATER_THAN EQUALS) | GREATER_THAN;
 stringcomparisonoperator : EQUALS | (EXCLAMATION EQUALS);
 booleancomparisonoperator : EQUALS | (EXCLAMATION EQUALS);
-slotnumericvalue : HASH (DASH|PLUS)? (slotdecimalvalue | slotintegervalue);
-slotstringvalue : qm (anynonescapedchar | escapedchar)+ qm;
+// stringValue = 1*(anyNonEscapedChar / escapedChar)
 // integerValue = digitNonZero *digit / zero
 // decimalValue = integerValue "." 1*digit
 // booleanValue = true / false
