@@ -108,13 +108,17 @@ namespace SnomedTemplateService.Data
                         {
                             try
                             {
-                                var match = Regex.Match(file.Name, @"^(.*?_(-?[1-9]\d*))\.xml$", RegexOptions.IgnoreCase);
+                                var match = Regex.Match(file.Name, @"^(.*?_((?:-|\+)?(?:0|[0-9]\d*)))\.xml$", RegexOptions.IgnoreCase);
                                 if (match.Success)
                                 {
                                     var key = $"{subdir.Name}_{match.Groups[1].Value}";
                                     using var fileStream = file.CreateReadStream();
                                     templates[key] = GetTemplateData(key, match.Groups[2].Value, fileStream);
-
+                                }
+                                else
+                                {
+                                    logger.LogError("The file name of {subDirName}\\{fileName} doesn't end with an unix timestamp", subdir.Name, file.Name);
+                                    correct = false;
                                 }
                             }
                             catch (Exception e)
