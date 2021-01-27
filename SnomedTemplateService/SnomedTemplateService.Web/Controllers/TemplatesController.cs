@@ -108,15 +108,15 @@ namespace SnomedTemplateService.Web.Controllers
         }
 
         private IDictionary<string, object> EtlSubexpressionToJson(
-            Subexpression subexpression, 
-            IDictionary<string,string> itemTitles, IDictionary<string, string> itemDescriptions,
+            Subexpression subexpression,
+            IDictionary<string, string> itemTitles, IDictionary<string, string> itemDescriptions,
             bool isRootExpression = false)
         {
             var focusConceptsJson = new List<object>();
             foreach (var fc in subexpression.FocusConcepts)
             {
                 var td = GetConceptOrSlotTitleAndDesc(fc.info, fc.focus, itemTitles, itemDescriptions);
-                if (!isRootExpression && td.title==null)
+                if (!isRootExpression && td.title == null)
                 {
                     throw new Exception("Title is not specified for a focus-concept of a nested expression.");
                 }
@@ -141,17 +141,16 @@ namespace SnomedTemplateService.Web.Controllers
             var groups = subexpression.Refinement.Handle(
                 handleSetRefinement: attrSetRefinement =>
                 {
-                    if (attrSetRefinement.AttributeGroups.Count != 0) throw new Exception("Groups are not supported for a set refinement");
-                    return new List<IList<(TemplateInformationSlot info, EtlAttribute attr)>>() { attrSetRefinement.AttributeSet.Attributes };
+                    IEnumerable<IList<(TemplateInformationSlot info, EtlAttribute attr)>> singleAttributeGroups = attrSetRefinement.AttributeSet.Attributes.Select(
+                        a => Enumerable.Repeat(a, 1).ToList());
+                    return singleAttributeGroups.Concat(attrSetRefinement.AttributeGroups.Select(a => a.group.Attributes));
                 },
-                handleGroupRefinement: attrGroupRefinement =>
-                {
-                    return attrGroupRefinement.AttributeGroups.Select(a => a.group.Attributes);
-                });
+                handleGroupRefinement: attrGroupRefinement => attrGroupRefinement.AttributeGroups.Select(a => a.group.Attributes)
+            );
 
             var groupsListJson = new List<List<object>>();
 
-            foreach(var grp in groups)
+            foreach (var grp in groups)
             {
                 var groupJson = new List<object>();
                 groupsListJson.Add(groupJson);

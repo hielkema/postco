@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <authors>
+    <author>
+      <name>SNOMED CT MRCM</name>
+      <contact></contact>
+    </author>
+  </authors>
+  <title>Medicinal product package</title>
+  <description></description>
+  <snomedVersion>2019-09-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat></stringFormat>
+  <tags>
+    <tag>MRCM Template</tag>
+  </tags>
+  <etl>
+    <![CDATA[
+      [[+id(<< 781405001 |Medicinal product package (product)|) @focus]]: 
+        [[0..1 @supplier]] 774159003 |Has supplier| = [[+id(<< 774164004 | Supplier (supplier)|)]], 
+        [[0..1 @productname]] 774158006 |Has product name| = [[+id(<< 774167006 | Product name (product name)|)]], 
+        [[1..1 @count]] 784276002 |Count of clinical drug type| = [[+id(< 260299005 |Number (qualifier value)|)]], 
+        [[1..*]] { 
+          [[1..1 @contains]] 774160008 |Contains clinical drug| = [[+id(<< 763158003 |Medicinal product (product)|)]], 
+          [[0..1 @packsize]] 774161007 |Has pack size| = [[+id(< 260299005 |Number (qualifier value)|)]], 
+          [[0..1 @unit]] 774163005 |Has pack size unit| = [[+id(<< 767524001 |Unit of measure (qualifier value)|)]] 
+        }
+    ]]>
+  </etl>
+  <items>
+    <item name="focus">
+      <title>Medicinal product package</title>
+    </item>
+    <item name="supplier">
+      <title>Has supplier</title>
+    </item>
+    <item name="productname">
+      <title>Has product name</title>
+    </item>
+    <item name="count">
+      <title>Count of clinical drug type</title>
+    </item>
+    <item name="contains">
+      <title>Contains clinical drug</title>
+    </item>
+    <item name="packsize">
+      <title>Has pack size</title>
+    </item>
+    <item name="unit">
+      <title>Has pack size unit</title>
+    </item>
+  </items>
+</template>
