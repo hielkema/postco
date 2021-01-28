@@ -10,6 +10,8 @@
                     <strong>Attribuut {{attributeKey+1}} <!-- [{{groupKey}}/{{attributeKey}}] --></strong>
                     <v-chip
                       v-if="thisComponent.cardinality.min == '0'"
+                      small
+                      label
                       class="ma-2"
                       color="primary">
                       Optioneel
