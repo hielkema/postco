@@ -38,6 +38,8 @@ services:
         #     - '9125:80'
         expose:
             - 80
+        environment: 
+            TEMPLSVC_EXITAFTERCHECK:
         networks:
             postco-internal:
                 aliases:

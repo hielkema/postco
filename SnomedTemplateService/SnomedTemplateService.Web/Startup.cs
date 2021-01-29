@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +8,7 @@ using Newtonsoft.Json;
 using SnomedTemplateService.Core.Interfaces;
 using SnomedTemplateService.Data;
 using SnomedTemplateService.Parser;
+using System;
 
 namespace SnomedTemplateService.Web
 {
@@ -66,11 +65,25 @@ namespace SnomedTemplateService.Web
                 endpoints.MapControllers();
             });
 
+            bool ExitAfterCheck = Environment.GetEnvironmentVariable("TEMPLSVC_EXITAFTERCHECK")
+                        ?.Trim()
+                        ?.ToLower() switch {
+                            "true" => true,
+                            "1" => true,
+                            _ => false
+                        };
+                    
+                
+            
             if (templateRepository.FoundErrorsInTemplates)
             {
                 Environment.ExitCode = 65;
                 applicationLifeTime.StopApplication();
-            } 
+            }
+            else if (ExitAfterCheck)
+            {
+                applicationLifeTime.StopApplication();
+            }
         }
     }
 }
