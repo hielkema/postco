@@ -119,7 +119,7 @@ export default {
                               expression += '\n\t\t\t\t}'
                             }
                         })
-                      if(nestedKey < nested.length-1){
+                      if(nestedKey < nestedGroups.length-1){
                         // Zijn er nog meer groepen binnen deze geneste expressie? Dan accolade en inspringen
                         expression += '\n\t\t\t\t{\n\t\t\t\t\t' 
                       }
