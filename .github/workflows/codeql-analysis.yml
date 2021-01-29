@@ -64,7 +64,7 @@ jobs:
         
     - name: Up Templateservice
       run: |
-        docker-compose -f docker-compose_prod.yml up templateservice
+        docker network create proxy && docker-compose -f docker-compose_prod.yml up templateservice
         
     - name: Build nginx
       run: |
