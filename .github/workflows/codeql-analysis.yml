@@ -64,7 +64,7 @@ jobs:
         
     - name: Check Template Files
       run: |
-        docker network create proxy && docker-compose -f docker-compose_prod.yml up --exit-code-from templateservice templateservice
+        (docker network create proxy && docker-compose -f docker-compose_prod.yml up --exit-code-from templateservice templateservice) || echo '::error Found error in template files.'
       env:
         TEMPLSVC_EXITAFTERCHECK: "TRUE"
 
