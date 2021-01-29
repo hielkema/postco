@@ -62,9 +62,9 @@ jobs:
       run: |
         docker-compose -f docker-compose_prod.yml build --no-cache templateservice
         
-    - name: Up Templateservice
-      run: |
-        docker network create proxy && docker-compose -f docker-compose_prod.yml up templateservice
+#     - name: Up Templateservice
+#       run: |
+#         docker network create proxy && docker-compose -f docker-compose_prod.yml up templateservice
         
     - name: Build nginx
       run: |
