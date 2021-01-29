@@ -62,6 +62,10 @@ jobs:
       run: |
         docker-compose -f docker-compose_prod.yml build --no-cache templateservice
         
+    - name: Up Templateservice
+      run: |
+        docker-compose -f docker-compose_prod.yml up templateservice
+        
     - name: Build nginx
       run: |
         docker-compose -f docker-compose_prod.yml build --no-cache nginx
