@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <template>
-  <time>1605716520</time>
   <authors>
     <author>
       <name>Feikje Hielkema-Raadsveld</name>
@@ -16,6 +15,7 @@
   </description>
   <snomedVersion>2020-09-30</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>[0/0] van [0/1] [1/0]</stringFormat>  <!-- Natural language representation, e.g. deformity of foot -->
   <tags>
     <tag>Laesie</tag>
     <tag>Locatie</tag>

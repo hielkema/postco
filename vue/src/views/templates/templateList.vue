@@ -24,6 +24,7 @@
 									v-model="filterTag"
 									:items="tagList"
 									attach
+									multiple
 									chips
 									label="Tags"
 									dense
@@ -57,6 +58,10 @@
 					</v-card-text>
 				</v-card>
 			</v-col>
+		</v-row>
+
+		<v-row>
+			<v-col cols=12><v-row>ss{{filterTag}}</v-row></v-col>
 		</v-row>
 		<v-row>
 			<v-col cols=12>
@@ -110,7 +115,7 @@
 								</div>
 							</template>
 							<template v-slot:item.entity="{ item }"><br>
-								{{item.id.split("_")[0]}}
+								<strong> {{item.id.split("_")[0]}} </strong>
 							</template>
 							<template v-slot:item.open="{ item }"><br>
 								<v-btn @click="openTemplate(item.id)" dense><strong>Open</strong></v-btn>
@@ -144,10 +149,11 @@ export default {
                 { text: 'Tags', value: 'tags', sortable: false },
                 { text: 'SNOMED versie', value: 'snomedVersion', width: "160px" },
 				{ text: 'Auteurs', value: 'authors', width: "220px" },
-				{ text: 'Open', value: 'open', sortable: false }
+				{ text: 'Timestamp versie', value: 'time' },
+				{ text: 'Open', value: 'open', sortable: false },
             ],
 			searchString: '',
-			filterTag: '',
+			filterTag: [],
 			filterEdition: '',
 			filterOrganization: '',
 		}
@@ -171,15 +177,24 @@ export default {
 		},
 		templates_filtered(){
 			var that = this
-			let filterTag = this.filterTag.toString()
+			let filterTag = this.filterTag
 			let filterEdition = this.filterEdition.toString()
 			let filterOrganization = this.filterOrganization.toString()
 			
             return this.$store.state.templates.availableTemplates.filter(function(item){
                 let filtered = true
-                if(that.filterTag && filterTag && (filterTag.length > 0)){
-                    filtered = item.tags.includes(filterTag)
-                }
+				
+				let singleTag = true
+				for(var tag of filterTag){
+					if(that.filterTag && filterTag && (filterTag.length > 0)){
+						if(! item.tags.includes(tag)){
+							singleTag = false
+						}
+
+					}
+				}
+				filtered = singleTag
+				
                 if(filtered){
                     if(that.filterEdition && filterEdition && filterEdition.length > 0){
                         filtered = item.snomedVersion == filterEdition

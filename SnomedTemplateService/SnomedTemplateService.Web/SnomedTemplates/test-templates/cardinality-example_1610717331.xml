@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <authors>
+    <author>
+      <name>Feikje Hielkema-Raadsveld</name>
+      <contact>hielkema@nictiz.nl</contact>
+    </author>
+  </authors>
+  <title>Voorbeeld kardinaliteit</title>
+  <description>
+    Een voorbeeld van een template waarin de kardinaliteit van een attribuut (in dit geval het attribuut Lateraliteit) gespecificeerd is.
+    (afgeleid van 'Afwijking van anatomische locatie aan zijde (aandoening)')
+  </description>
+  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>[0/0] van [0/1] [0/1/0/0]</stringFormat>
+  <tags>
+    <tag>Laesie</tag>
+    <tag>Locatie</tag>
+  </tags>
+  <etl>
+    <![CDATA[
+            64572001 |aandoening (aandoening)| : {
+                [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| = [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|)]],
+                [[ @LocatieAttr ]] 363698007 |locatie van bevinding (attribuut)| =  
+                    ( [[ @LocatieFocus ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : { 
+                            [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]],
+			    [[ 0..1 @Lateraliteit2 ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                            })
+			}
+        ]]>
+  </etl>
+  <items>
+    <item name="Afwijking">
+      <title>Afwijking</title>
+      <description>Welke morfologische afwijking?</description>
+    </item>
+    <item name="LocatieFocus">
+      <title>Locatie</title>
+      <description>Welke locatie?</description>
+    </item>
+    <item name="LocatieAttr">
+      <title>Locatie</title>
+      <description>Welke locatie?</description>
+    </item>
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
+    </item>
+    <item name="Lateraliteit2">
+      <title>Tweede lateraliteit</title>
+      <description>Welke tweede zijde?</description>
+    </item>
+  </items>
+</template>

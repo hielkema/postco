@@ -62,6 +62,12 @@ jobs:
       run: |
         docker-compose -f docker-compose_prod.yml build --no-cache templateservice
         
+    - name: Check Template Files
+      run: |
+        docker network create proxy && docker-compose -f docker-compose_prod.yml up --exit-code-from templateservice templateservice
+      env:
+        TEMPLSVC_EXITAFTERCHECK: "TRUE"
+
     - name: Build nginx
       run: |
         docker-compose -f docker-compose_prod.yml build --no-cache nginx

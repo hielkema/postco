@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +8,7 @@ using Newtonsoft.Json;
 using SnomedTemplateService.Core.Interfaces;
 using SnomedTemplateService.Data;
 using SnomedTemplateService.Parser;
+using System;
 
 namespace SnomedTemplateService.Web
 {
@@ -41,7 +40,12 @@ namespace SnomedTemplateService.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
+            IHostApplicationLifetime applicationLifeTime,
+            ILogger<Startup> logger,
+            ITemplateRepository templateRepository)
         {
             if (env.IsDevelopment())
             {
@@ -60,8 +64,26 @@ namespace SnomedTemplateService.Web
             {
                 endpoints.MapControllers();
             });
+
+            bool ExitAfterCheck = Environment.GetEnvironmentVariable("TEMPLSVC_EXITAFTERCHECK")
+                        ?.Trim()
+                        ?.ToLower() switch {
+                            "true" => true,
+                            "1" => true,
+                            _ => false
+                        };
+                    
+                
             
-            XmlFileTemplateRepository.CheckTemplates(env, Configuration, loggerFactory.CreateLogger<XmlFileTemplateRepository>());
+            if (templateRepository.FoundErrorsInTemplates)
+            {
+                Environment.ExitCode = 65;
+                applicationLifeTime.StopApplication();
+            }
+            else if (ExitAfterCheck)
+            {
+                applicationLifeTime.StopApplication();
+            }
         }
     }
 }

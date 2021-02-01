@@ -85,17 +85,12 @@ namespace SnomedTemplateService.Parser
 
         private DefinitionStatusLiteral ConvertDefinitionstatus(DefinitionstatusContext context)
         {
-            switch (context.GetText())
+            return (context.GetText()) switch
             {
-                case "===":
-                    return new DefinitionStatusLiteral(DefinitionStatusEnum.equivalentTo);
-
-                case "<<<":
-                    return new DefinitionStatusLiteral(DefinitionStatusEnum.subtypeOf);
-
-                default:
-                    throw new ParserException();
-            }
+                "===" => new DefinitionStatusLiteral(DefinitionStatusEnum.equivalentTo),
+                "<<<" => new DefinitionStatusLiteral(DefinitionStatusEnum.subtypeOf),
+                _ => throw new ParserException(),
+            };
         }
 
         private IList<(TemplateInformationSlot info, IConceptReferenceOrSlot focusConcept)> ConvertFocusconcept(FocusconceptContext context)
@@ -462,7 +457,7 @@ namespace SnomedTemplateService.Parser
 
         private ICollection<string> ConvertSlotstringset(SlotstringsetContext context)
         {
-            return context.slotstring().Select(slotstr => ConvertSlotstring(slotstr)).ToList();
+            return context.slotstringvalue().Select(slotstr => ConvertSlotstringvalue(slotstr)).ToList();
         }
 
         private ICollection<OneOf<int, IntReplacementSlot.Range>> ConvertSlotintegerset(SlotintegersetContext context)
@@ -587,12 +582,12 @@ namespace SnomedTemplateService.Parser
 
         private string ConvertSlotname(SlotnameContext context)
         {
-            return context.nonquotestringvalue() switch { null => null, var x => ConvertNonquotestringvalue(x) } ?? ConvertSlotstring(context.slotstring());
+            return context.nonquotestringvalue() switch { null => null, var x => ConvertNonquotestringvalue(x) } ?? ConvertSlotstringvalue(context.slotstringvalue());
         }
 
-        private string ConvertSlotstring(SlotstringContext context)
+        private string ConvertSlotstringvalue(SlotstringvalueContext context)
         {
-            return Regex.Replace(context.slotstringvalue().GetText() switch { var x => x.Substring(1, x.Length - 2) }, @"\\([\""])", "$1");
+            return Regex.Replace(context.GetText() switch { var x => x[1..^1] }, @"\\([\""])", "$1");
         }
 
         private string ConvertNonquotestringvalue(NonquotestringvalueContext context)

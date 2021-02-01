@@ -9,5 +9,6 @@ namespace SnomedTemplateService.Core.Interfaces
     {
         TemplateData GetById(string id);
         IList<TemplateData> GetTemplates();
+        bool FoundErrorsInTemplates { get; }
     }
 }

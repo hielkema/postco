@@ -7,7 +7,15 @@
               <tbody>
                 <tr>
                   <td width="350px">
-                    <strong>Attribuut {{attributeKey+1}} <!-- [{{groupKey}}/{{attributeKey}}] --></strong><br>
+                    <strong>Attribuut {{attributeKey+1}} <!-- [{{groupKey}}/{{attributeKey}}] --></strong>
+                    <v-chip
+                      v-if="thisComponent.cardinality.min == '0'"
+                      small
+                      label
+                      class="ma-2"
+                      color="primary">
+                      Optioneel
+                    </v-chip><br>
                     {{ thisComponent.title }}: {{ thisComponent.description }}
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
@@ -145,21 +153,23 @@ export default {
     }
   },
   mounted: function(){
-    this.$store.dispatch('templates/saveAttribute', 
-      {
-        'groupKey':this.groupKey, 
-        'attributeKey': this.attributeKey, 
-        'attribute' : {
-          'id':'....', 
-          'display':'....',
-          'preferred':'....',
-          }, 
-        'concept': {
-          'id' : '.....',
-          'display' : '....',
-          'preferred':'....',
-        },
-      })
+    if(this.thisComponent.cardinality.min == 1){
+      this.$store.dispatch('templates/saveAttribute', 
+        {
+          'groupKey':this.groupKey, 
+          'attributeKey': this.attributeKey, 
+          'attribute' : {
+            'id':'....', 
+            'display':'....',
+            'preferred':'....',
+            }, 
+          'concept': {
+            'id' : '.....',
+            'display' : '....',
+            'preferred':'....',
+          },
+        })
+    }
     this.retrieveFSN(this.thisComponent.attribute)
     this.retrieved = true
   }

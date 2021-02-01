@@ -3,7 +3,6 @@
   <xs:element name="template">
     <xs:complexType>
       <xs:all>
-        <xs:element name="time" type="xs:unsignedInt" />
         <xs:element name="authors">
           <xs:complexType>
             <xs:sequence>
