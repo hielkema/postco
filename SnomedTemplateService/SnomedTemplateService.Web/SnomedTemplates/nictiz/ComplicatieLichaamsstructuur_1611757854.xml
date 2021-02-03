@@ -6,9 +6,9 @@
 <contact>groot@nictiz.nl</contact>
 </author>
   </authors>
-  <title>Complicatie van wekedelen met morfologie</title>
+  <title>Complicatie van lichaamsstructuur met morfologie</title>
   <description>
-    Dit template kan worden gebruikt om een complicatie van de wekedelen met gerelateerde morfologie vast te leggen.
+    Dit template kan worden gebruikt om een complicatie van een lichaamsstructuur met gerelateerde morfologie vast te leggen.
   </description>
   <snomedVersion>2020-09-30</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
@@ -23,7 +23,7 @@
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
                     [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
                 [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
-                    [[+id (< 87784001 |structuur van weke delen (lichaamsstructuur)|) ]]
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]]
 			}
         ]]>
   </etl>
@@ -34,7 +34,7 @@
     </item>
     <item name="Locatie">
       <title>Locatie</title>
-      <description>Welke locatie van weke delen?</description>
+      <description>Welke lichaamsstructuur?</description>
     </item>
   </items>
 </template>
