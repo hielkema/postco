@@ -3,8 +3,8 @@
   <authors>
     <author>
       <name>Elze de Groot</name>
-<contact>groot@nictiz.nl</contact>
-</author>
+      <contact>groot@nictiz.nl</contact>
+    </author>
   </authors>
   <title>Complicatie van infectieuze ontsteking</title>
   <description>
@@ -23,7 +23,7 @@
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
                     [[+id (< 409774005 |inflammatoire morfologie (afwijkende morfologie)|) ]],
                 [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]]
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]],
                 [[ @Infectie ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
                     [[+id (< 441862004 |infectieus proces (kwalificatiewaarde)|) ]]
 			}
@@ -44,4 +44,3 @@
     </item>
   </items>
 </template>
-© 2021 GitHub, Inc.
