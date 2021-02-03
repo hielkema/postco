@@ -23,7 +23,7 @@
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
                     [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
                 [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)| ]]
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]]
 			}
         ]]>
   </etl>
