@@ -8,7 +8,7 @@
   </authors>
   <title>Complicatie van lichaamsstructuur met morfologie</title>
   <description>
-    Dit template kan worden gebruikt om een complicatie van een lichaamsstructuur met gerelateerde morfologie vast te leggen.
+    Dit template kan worden gebruikt om een complicatie van een lichaamsstructuur met gerelateerde morfologie vast te leggen. Optioneel kan worden vastgelegd wat het klinisch verloop is.
   </description>
   <snomedVersion>2020-09-30</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
@@ -25,7 +25,9 @@
                 [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
                     [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]]
 			}
-        ]]>
+{[[ 0..1 @Verloop ]] 263502005 |klinisch verloop (attribuut)| =  
+                    [[+id (< 288524001 |beloop (kwalificatiewaarde)|) ]]
+        ]]>}
   </etl>
   <items>
     <item name="Morfologie">
@@ -35,6 +37,10 @@
     <item name="Locatie">
       <title>Locatie</title>
       <description>Welke lichaamsstructuur?</description>
+    </item>
+	  <item name="Verloop">
+      <title>Verloop</title>
+      <description>Wat is het klinisch verloop? (bv acuut, chronisch, recidief etc) </description>
     </item>
   </items>
 </template>
