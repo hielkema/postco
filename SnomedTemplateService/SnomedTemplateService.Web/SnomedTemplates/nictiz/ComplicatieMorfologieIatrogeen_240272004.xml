@@ -19,11 +19,11 @@
   </tags>
   <etl>
    <![CDATA[
-           === 116223007 |complicatie (aandoening)| + 12456005 |iatrogene aandoening (aandoening) : {
+           === 116223007 |complicatie (aandoening)| + 12456005 |iatrogene aandoening (aandoening)| : {
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
                     [[+id (<< 409774005 |inflammatoire morfologie (afwijkende morfologie)|) ]],
                 [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]],
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]]
 			}
         ]]>
   </etl>
