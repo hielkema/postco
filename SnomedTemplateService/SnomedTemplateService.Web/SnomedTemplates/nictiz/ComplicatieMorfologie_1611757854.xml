@@ -3,12 +3,12 @@
   <authors>
     <author>
       <name>Elze de Groot</name>
-      <contact>groot@nictiz.nl</contact>
-    </author>
+<contact>groot@nictiz.nl</contact>
+</author>
   </authors>
-  <title>Complicatie van infectieuze ontsteking</title>
+  <title>Complicatie van lichaamsstructuur met morfologie</title>
   <description>
-    Dit template kan worden gebruikt om een complicatie van een infectie van ontsteking vast te leggen, zoals infectieuze bursitis of infectieuze artritis.
+    Dit template kan worden gebruikt om een complicatie van een lichaamsstructuur met gerelateerde morfologie vast te leggen. Optioneel kan worden vastgelegd wat het klinisch verloop is.
   </description>
   <snomedVersion>2020-09-30</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
@@ -21,13 +21,13 @@
     <![CDATA[
            === 116223007 |complicatie (aandoening)| : {
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
-                    [[+id (<< 409774005 |inflammatoire morfologie (afwijkende morfologie)|) ]],
+                    [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
                 [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]],
-                [[ @Infectie ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
-                    [[+id (<< 441862004 |infectieus proces (kwalificatiewaarde)|) ]]
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]]
 			}
-        ]]>
+            {[[ 0..1 @Verloop ]] 263502005 |klinisch verloop (attribuut)| =  
+                    [[+id (< 288524001 |beloop (kwalificatiewaarde)|) ]]}
+      ]]>
   </etl>
   <items>
     <item name="Morfologie">
@@ -38,9 +38,9 @@
       <title>Locatie</title>
       <description>Welke lichaamsstructuur?</description>
     </item>
-    <item name="Infectie">
-      <title>Infectieus proces</title>
-      <description>Infectieus of parasitair proces</description>
+	  <item name="Verloop">
+      <title>Verloop</title>
+      <description>Wat is het klinisch verloop? (bv acuut, chronisch, recidief etc) </description>
     </item>
   </items>
 </template>

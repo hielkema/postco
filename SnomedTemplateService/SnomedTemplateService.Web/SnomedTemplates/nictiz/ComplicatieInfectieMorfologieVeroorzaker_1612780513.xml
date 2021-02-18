@@ -8,7 +8,7 @@
   </authors>
   <title>Complicatie van infectieuze ontsteking</title>
   <description>
-    Dit template kan worden gebruikt om een complicatie van een infectie van ontsteking vast te leggen, zoals infectieuze bursitis of infectieuze artritis.
+    Dit template kan worden gebruikt om een complicatie van een bacteriele of virale infectie met morfologie vast te leggen.
   </description>
   <snomedVersion>2020-09-30</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
@@ -21,11 +21,13 @@
     <![CDATA[
            === 116223007 |complicatie (aandoening)| : {
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
-                    [[+id (<< 409774005 |inflammatoire morfologie (afwijkende morfologie)|) ]],
+                    [[+id (< 409774005 |inflammatoire morfologie (afwijkende morfologie)|) ]],
                 [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
                     [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]],
                 [[ @Infectie ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
-                    [[+id (<< 441862004 |infectieus proces (kwalificatiewaarde)|) ]]
+                    [[+id (< 441862004 |infectieus proces (kwalificatiewaarde)|) ]],
+                [[ @Veroorzaker ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
+                    [[+id (< 410607006 |organisme (organisme)|) ]]
 			}
         ]]>
   </etl>
@@ -38,9 +40,13 @@
       <title>Locatie</title>
       <description>Welke lichaamsstructuur?</description>
     </item>
+    <item name="Veroorzaker">
+      <title>Veroorzaker</title>
+      <description>Wat is de veroorzaker? (bv een virus of bacterie)</description>
+    </item>
     <item name="Infectie">
       <title>Infectieus proces</title>
-      <description>Infectieus of parasitair proces</description>
+      <description>Infectieus proces</description>
     </item>
   </items>
 </template>
