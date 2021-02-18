@@ -9,8 +9,7 @@
   <title>Afwijking van anatomische locatie (aandoening)</title>
   <description>
     Dit template kan worden gebruikt om elke mogelijke morfologische afwijking van elke mogelijke lichaamslocatie te specificeren.
-    Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen. Gebruik daarvoor
-    template 'afwijkingVanLocatieAanZijde'.
+    Je kunt hierbij locaties kiezen en optioneel een lateraliteit toevoegen.
     Het focusconcept is aandoening: voor bevindingen met een morfologie zou een apart template nodig zijn.
   </description>
   <snomedVersion>2020-09-30</snomedVersion>
@@ -24,15 +23,20 @@
   <!-- bv. fractuur van ulna -->
   <etl>
     <![CDATA[
-            64572001 |aandoening (aandoening)| : {
-                [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| = 
-                  [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|)]],
-                [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
-                  [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|)]]
-			}
+        64572001 |aandoening (aandoening)| : {
+          [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| = [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|)]],
+          [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
+              ( [[ @LocatieFocus ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : { 
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      })
+        }
         ]]>
   </etl>
   <items>
+    <item name="LocatieFocus">
+      <title>Locatie</title>
+      <description>Welke locatie?</description>
+    </item>
     <item name="Afwijking">
       <title>Afwijking</title>
       <description>Welke morfologische afwijking?</description>
@@ -40,6 +44,10 @@
     <item name="Locatie">
       <title>Locatie</title>
       <description>Welke locatie?</description>
+    </item>
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
     </item>
   </items>
 </template>
