@@ -27,8 +27,8 @@
             64572001 |aandoening (aandoening)| : {
                 [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| = [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|)]],
                 [[ @LocatieAttr ]] 363698007 |locatie van bevinding (attribuut)| =  
-                    ( [[ @LocatieFocus ]] [[+id (^723264001 |Lateralizable body structure reference set (foundation metadata concept)|) ]] : { 
-                            [[ @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                    ( [[ @LocatieFocus ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : { 
+                            [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
                             })
 			}
         ]]>
