@@ -22,20 +22,20 @@
   </tags>
   <etl>
     <![CDATA[
-            64572001 |aandoening (aandoening)| : {
-                [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| = 
-                	 [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
-                [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
-                   ([[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : { 
+              64572001 |aandoening (aandoening)| : {
+                [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| =
+                    [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
+                363698007 |locatie van bevinding (attribuut)| =
+                  ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
                       [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
                       })
             }
             {
-                [[ @Interpretatie ]] 363714003 |interpreteert (attribuut)| = ( [[ @InterpretatieFocus ]] 386053000 |beoordeling (verrichting)|: 
+                [[ @Interpretatie ]] 363714003 |interpreteert (attribuut)| = ( [[ @InterpretatieFocus ]] 386053000 |beoordeling (verrichting)|:
                     { [[ @Monster ]] 116686009 |uitgevoerd in monster (attribuut)| = [[+id(< 123038009 |monster (monster)|)]] }
                     { [[ @Methode ]] 260686004 |methode (attribuut)| = 129265001 |evaluatie (kwalificatiewaarde)| }
                     )
-			}
+            }
         ]]>
   </etl>
   <items>
