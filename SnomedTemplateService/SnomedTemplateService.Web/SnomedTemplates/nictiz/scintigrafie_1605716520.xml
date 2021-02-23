@@ -26,8 +26,10 @@
             373205008 |scintigrafie (verrichting)| : {
                 [[ @Methode ]] 260686004 |methode (attribuut)| = 
                 	[[+id (<< 312421008 |nucleaire beeldvorming (kwalificatiewaarde)|)]],
-                [[ @Locatie ]] 405813007 |directe locatie van verrichting (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|)]],
+                405813007 |directe locatie van verrichting (attribuut)| =  
+                    ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      }),
                 [[ @Isotoop ]] 424361007 |met gebruik van substantie (attribuut)| = 
                 	[[+id (<< 89457008 |radio-isotoop (substantie)|)]]
 			}
@@ -45,6 +47,10 @@
     <item name="Isotoop">
       <title>Isotoop</title>
       <description>Welke isotoop?</description>
+    </item>
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
     </item>
   </items>
 </template>

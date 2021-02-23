@@ -22,8 +22,10 @@
            === 116223007 |complicatie (aandoening)| : {
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
                     [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
-                [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]]
+                363698007 |locatie van bevinding (attribuut)| =
+                  ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      })
 			}
             {[[ 0..1 @Verloop ]] 263502005 |klinisch verloop (attribuut)| =  
                     [[+id (< 288524001 |beloop (kwalificatiewaarde)|) ]]}
@@ -41,6 +43,10 @@
 	  <item name="Verloop">
       <title>Verloop</title>
       <description>Wat is het klinisch verloop? (bv acuut, chronisch, recidief etc) </description>
+    </item>
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
     </item>
   </items>
 </template>

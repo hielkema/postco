@@ -22,8 +22,10 @@
             64572001 |aandoening (aandoening)| : {
                 [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| = 
                     [[+id (< 68453008 |carcinoom - geen subtype (afwijkende morfologie)|) ]],
-                [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
-                    [[+id (< 76752008 |structuur van mamma (lichaamsstructuur)|) ]]
+                363698007 |locatie van bevinding (attribuut)| =
+                  ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      })
 			}
         ]]>
   </etl>
@@ -35,6 +37,10 @@
     <item name="Locatie">
       <title>Locatie</title>
       <description>Welk kwadrant?</description>
+    </item>
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
     </item>
   </items>
 </template>

@@ -24,8 +24,10 @@
   <etl>
     <![CDATA[
             [[ @Methode ]] [[+id (<< 108290001 |bestraling voor oncologie en/of radiotherapie (verrichting)|)]]: {
-                [[ @Locatie ]] 405813007 |directe locatie van verrichting (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|)]]
+                405813007 |directe locatie van verrichting (attribuut)| =  
+                    ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      })
             }
             {
                 [[ @Intentie ]] 363703001 |doel (attribuut)| = 
@@ -45,6 +47,10 @@
     <item name="Intentie">
       <title>Intentie</title>
       <description>Palliatief of therapeutisch?</description>
+    </item>
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
     </item>
   </items>
 </template>
