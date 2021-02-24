@@ -23,7 +23,7 @@
                 [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| = 
                     [[+id (< 68453008 |carcinoom - geen subtype (afwijkende morfologie)|) ]],
                 363698007 |locatie van bevinding (attribuut)| =
-                  ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                  ([[ @Locatie ]] [[+id (<< 272670002 |structuur van kwadrant van mamma (lichaamsstructuur)|) ]] : {
                       [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
                       })
 			}
