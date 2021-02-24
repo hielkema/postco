@@ -24,10 +24,8 @@
             363679005 |beeldvormende verrichting (verrichting)| : {
                 [[ @Methode ]] 260686004 |methode (attribuut)| = 
                 [[+id (<< 360037004 |beeldvorming (kwalificatiewaarde)|)]],
-                405813007 |directe locatie van verrichting (attribuut)| =  
-                    ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
-                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
-                      })
+                [[ @Locatie ]] 405813007 |directe locatie van verrichting (attribuut)| =  
+                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|)]]
 			}
         ]]>
   </etl>
@@ -39,10 +37,6 @@
     <item name="Locatie">
       <title>Locatie</title>
       <description>Welke locatie?</description>
-    </item>
-    <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
     </item>
   </items>
 </template>
