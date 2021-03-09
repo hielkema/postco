@@ -19,7 +19,7 @@
   </tags>
   <etl>
     <![CDATA[
-           === (<64572001 |aandoening (aandoening)|)+116223007 |complicatie (aandoening)| : {
+           === 116223007 |complicatie (aandoening)| : {
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
                     [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
                 363698007 |locatie van bevinding (attribuut)| =
