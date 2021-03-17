@@ -25,10 +25,11 @@
                       [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
                       }),
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| =  
-                    [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]]
-					
+                    [[+id (<< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
+				
 			}
-			{[[ @Bij ]] 47429007 |bij (attribuut)| =  
+			{
+				[[ @Bij ]] 47429007 |bij (attribuut)| =  
                     [[+id (< 49062001 |hulpmiddel (fysiek object)|) ]]}
 			
         ]]>

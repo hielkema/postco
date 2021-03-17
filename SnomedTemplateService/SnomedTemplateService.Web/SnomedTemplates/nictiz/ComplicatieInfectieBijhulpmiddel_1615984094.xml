@@ -29,7 +29,8 @@
 				[[ 0..1 @Veroorzaker ]] 246075003 |veroorzaker (attribuut)| =  
                     [[+id (< 410607006 |organisme (organisme)|) ]]	
 			}
-			{[[ 0..1 @Bij ]] 47429007 |bij (attribuut)| =  
+			{
+				[[ @Bij ]] 47429007 |bij (attribuut)| =  
                     [[+id (< 49062001 |hulpmiddel (fysiek object)|) ]]}
 			
         ]]>
@@ -46,6 +47,10 @@
 	<item name="Veroorzaker">
       <title>Veroorzaker</title>
       <description>Welk organisme is de veroorzaker van de infectie? </description>
+    </item>
+	<item name="Bij">
+      <title>Bij</title>
+      <description>Geassocieerd hulpmiddel </description>
     </item>
     <item name="Lateraliteit">
       <title>Lateraliteit</title>
