@@ -6,9 +6,9 @@
       <contact>groot@nictiz.nl</contact>
     </author>
   </authors>
-  <title>Complicatie van infectieuze ontsteking</title>
+  <title>Complicatie van infectie met morfologie</title>
   <description>
-    Dit template kan worden gebruikt om een complicatie van een bacteriele of virale infectie met morfologie vast te leggen.
+    Dit template kan worden gebruikt om een complicatie van een infectie met morfologie vast te leggen. Eventueel kan de veroorzaker toegevoegd worden.
   </description>
   <snomedVersion>2020-09-30</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
@@ -21,7 +21,7 @@
     <![CDATA[
            === 116223007 |complicatie (aandoening)| : {
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
-                    [[+id (< 409774005 |inflammatoire morfologie (afwijkende morfologie)|) ]],
+                    [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
                 363698007 |locatie van bevinding (attribuut)| =
                   ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
                       [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
