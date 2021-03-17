@@ -25,7 +25,7 @@
                       [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
                       }),
                 [[ @Infectie ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
-                    [[+id (<< 472964009 |allergisch proces (kwalificatiewaarde)| ]],
+                    [[+id (<< 472964009 |allergisch proces (kwalificatiewaarde)|) ]],
 				[[ 0..1 @Veroorzaker ]] 246075003 |veroorzaker (attribuut)| =  
                     [[+id (< 410607006 |organisme (organisme)|) ]]	
 			}
