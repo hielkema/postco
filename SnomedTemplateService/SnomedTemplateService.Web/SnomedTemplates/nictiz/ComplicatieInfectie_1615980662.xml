@@ -1,0 +1,40 @@
+  </author>
+  </authors>
+  <title>Complicatie van infectieuze ontsteking</title>
+  <description>
+    Dit template kan worden gebruikt om een complicatie van een infectie vast te leggen.
+  </description>
+  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
+  <tags>
+    <tag>Complicatie</tag>
+  </tags>
+  <etl>
+    <![CDATA[
+           === 116223007 |complicatie (aandoening)| : {
+                363698007 |locatie van bevinding (attribuut)| =
+                  ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      }),
+                [[ @Infectie ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
+                    [[+id (<< 441862004 |infectieus proces (kwalificatiewaarde)|) ]]
+			}
+        ]]>
+  </etl>
+  <items>
+    <item name="Locatie">
+      <title>Locatie</title>
+      <description>Welke lichaamsstructuur?</description>
+    </item>
+    <item name="Infectie">
+      <title>Infectieus proces</title>
+      <description>Infectieus of parasitair proces</description>
+    </item>
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
+    </item>
+  </items>
+</template>
