@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <authors>
+    <author>
+      <name>Elze de Groot</name>
+      <contact>groot@nictiz.nl</contact>
+    </author>
+  </authors>
+  <title>Complicatie compartimentsyndroom traumatisch</title>
+  <description>
+    Dit template kan worden gebruikt om de complicatie traumatisch compartimentsyndroom vast te leggen.
+  </description>
+  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
+  <tags>
+    <tag>Complicatie</tag>
+  </tags>
+  <etl>
+    <![CDATA[
+           === 116223007 |complicatie (aandoening)|+111245009 |compartimentsyndroom (aandoening)| : {
+                [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
+                    [[+id (<< 37782003 |beschadiging (afwijkende morfologie)|) ]],
+                363698007 |locatie van bevinding (attribuut)| =
+                  ([[ @Locatie ]] [[+id (<< 118509002 |structuur van fasciaal compartiment (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      }),
+                [[ @Veroorzaker ]] 246075003 |veroorzaker (attribuut)| =  
+                    [[+id (<< 285665007 |toename van druk (fysische kracht)|) ]]
+			}
+        ]]>
+  </etl>
+  <items>
+    <item name="Morfologie">
+      <title>Morfologie</title>
+      <description>Beschadiging</description>
+    </item>
+    <item name="Locatie">
+      <title>Locatie</title>
+      <description>Verfijning fasciaal compartiment</description>
+    </item>
+    <item name="Veroorzaker">
+      <title>Veroorzaker</title>
+      <description>Toename van druk</description>
+    </item>
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
+    </item>
+  </items>
+</template>
