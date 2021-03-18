@@ -19,18 +19,18 @@
   </tags>
   <etl>
     <![CDATA[
-           === 116223007 |complicatie (aandoening)| : {
-                363698007 |locatie van bevinding (attribuut)| =
-                  ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+            116223007 |complicatie (aandoening)| : {
+                [[ @Morfologie ]] 260686004 |methode (attribuut)| = 
+                	[[+id (<< 49755003 |morfologische afwijking (afwijkende morfologie)|)]],
+                 363698007 |locatie van bevinding (attribuut)| =  
+                    ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
                       [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
-                      }),
-                [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| =  
-                    [[+id (<< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
-				
+                      })
+            }
+            {
+                [[ @Bij ]] 47429007 |bij (attribuut)| = 
+                	[[+id (< 49062001 |hulpmiddel (fysiek object)|)]]
 			}
-			{
-				[[ @Bij ]] 47429007 |bij (attribuut)| =  
-                    [[+id (< 49062001 |hulpmiddel (fysiek object)|) ]]}
 			
         ]]>
   </etl>
