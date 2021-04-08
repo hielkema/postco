@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 <template>
   <authors>
     <author>
@@ -6,16 +6,22 @@
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>MammaCarcinoom</title>
+  <title>
+    <txt lang="nl">MammaCarcinoom</txt>
+  </title>
   <description>
+    <txt lang="nl">
     Dit template kan worden gebruikt om een type carcinoom van een specifieke locatie in de mammma vast te leggen.
+  </txt>
   </description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <stringFormat>
+    <txt lang="nl">[0/0] van [0/1]</txt>
+  </stringFormat>
   <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
   <tags>
-    <tag>Mammacarcinoom</tag>
+    <tag id="Mammacarcinoom"/>
   </tags>
   <etl>
     <![CDATA[
@@ -31,16 +37,28 @@
   </etl>
   <items>
     <item name="Afwijking">
-      <title>Afwijking</title>
-      <description>Welke type carcinoom?</description>
+      <title>
+        <txt lang="nl">Afwijking</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke type carcinoom?</txt>
+      </description>
     </item>
     <item name="Locatie">
-      <title>Locatie</title>
-      <description>Welk kwadrant?</description>
+      <title>
+        <txt lang="nl">Locatie</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welk kwadrant?</txt>
+      </description>
     </item>
     <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title>
+        <txt lang="nl">Lateraliteit</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke zijde?</txt>
+      </description>
     </item>
   </items>
 </template>

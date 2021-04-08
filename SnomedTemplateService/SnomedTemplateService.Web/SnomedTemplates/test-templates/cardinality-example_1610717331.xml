@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 <template>
   <authors>
     <author>
@@ -6,17 +6,23 @@
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>Voorbeeld kardinaliteit</title>
+  <title>
+    <txt lang="nl">Voorbeeld kardinaliteit</txt>
+  </title>
   <description>
+    <txt lang="nl">
     Een voorbeeld van een template waarin de kardinaliteit van een attribuut (in dit geval het attribuut Lateraliteit) gespecificeerd is.
     (afgeleid van 'Afwijking van anatomische locatie aan zijde (aandoening)')
+  </txt>
   </description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/1] [0/1/0/0]</stringFormat>
+  <stringFormat>
+    <txt lang="nl">[0/0] van [0/1] [0/1/0/0]</txt>
+  </stringFormat>
   <tags>
-    <tag>Laesie</tag>
-    <tag>Locatie</tag>
+    <tag id="Laesie"/>
+    <tag id="Locatie"/>
   </tags>
   <etl>
     <![CDATA[
@@ -32,24 +38,44 @@
   </etl>
   <items>
     <item name="Afwijking">
-      <title>Afwijking</title>
-      <description>Welke morfologische afwijking?</description>
+      <title>
+        <txt lang="nl">Afwijking</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke morfologische afwijking?</txt>
+      </description>
     </item>
     <item name="LocatieFocus">
-      <title>Locatie</title>
-      <description>Welke locatie?</description>
+      <title>
+        <txt lang="nl">Locatie</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke locatie?</txt>
+      </description>
     </item>
     <item name="LocatieAttr">
-      <title>Locatie</title>
-      <description>Welke locatie?</description>
+      <title>
+        <txt lang="nl">Locatie</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke locatie?</txt>
+      </description>
     </item>
     <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title>
+        <txt lang="nl">Lateraliteit</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke zijde?</txt>
+      </description>
     </item>
     <item name="Lateraliteit2">
-      <title>Tweede lateraliteit</title>
-      <description>Welke tweede zijde?</description>
+      <title>
+        <txt lang="nl">Tweede lateraliteit</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke tweede zijde?</txt>
+      </description>
     </item>
   </items>
 </template>

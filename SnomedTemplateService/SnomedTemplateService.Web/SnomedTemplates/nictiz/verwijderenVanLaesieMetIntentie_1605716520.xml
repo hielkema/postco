@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 <template>
   <authors>
     <author>
@@ -6,21 +6,27 @@
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>Verwijderen van laesie met intentie</title>
+  <title>
+    <txt lang="nl">Verwijderen van laesie met intentie</txt>
+  </title>
   <description>
+    <txt lang="nl">
     Dit template kan worden gebruikt om een verwijdering van een type laesie van een lichaamsstructuur met therapeutische
     of palliatieve intentie te specificeren.
     Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen.
+  </txt>
   </description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/2] van [0/1] met [0/3]</stringFormat>
+  <stringFormat>
+    <txt lang="nl">[0/0] van [0/2] van [0/1] met [0/3]</txt>
+  </stringFormat>
   <!-- bv. verwijderen van carcinoom van blaas met palliatieve intentie -->
   <tags>
-    <tag>Verwijderen</tag>
-    <tag>Laesie</tag>
-    <tag>Intentie</tag>
-    <tag>Locatie</tag>
+    <tag id="Verwijderen"/>
+    <tag id="Laesie"/>
+    <tag id="Intentie"/>
+    <tag id="Locatie"/>
   </tags>
   <etl>
     <![CDATA[
@@ -42,24 +48,44 @@
   </etl>
   <items>
     <item name="Methode">
-      <title>Methode</title>
-      <description>Welke methode van verwijderen?</description>
+      <title>
+        <txt lang="nl">Methode</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke methode van verwijderen?</txt>
+      </description>
     </item>
     <item name="Locatie">
-      <title>Locatie</title>
-      <description>Welke locatie?</description>
+      <title>
+        <txt lang="nl">Locatie</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke locatie?</txt>
+      </description>
     </item>
     <item name="Laesie">
-      <title>Laesie</title>
-      <description>Welk type laesie?</description>
+      <title>
+        <txt lang="nl">Laesie</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welk type laesie?</txt>
+      </description>
     </item>
     <item name="Intentie">
-      <title>Intentie</title>
-      <description>Palliatief of therapeutisch?</description>
+      <title>
+        <txt lang="nl">Intentie</txt>
+      </title>
+      <description>
+        <txt lang="nl">Palliatief of therapeutisch?</txt>
+      </description>
     </item>
     <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title>
+        <txt lang="nl">Lateraliteit</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke zijde?</txt>
+      </description>
     </item>
   </items>
 </template>

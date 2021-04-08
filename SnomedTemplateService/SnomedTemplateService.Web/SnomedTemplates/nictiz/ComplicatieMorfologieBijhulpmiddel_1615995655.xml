@@ -1,21 +1,27 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 <template>
   <authors>
     <author>
       <name>Elze de Groot</name>
       <contact>groot@nictiz.nl</contact>
-  </author>
+    </author>
   </authors>
-  <title>Complicatie met morfologie bij hulpmiddel</title>
+  <title>
+    <txt lang="nl">Complicatie met morfologie bij hulpmiddel</txt>
+  </title>
   <description>
+    <txt lang="nl">
     Dit template kan worden gebruikt om een complicatie bij een hulpmiddel vast te leggen met een morfologie.
+  </txt>
   </description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <stringFormat>
+    <txt lang="nl">[0/0] van [0/1]</txt>
+  </stringFormat>
   <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
   <tags>
-    <tag>Complicatie</tag>
+    <tag id="Complicatie"/>
   </tags>
   <etl>
     <![CDATA[
@@ -36,20 +42,36 @@
   </etl>
   <items>
     <item name="Locatie">
-      <title>Locatie</title>
-      <description>Welke lichaamsstructuur?</description>
+      <title>
+        <txt lang="nl">Locatie</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke lichaamsstructuur?</txt>
+      </description>
     </item>
     <item name="Bij">
-      <title>Bij</title>
-      <description>Geassocieerd hulpmiddel (bv drain of katheter etc)</description>
+      <title>
+        <txt lang="nl">Bij</txt>
+      </title>
+      <description>
+        <txt lang="nl">Geassocieerd hulpmiddel (bv drain of katheter etc)</txt>
+      </description>
     </item>
-	<item name="Morfologie">
-      <title>Morfologie</title>
-      <description>Welke morfologie? </description>
+    <item name="Morfologie">
+      <title>
+        <txt lang="nl">Morfologie</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke morfologie? </txt>
+      </description>
     </item>
     <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title>
+        <txt lang="nl">Lateraliteit</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke zijde?</txt>
+      </description>
     </item>
   </items>
 </template>

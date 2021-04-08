@@ -1,23 +1,27 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 <template>
   <authors>
     <author>
       <name>Alice</name>
-      <contact></contact>
+      <contact />
     </author>
     <author>
       <name>John Doe</name>
       <contact>j.doe@example.org</contact>
     </author>
   </authors>
-  <title>CT-geleide operatie van lichaamsstructuur</title>
-  <description></description>
-  <stringFormat></stringFormat>
-    <snomedVersion>2021-03-31</snomedVersion>
+  <title>
+    <txt lang="nl">CT-geleide operatie van lichaamsstructuur</txt>
+  </title>
+  <description>
+  </description>
+  <stringFormat>
+  </stringFormat>
+  <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <tags>
-    <tag>Tag 1</tag>
-    <tag>Tag 2</tag>
+    <tag id="Tag1"/>
+    <tag id="Tag2"/>
   </tags>
   <etl>
     <![CDATA[

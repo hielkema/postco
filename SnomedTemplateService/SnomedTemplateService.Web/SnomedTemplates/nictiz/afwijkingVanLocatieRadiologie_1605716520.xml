@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 <template>
   <authors>
     <author>
@@ -6,19 +6,25 @@
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>Afwijking van anatomische locatie vastgesteld met beeldvormende verrichting</title>
+  <title>
+    <txt lang="nl">Afwijking van anatomische locatie vastgesteld met beeldvormende verrichting</txt>
+  </title>
   <description>
+    <txt lang="nl">
     Dit template kan worden gebruikt om een afwijking van een lichaamsstructuur vast te leggen, die
     is vastgesteld op basis van een beeldvormende verrichting.
+  </txt>
   </description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/1] vastgesteld met [1/0]</stringFormat>
+  <stringFormat>
+    <txt lang="nl">[0/0] van [0/1] vastgesteld met [1/0]</txt>
+  </stringFormat>
   <!-- bv. carcinoom van mamma vastgesteld met MRI -->
   <tags>
-    <tag>Beeldvorming</tag>
-    <tag>Locatie</tag>
-    <tag>Laesie</tag>
+    <tag id="Beeldvorming"/>
+    <tag id="Locatie"/>
+    <tag id="Laesie"/>
   </tags>
   <etl>
     <![CDATA[
@@ -37,20 +43,36 @@
   </etl>
   <items>
     <item name="Afwijking">
-      <title>Afwijking</title>
-      <description>Welke morfologische afwijking?</description>
+      <title>
+        <txt lang="nl">Afwijking</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke morfologische afwijking?</txt>
+      </description>
     </item>
     <item name="Locatie">
-      <title>Locatie</title>
-      <description>Welke locatie?</description>
+      <title>
+        <txt lang="nl">Locatie</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke locatie?</txt>
+      </description>
     </item>
     <item name="Verrichting">
-      <title>Verrichting</title>
-      <description>Type beeldvormende verrichting</description>
+      <title>
+        <txt lang="nl">Verrichting</txt>
+      </title>
+      <description>
+        <txt lang="nl">Type beeldvormende verrichting</txt>
+      </description>
     </item>
     <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title>
+        <txt lang="nl">Lateraliteit</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke zijde?</txt>
+      </description>
     </item>
   </items>
 </template>

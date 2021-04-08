@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 <template>
   <authors>
     <author>
@@ -6,19 +6,25 @@
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>Proliferatieve massa van anatomische locatie</title>
+  <title>
+    <txt lang="nl">Proliferatieve massa van anatomische locatie</txt>
+  </title>
   <description>
+    <txt lang="nl">
     Dit template kan worden gebruikt om een type proliferatieve massa (zoals een carcinoom) van elke mogelijke lichaamslocatie te specificeren.
     Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen. Gebruik daarvoor
     template 'afwijkingVanLocatieAanZijde'.
+  </txt>
   </description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <stringFormat>
+    <txt lang="nl">[0/0] van [0/1]</txt>
+  </stringFormat>
   <!-- bv. benigne neoplasma van huid -->
   <tags>
-    <tag>Proliferatieve massa</tag>
-    <tag>Locatie</tag>
+    <tag id="Proliferatieve_massa"/>
+    <tag id="Locatie"/>
   </tags>
   <etl>
     <![CDATA[
@@ -34,16 +40,28 @@
   </etl>
   <items>
     <item name="Afwijking">
-      <title>Afwijking</title>
-      <description>Welk type proliferatieve massa?</description>
+      <title>
+        <txt lang="nl">Afwijking</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welk type proliferatieve massa?</txt>
+      </description>
     </item>
     <item name="Locatie">
-      <title>Procedure site</title>
-      <description>Welke locatie?</description>
+      <title>
+        <txt lang="nl">Procedure site</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke locatie?</txt>
+      </description>
     </item>
     <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title>
+        <txt lang="nl">Lateraliteit</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke zijde?</txt>
+      </description>
     </item>
   </items>
 </template>

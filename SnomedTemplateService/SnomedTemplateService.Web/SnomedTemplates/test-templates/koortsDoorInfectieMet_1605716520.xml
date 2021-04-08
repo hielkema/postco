@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 <template>
   <authors>
     <author>
@@ -6,18 +6,24 @@
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>Koorts door infectie met ziekteverwekker</title>
+  <title>
+    <txt lang="nl">Koorts door infectie met ziekteverwekker</txt>
+  </title>
   <description>
+    <txt lang="nl">
     Dit template kan worden gebruikt om vast te leggen dat de patiënt een infectieuze koorts heeft en
     welke ziekteverwekker die infectie veroorzaakt. Het concept heeft twee focusconcepten: koorts en (omdat koorts
     enkel een bevinding is) aandoening.
+  </txt>
   </description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <stringFormat>
+    <txt lang="nl">[0/0] van [0/1]</txt>
+  </stringFormat>
   <!-- bv. fractuur van ulna -->
   <tags>
-    <tag>Tag 2</tag>
+    <tag id="Tag2"/>
   </tags>
   <etl>
     <![CDATA[
@@ -30,12 +36,20 @@
   </etl>
   <items>
     <item name="DefStatus">
-      <title>Definitiestatus</title>
-      <description>Voldoende of onvoldoende gedefinieerd?</description>
+      <title>
+        <txt lang="nl">Definitiestatus</txt>
+      </title>
+      <description>
+        <txt lang="nl">Voldoende of onvoldoende gedefinieerd?</txt>
+      </description>
     </item>
     <item name="Organism">
-      <title>Ziekteverwekker</title>
-      <description>Welke ziekteverwekker?</description>
+      <title>
+        <txt lang="nl">Ziekteverwekker</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke ziekteverwekker?</txt>
+      </description>
     </item>
   </items>
 </template>

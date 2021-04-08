@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 <template>
   <authors>
     <author>
@@ -10,13 +10,18 @@
       <contact>richard@example.net</contact>
     </author>
   </authors>
-  <title>Allergische reactie door substantie</title>
-  <description></description>
-  <stringFormat>[0/1] veroorzaakt door [0/0]</stringFormat>
+  <title>
+    <txt lang="nl">Allergische reactie door substantie</txt>
+  </title>
+  <description>
+  </description>
+  <stringFormat>
+    <txt lang="nl">[0/1] veroorzaakt door [0/0]</txt>
+  </stringFormat>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <tags>
-    <tag>Tag 1</tag>
+    <tag id="Tag1"/>
   </tags>
   <etl>
     <![CDATA[

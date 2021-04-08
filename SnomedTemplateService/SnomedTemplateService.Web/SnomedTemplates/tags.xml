@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<tags>
+  <tag id="Laesie">
+    <txt lang="nl">Laesie</txt>
+  </tag>
+  <tag id="Locatie">
+    <txt lang="nl">Locatie</txt>
+  </tag>
+  <tag id="Monster">
+    <txt lang="nl">Monster</txt>
+  </tag>
+  <tag id="Beeldvorming">
+    <txt lang="nl">Beeldvorming</txt>
+  </tag>
+  <tag id="Lateraliteit">
+    <txt lang="nl">Lateraliteit</txt>
+  </tag>
+  <tag id="Complicatie">
+    <txt lang="nl">Complicatie</txt>
+  </tag>
+  <tag id="Endoscopisch_verwijderen">
+    <txt lang="nl">Endoscopisch verwijderen</txt>
+  </tag>
+  <tag id="Mammacarcinoom">
+    <txt lang="nl">Mammacarcinoom</txt>
+  </tag>
+  <tag id="Proliferatieve_massa">
+    <txt lang="nl">Proliferatieve massa</txt>
+  </tag>
+  <tag id="Radiotherapie">
+    <txt lang="nl">Radiotherapie</txt>
+  </tag>
+  <tag id="Scintigrafie">
+    <txt lang="nl">Scintigrafie</txt>
+  </tag>
+  <tag id="Isotoop">
+    <txt lang="nl">Isotoop</txt>
+  </tag>
+  <tag id="Verwijderen">
+    <txt lang="nl">Verwijderen</txt>
+  </tag>
+  <tag id="Intentie">
+    <txt lang="nl">Intentie</txt>
+  </tag>
+  <tag id="MRCM_Template">
+    <txt lang="nl">MRCM Template</txt>
+  </tag>
+  <tag id="Tag1">
+    <txt lang="nl">Tag 1</txt>
+  </tag>
+  <tag id="Tag2">
+    <txt lang="nl">Tag 2</txt>
+  </tag>
+</tags>

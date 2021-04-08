@@ -1,22 +1,27 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 <template>
   <authors>
     <author>
       <name>Alice</name>
-      <contact></contact>
+      <contact />
     </author>
     <author>
       <name>Bob</name>
       <contact>bob@example.org</contact>
     </author>
   </authors>
-  <title>Fractuur</title>
-  <description>Beschrijving Fractuur Template</description>
-  <stringFormat></stringFormat>
+  <title>
+    <txt lang="nl">Fractuur</txt>
+  </title>
+  <description>
+    <txt lang="nl">Beschrijving Fractuur Template</txt>
+  </description>
+  <stringFormat>
+  </stringFormat>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <tags>
-    <tag>Tag 2</tag>
+    <tag id="Tag2"/>
   </tags>
   <etl>
     <![CDATA[
@@ -27,10 +32,14 @@
   </etl>
   <items>
     <item name="Site">
-      <title>site</title>
+      <title>
+        <txt lang="nl">site</txt>
+      </title>
     </item>
     <item name="FractureType">
-      <title>fracture type</title>  
+      <title>
+        <txt lang="nl">fracture type</txt>
+      </title>
     </item>
   </items>
 </template>

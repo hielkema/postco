@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 <template>
   <authors>
     <author>
@@ -6,17 +6,23 @@
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>Beeldvormende verrichting van locatie</title>
+  <title>
+    <txt lang="nl">Beeldvormende verrichting van locatie</txt>
+  </title>
   <description>
+    <txt lang="nl">
     Dit template kan worden gebruikt om een beeldvormende verrichting van elke mogelijke lichaamslocatie te specificeren.
     Je kunt hierbij locaties kiezen met of zonder lateraliteit en optioneel een zijde toevoegen.
+  </txt>
   </description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <stringFormat>
+    <txt lang="nl">[0/0] van [0/1]</txt>
+  </stringFormat>
   <!-- bv. MRI van pols -->
   <tags>
-    <tag>Beeldvorming</tag>
+    <tag id="Beeldvorming"/>
   </tags>
   <etl>
     <![CDATA[
@@ -32,16 +38,28 @@
   </etl>
   <items>
     <item name="Methode">
-      <title>Methode</title>
-      <description>Welk type beeldvorming?</description>
+      <title>
+        <txt lang="nl">Methode</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welk type beeldvorming?</txt>
+      </description>
     </item>
     <item name="Locatie">
-      <title>Locatie</title>
-      <description>Welke locatie?</description>
+      <title>
+        <txt lang="nl">Locatie</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke locatie?</txt>
+      </description>
     </item>
     <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title>
+        <txt lang="nl">Lateraliteit</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke zijde?</txt>
+      </description>
     </item>
   </items>
 </template>

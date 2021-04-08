@@ -17,7 +17,6 @@ namespace SnomedTemplateService.Data
 {
     public class XmlFileTemplateRepository : ITemplateRepository
     {
-        private static bool foundErrorsInTemplates = false;
         private readonly TemplateCollection templateCollection;
         private readonly ILogger<XmlFileTemplateRepository> logger;
         private const string templatesCacheKey = "SNOMEDTEMPLATES";
@@ -54,8 +53,8 @@ namespace SnomedTemplateService.Data
                         }
                         return !foundErrorsInEtl;
                     }
-                ).ToDictionary(kv=>kv.Key, kv=>kv.Value);
-                foundErrorsInTemplates = foundErrorsInXml || (nrOfItemsBeforeCheckingEtl != templatesMutableDictionary.Count);
+                ).ToDictionary(kv => kv.Key, kv => kv.Value);
+                var foundErrorsInTemplates = foundErrorsInXml || (nrOfItemsBeforeCheckingEtl != templatesMutableDictionary.Count);
                 templateCollection = new TemplateCollection(templatesMutableDictionary, foundErrorsInTemplates);
                 memoryCache.Set(templatesCacheKey, templateCollection, hostEnvironment.ContentRootFileProvider.Watch($"{templateDirectoryPath}\\*\\*.xml"));
             }
@@ -80,7 +79,7 @@ namespace SnomedTemplateService.Data
             if (!result.Exists)
             {
                 logger.LogError("The Templates Directory ({templateDirName}) doesn't exist.", path);
-                throw new Exception($"The Templates Directory ({path}) doesn't exist."); 
+                throw new Exception($"The Templates Directory ({path}) doesn't exist.");
             }
             return result;
         }
@@ -89,6 +88,18 @@ namespace SnomedTemplateService.Data
         {
             bool correct = true;
             templates = new Dictionary<string, TemplateData>();
+            TagCollection tagCollection;
+            try
+            {
+                var tagsFileInfo = templateDirectory.SingleOrDefault(f => string.Equals(f.Name, "tags.xml", StringComparison.OrdinalIgnoreCase));
+                tagCollection = new TagCollection(tagsFileInfo, logger);
+            }
+            catch
+            {
+                correct = false;
+                tagCollection = new TagCollection(logger);
+                logger.LogError("Error in tags.xml");
+            }
             foreach (var subdir in templateDirectory.Where(c => c.IsDirectory))
             {
                 try
@@ -113,7 +124,9 @@ namespace SnomedTemplateService.Data
                                 {
                                     var key = $"{subdir.Name}_{match.Groups[1].Value}";
                                     using var fileStream = file.CreateReadStream();
-                                    templates[key] = GetTemplateData(key, match.Groups[2].Value, fileStream);
+                                    (var templateData, var tags) = GetTemplateData(key, match.Groups[2].Value, fileStream, tagCollection);
+                                    templateData.Tags = tags;
+                                    templates[key] = templateData;
                                 }
                                 else
                                 {
@@ -153,53 +166,139 @@ namespace SnomedTemplateService.Data
         }
 
 
-        private TemplateData GetTemplateData(string key, string timestamp, Stream stream)
+        private (TemplateData templateData, IList<MultiLanguageString> tags) GetTemplateData(string key, string timestamp, Stream stream, TagCollection allTags)
         {
             var doc = new XmlDocument();
             doc.Load(stream);
             var templateNode = doc.SelectSingleNode("/template");
-            var tags = doc.SelectNodes("/template/tags/tag").Cast<XmlElement>().Select(e => e.InnerText).ToList();
+
+            var tags = new List<MultiLanguageString>();
+
+            foreach (var element in templateNode.SelectNodes("tags/tag").Cast<XmlElement>())
+            {
+                var id = element.GetAttribute("id");
+                if (string.IsNullOrEmpty(id))
+                {
+                    logger.LogError("No id specified for tag-element of template.");
+                    throw new Exception("No id specified for tag-element of template.");
+                }
+                var tag = allTags.GetTagById(id);
+                if (tag == null)
+                {
+                    logger.LogError("Tag with id='{id}' is not found.", id);
+                    throw new Exception($"Tag with id='{id}' is not found.");
+                }
+                tags.Add(tag);
+            }
+
+            if (tags.Count == 0)
+            {
+                logger.LogError("A template should have at least one tag.");
+                throw new Exception("A template should have at least one tag.");
+            }
+
+            var title = ConvertMultiLanguageElement(templateNode.SelectSingleNode("title"), "/template/title", logger);
 
             var result = new TemplateData(
                 key,
                 timestamp,
                 templateNode.SelectSingleNode("snomedVersion")?.InnerText?.Trim(),
                 templateNode.SelectSingleNode("snomedBranch")?.InnerText?.Trim(),
-                templateNode.SelectSingleNode("etl")?.InnerText?.Trim(),
-                tags
+                title,
+                templateNode.SelectSingleNode("etl")?.InnerText?.Trim()
             )
             {
-                Description = templateNode.SelectSingleNode("description")?.InnerText?.Trim(),
+                Description = ConvertMultiLanguageElement(templateNode.SelectSingleNode("description"), "/template/description", logger)
             };
 
-            var title = templateNode.SelectSingleNode("title")?.InnerText?.Trim();
-            if (title != null)
-            {
-                result.Title = title;
-            }
-            result.StringFormat = templateNode.SelectSingleNode("stringFormat")?.InnerText?.Trim();
-            result.ItemTitles = templateNode.SelectNodes("items/item").Cast<XmlElement>().ToDictionary(e => e.GetAttribute("name"), e => e.SelectSingleNode("title")?.InnerText ?? e.GetAttribute("name"));
-            result.ItemTitles = result.ItemTitles.Where(kv => kv.Value != null).ToDictionary(kv => kv.Key, kv => kv.Value);
-            result.ItemDescriptions = templateNode.SelectNodes("items/item").Cast<XmlElement>().ToDictionary(e => e.GetAttribute("name"), e => e.SelectSingleNode("description")?.InnerText);
-            result.ItemDescriptions = result.ItemDescriptions.Where(kv => kv.Value != null).ToDictionary(kv => kv.Key, kv => kv.Value);
+            result.StringFormat = ConvertMultiLanguageElement(templateNode.SelectSingleNode("stringFormat"), "/template/stringFormat", logger);
+            result.ItemData = templateNode.SelectNodes("items/item").Cast<XmlElement>()
+                .ToDictionary(
+                    e => e.GetAttribute("name"),
+                    e => new TemplateData.Item(
+                        ConvertMultiLanguageElement(e.SelectSingleNode("title"), "/template/items/item/title", logger),
+                        ConvertMultiLanguageElement(e.SelectSingleNode("description"), "/template/item/description", logger)
+                    )
+                );
+
             result.Authors = templateNode.SelectNodes("authors/author")
                 .Cast<XmlElement>()
-                .Select(a => new TemplateAuthor(a.SelectSingleNode("name")?.InnerText?.Trim())
+                .Select(a => new TemplateData.Author(a.SelectSingleNode("name")?.InnerText?.Trim())
                 {
                     Contact = a.SelectSingleNode("contact")?.InnerText?.Trim()
                 }).ToList();
 
-            return result;
+            return (result, tags);
+        }
+    
+        private static MultiLanguageString ConvertMultiLanguageElement(XmlNode node, string path, ILogger<XmlFileTemplateRepository> logger)
+        {
+            if (node == null)
+            {
+                return null;
+            }
+            if (!node.ChildNodes.Cast<XmlNode>().All(n => n is XmlElement element && element.LocalName == "txt"))
+            {
+                logger.LogError("All children of '{elementPath}' must be txt-elements.", path);
+                throw new Exception($"All children of '{path}' must be txt-elements.");
+            }
+
+            if (!node.ChildNodes.Cast<XmlElement>().All(e => e.HasAttribute("lang") && e.GetAttribute("lang").Length > 0))
+            {
+                logger.LogError("Each child of '{elementPath}' must have a 'lang'-attribute.", path);
+                throw new Exception($"Each child of '{path}' must have a 'lang'-attribute.");
+            }
+
+            if (!node.ChildNodes.Cast<XmlElement>().All(e => !e.IsEmpty && (e.InnerText?.Trim().Length ?? 0) > 0 ))
+            {
+                logger.LogError("Each child of '{elementPath}' must be non-empty.", path);
+                throw new Exception($"Each child of '{path}' must be non-empty.");
+            }
+            return new MultiLanguageString(
+                node.ChildNodes.Cast<XmlElement>().ToDictionary(e => e.GetAttribute("lang"), 
+                e => e.InnerText.Trim()
+                )
+            );
         }
         private class TemplateCollection
         {
             public TemplateCollection(IDictionary<string, TemplateData> templates, bool foundErrorsInTemplates)
             {
-                Templates = ImmutableDictionary.ToImmutableDictionary(templates);
+                Templates = templates.ToImmutableDictionary();
                 FoundErrorsInTemplates = foundErrorsInTemplates;
             }
             public IDictionary<string, TemplateData> Templates { get; }
             public bool FoundErrorsInTemplates { get; }
+        }
+
+        private class TagCollection
+        {
+            private readonly IDictionary<string, MultiLanguageString> tagsById;
+            private ILogger<XmlFileTemplateRepository> logger; 
+
+            public TagCollection(ILogger<XmlFileTemplateRepository> logger) : this(null, logger)
+            {
+            }
+            public TagCollection(IFileInfo tagsFile, ILogger<XmlFileTemplateRepository> logger)
+            {
+                if (tagsFile == null)
+                {
+                    tagsById = new Dictionary<string, MultiLanguageString>();
+                }
+                this.logger = logger;
+                var xml = new XmlDocument();
+                using var tagsFileStream = tagsFile.CreateReadStream();
+                xml.Load(tagsFileStream);
+                tagsById = xml.SelectNodes("/tags/tag").Cast<XmlElement>().ToDictionary(
+                    e => e.GetAttribute("id") switch { null => throw new Exception("Each tag in the tags file should have a id"), var x => x},
+                    e => ConvertMultiLanguageElement(e, "/tags/tag", logger)
+                );
+            }
+            public MultiLanguageString GetTagById(string id)
+            {
+                tagsById.TryGetValue(id, out var result);
+                return result;
+            }
         }
     }
 

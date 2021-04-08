@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 <template>
   <authors>
     <author>
@@ -6,19 +6,25 @@
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>Beeldvormende verrichting van locatie aan zijde</title>
+  <title>
+    <txt lang="nl">Beeldvormende verrichting van locatie aan zijde</txt>
+  </title>
   <description>
+    <txt lang="nl">
     Dit template kan worden gebruikt om een beeldvormende verrichting van elke mogelijke lichaamslocatie te specificeren,
     met daarbij ook een lateraliteit. Je kunt alleen locaties kiezen die lateraliseerbaar zijn; voor overige locaties, gebruik
     template beeldvormendeVerrichting.
+  </txt>
   </description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/1] [1/0]</stringFormat>
+  <stringFormat>
+    <txt lang="nl">[0/0] van [0/1] [1/0]</txt>
+  </stringFormat>
   <!-- bv. MRI van pols links -->
   <tags>
-    <tag>Beeldvorming</tag>
-    <tag>Lateraliteit</tag>
+    <tag id="Beeldvorming"/>
+    <tag id="Lateraliteit"/>
   </tags>
   <etl>
     <![CDATA[
@@ -34,20 +40,36 @@
   </etl>
   <items>
     <item name="Methode">
-      <title>Methode</title>
-      <description>Welk type beeldvorming?</description>
+      <title>
+        <txt lang="nl">Methode</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welk type beeldvorming?</txt>
+      </description>
     </item>
     <item name="Locatie">
-      <title>Locatie</title>
-      <description>Specificeer de locatie en lateraliteit apart, bv. 'nier' en 'links'.</description>
+      <title>
+        <txt lang="nl">Locatie</txt>
+      </title>
+      <description>
+        <txt lang="nl">Specificeer de locatie en lateraliteit apart, bv. 'nier' en 'links'.</txt>
+      </description>
     </item>
     <item name="LocatieFocus">
-      <title>Welke locatie</title>
-      <description>Kies een lateraliseerbare structuur.</description>
+      <title>
+        <txt lang="nl">Welke locatie</txt>
+      </title>
+      <description>
+        <txt lang="nl">Kies een lateraliseerbare structuur.</txt>
+      </description>
     </item>
     <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title>
+        <txt lang="nl">Lateraliteit</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke zijde?</txt>
+      </description>
     </item>
   </items>
 </template>

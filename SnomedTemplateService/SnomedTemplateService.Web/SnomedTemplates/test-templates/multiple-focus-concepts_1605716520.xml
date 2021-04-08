@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0"?>
 <template>
   <authors>
     <author>
@@ -6,14 +6,18 @@
       <contact>test@test.nl</contact>
     </author>
   </authors>
-  <title>multiple focus concepts-template</title>
-  <description></description>
-  <stringFormat></stringFormat>
+  <title>
+    <txt lang="nl">multiple focus concepts-template</txt>
+  </title>
+  <description>
+  </description>
+  <stringFormat>
+  </stringFormat>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <tags>
-    <tag>Tag 1</tag>
-    <tag>Tag 2</tag>
+    <tag id="Tag1"/>
+    <tag id="Tag2"/>
   </tags>
   <etl>
     <![CDATA[

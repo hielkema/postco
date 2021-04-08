@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 <template>
   <authors>
     <author>
@@ -10,13 +10,17 @@
       <contact>bob@example.org</contact>
     </author>
   </authors>
-  <title>Beeldvormende verrichting van lichaamsstructuur</title>
-  <description></description>
-  <stringFormat></stringFormat>
+  <title>
+    <txt lang="nl">Beeldvormende verrichting van lichaamsstructuur</txt>
+  </title>
+  <description>
+  </description>
+  <stringFormat>
+  </stringFormat>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <tags>
-    <tag>Tag 1</tag>
+    <tag id="Tag1"/>
   </tags>
   <etl>
     <![CDATA[

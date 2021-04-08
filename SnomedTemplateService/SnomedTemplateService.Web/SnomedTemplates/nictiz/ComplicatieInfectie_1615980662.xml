@@ -1,21 +1,27 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 <template>
   <authors>
     <author>
       <name>Elze de Groot</name>
       <contact>groot@nictiz.nl</contact>
-  </author>
+    </author>
   </authors>
-  <title>Complicatie infectie</title>
+  <title>
+    <txt lang="nl">Complicatie infectie</txt>
+  </title>
   <description>
+    <txt lang="nl">
     Dit template kan worden gebruikt om een complicatie van een infectie vast te leggen.
+  </txt>
   </description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <stringFormat>
+    <txt lang="nl">[0/0] van [0/1]</txt>
+  </stringFormat>
   <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
   <tags>
-    <tag>Complicatie</tag>
+    <tag id="Complicatie"/>
   </tags>
   <etl>
     <![CDATA[
@@ -33,20 +39,36 @@
   </etl>
   <items>
     <item name="Locatie">
-      <title>Locatie</title>
-      <description>Welke lichaamsstructuur?</description>
+      <title>
+        <txt lang="nl">Locatie</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke lichaamsstructuur?</txt>
+      </description>
     </item>
     <item name="Infectie">
-      <title>Infectieus proces</title>
-      <description>Infectieus of parasitair proces?</description>
+      <title>
+        <txt lang="nl">Infectieus proces</txt>
+      </title>
+      <description>
+        <txt lang="nl">Infectieus of parasitair proces?</txt>
+      </description>
     </item>
-	<item name="Veroorzaker">
-      <title>Veroorzaker</title>
-      <description>Welk organisme is de veroorzaker van de infectie? </description>
+    <item name="Veroorzaker">
+      <title>
+        <txt lang="nl">Veroorzaker</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welk organisme is de veroorzaker van de infectie? </txt>
+      </description>
     </item>
     <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title>
+        <txt lang="nl">Lateraliteit</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke zijde?</txt>
+      </description>
     </item>
   </items>
 </template>

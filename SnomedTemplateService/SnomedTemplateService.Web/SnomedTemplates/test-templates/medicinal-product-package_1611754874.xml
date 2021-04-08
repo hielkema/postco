@@ -1,18 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0"?>
 <template>
   <authors>
     <author>
       <name>SNOMED CT MRCM</name>
-      <contact></contact>
+      <contact />
     </author>
   </authors>
-  <title>Medicinal product package</title>
-  <description></description>
+  <title>
+    <txt lang="nl">Medicinal product package</txt>
+  </title>
+  <description>
+  </description>
+  <stringFormat>
+  </stringFormat>
   <snomedVersion>2019-09-30</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat></stringFormat>
   <tags>
-    <tag>MRCM Template</tag>
+    <tag id="MRCM_Template"/>
   </tags>
   <etl>
     <![CDATA[
@@ -29,25 +33,39 @@
   </etl>
   <items>
     <item name="focus">
-      <title>Medicinal product package</title>
+      <title>
+        <txt lang="nl">Medicinal product package</txt>
+      </title>
     </item>
     <item name="supplier">
-      <title>Has supplier</title>
+      <title>
+        <txt lang="nl">Has supplier</txt>
+      </title>
     </item>
     <item name="productname">
-      <title>Has product name</title>
+      <title>
+        <txt lang="nl">Has product name</txt>
+      </title>
     </item>
     <item name="count">
-      <title>Count of clinical drug type</title>
+      <title>
+        <txt lang="nl">Count of clinical drug type</txt>
+      </title>
     </item>
     <item name="contains">
-      <title>Contains clinical drug</title>
+      <title>
+        <txt lang="nl">Contains clinical drug</txt>
+      </title>
     </item>
     <item name="packsize">
-      <title>Has pack size</title>
+      <title>
+        <txt lang="nl">Has pack size</txt>
+      </title>
     </item>
     <item name="unit">
-      <title>Has pack size unit</title>
+      <title>
+        <txt lang="nl">Has pack size unit</txt>
+      </title>
     </item>
   </items>
 </template>

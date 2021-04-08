@@ -17,15 +17,34 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="title" type="nonEmptyString" />
-        <xs:element name="description" type="xs:string"/>
-        <xs:element name="snomedVersion" type="nonEmptyString"/>
+        <xs:element name="title" type="nonEmptyMultiLangStr">
+          <xs:unique name="maxOneTxtPerLangInMainTitle">
+            <xs:selector xpath="txt" />
+            <xs:field xpath="@lang" />
+          </xs:unique>
+        </xs:element>
+        <xs:element name="description" type="multiLangStr">
+          <xs:unique name="maxOneTxtPerLangInMainDesc">
+            <xs:selector xpath="txt" />
+            <xs:field xpath="@lang" />
+          </xs:unique>
+        </xs:element>
+        <xs:element name="snomedVersion" type="nonEmptyString" />
         <xs:element name="snomedBranch" type="nonEmptyString" />
-        <xs:element name="stringFormat" type="xs:string"/>
+        <xs:element name="stringFormat" type="multiLangStr">
+          <xs:unique name="maxOneTxtPerLangInStringFormat">
+            <xs:selector xpath="txt" />
+            <xs:field xpath="@lang" />
+          </xs:unique>
+        </xs:element>
         <xs:element name="tags">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="tag" type="nonEmptyString" maxOccurs="unbounded"/>
+              <xs:element name="tag" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="id" type="nonEmptyString" use="required"/>
+                </xs:complexType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -36,8 +55,18 @@
               <xs:element maxOccurs="unbounded" name="item">
                 <xs:complexType>
                   <xs:all>
-                    <xs:element name="title" type="nonEmptyString" />
-                    <xs:element name="description" type="xs:string" minOccurs="0" />
+                    <xs:element name="title" type="nonEmptyMultiLangStr">
+                      <xs:unique name="maxOneTxtPerLangPerItemTitle">
+                        <xs:selector xpath="txt" />
+                        <xs:field xpath="@lang" />
+                      </xs:unique>
+                    </xs:element>
+                    <xs:element name="description" type="multiLangStr" minOccurs="0">
+                      <xs:unique name="maxOneTxtPerLangPerItemDesc">
+                        <xs:selector xpath="txt" />
+                        <xs:field xpath="@lang" />
+                      </xs:unique>
+                    </xs:element>
                   </xs:all>
                   <xs:attribute name="name" type="xs:string" use="required" />
                 </xs:complexType>
@@ -48,9 +77,35 @@
       </xs:all>
     </xs:complexType>
   </xs:element>
-  <xs:simpleType name ="nonEmptyString">
-     <xs:restriction base="xs:string">
-       <xs:minLength value="1"/>
-     </xs:restriction>
+  <xs:simpleType name="nonEmptyString">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+    </xs:restriction>
   </xs:simpleType>
+  <xs:complexType name="multiLangStr">
+    <xs:sequence>
+      <xs:element name="txt" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="lang" type="nonEmptyString" use="required" />
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="nonEmptyMultiLangStr">
+    <xs:sequence>
+      <xs:element name="txt" minOccurs="1" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="lang" type="nonEmptyString" use="required" />
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
 </xs:schema>
