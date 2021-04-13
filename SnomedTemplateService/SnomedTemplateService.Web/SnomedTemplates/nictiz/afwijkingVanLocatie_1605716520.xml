@@ -12,7 +12,7 @@
     Je kunt hierbij locaties kiezen en optioneel een lateraliteit toevoegen.
     Het focusconcept is aandoening: voor bevindingen met een morfologie zou een apart template nodig zijn.
   </description>
-  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <stringFormat>[0/0] van [0/1] [1/0]</stringFormat>  <!-- Natural language representation, e.g. deformity of foot -->
   <tags>

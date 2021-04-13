@@ -12,7 +12,7 @@
     met daarbij ook een lateraliteit. Je kunt alleen locaties kiezen die lateraliseerbaar zijn; voor overige locaties, gebruik
     template beeldvormendeVerrichting.
   </description>
-  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <stringFormat>[0/0] van [0/1] [1/0]</stringFormat>
   <!-- bv. MRI van pols links -->

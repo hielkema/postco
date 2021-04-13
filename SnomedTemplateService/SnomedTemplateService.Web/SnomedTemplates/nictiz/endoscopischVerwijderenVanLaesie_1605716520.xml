@@ -11,7 +11,7 @@
     Dit template kan worden gebruikt om een endoscopische verwijdering van een type laesie van een lichaamsstructuur te specificeren.
     Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen.
   </description>
-  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <stringFormat>[0/0] van [0/2] van [0/1] met [0/3]</stringFormat>
   <!-- bv. verwijderen van carcinoom van blaas met cystoscoop -->

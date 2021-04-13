@@ -11,7 +11,7 @@
     Dit template kan worden gebruikt om een beeldvormende verrichting van elke mogelijke lichaamslocatie te specificeren.
     Je kunt hierbij locaties kiezen met of zonder lateraliteit en optioneel een zijde toevoegen.
   </description>
-  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <stringFormat>[0/0] van [0/1]</stringFormat>
   <!-- bv. MRI van pols -->

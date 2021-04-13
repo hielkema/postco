@@ -10,7 +10,7 @@
   <description>
     Dit template kan worden gebruikt om een type carcinoom van een specifieke locatie in de mammma vast te leggen.
   </description>
-  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <stringFormat>[0/0] van [0/1]</stringFormat>
   <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->

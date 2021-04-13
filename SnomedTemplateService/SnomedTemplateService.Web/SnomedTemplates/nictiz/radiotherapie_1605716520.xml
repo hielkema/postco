@@ -13,7 +13,7 @@
     Let op: kies bij voorkeur een methode waar nog geen locatie of intentie in gespecificeerd is; anders kun je een expressie krijgen met
     twee verschillende locaties en intenties.
   </description>
-  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <stringFormat>[0/0] van [1/0] met [2/0]</stringFormat>
   <!-- bv. geven van 'boost'-bestraling van hals met therapeutische intentie-->
