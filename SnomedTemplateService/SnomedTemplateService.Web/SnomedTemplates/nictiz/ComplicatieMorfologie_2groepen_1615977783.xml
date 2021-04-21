@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <authors>
+    <author>
+      <name>Elze de Groot</name>
+<contact>groot@nictiz.nl</contact>
+</author>
+  </authors>
+  <title>Complicatie van lichaamsstructuur met morfologie - 2 groepen</title>
+  <description>
+    Dit template kan worden gebruikt om een complicatie van een lichaamsstructuur met gerelateerde morfologie vast te leggen in twee groepen. Optioneel kan worden vastgelegd wat het klinisch verloop is.
+  </description>
+  <snomedVersion>2021-03-31</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
+  <tags>
+    <tag>Complicatie</tag>
+  </tags>
+  <etl>
+    <![CDATA[
+           === 116223007 |complicatie (aandoening)| : {
+                [[ @Morfologie1 ]] 116676008 |gerelateerde morfologie (attribuut)| = 
+                    [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
+                363698007 |locatie van bevinding (attribuut)| =
+                  ([[ @Locatie1 ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      })
+			}
+ {
+                [[ @Morfologie2 ]] 116676008 |gerelateerde morfologie (attribuut)| = 
+                    [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
+                363698007 |locatie van bevinding (attribuut)| =
+                  ([[ @Locatie2 ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      })
+			}
+            {[[ 0..1 @Verloop ]] 263502005 |klinisch verloop (attribuut)| =  
+                    [[+id (< 288524001 |beloop (kwalificatiewaarde)|) ]]}
+      ]]>
+  </etl>
+  <items>
+    <item name="Morfologie1">
+      <title>Morfologie</title>
+      <description>Welke morfologie groep 1?</description>
+    </item>
+    <item name="Locatie1">
+      <title>Locatie</title>
+      <description>Welke lichaamsstructuur groep 1?</description>
+    </item>
+    <item name="Morfologie2">
+      <title>Morfologie</title>
+      <description>Welke morfologie groep 2?</description>
+    </item>
+    <item name="Locatie2">
+      <title>Locatie</title>
+      <description>Welke lichaamsstructuur groep 2?</description>
+    </item>
+	  <item name="Verloop">
+      <title>Verloop</title>
+      <description>Wat is het klinisch verloop? (bv acuut, chronisch, recidief etc) </description>
+    </item>
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
+    </item>
+  </items>
+</template>

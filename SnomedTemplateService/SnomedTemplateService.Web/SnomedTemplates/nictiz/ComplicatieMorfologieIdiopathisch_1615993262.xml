@@ -6,11 +6,11 @@
 <contact>groot@nictiz.nl</contact>
 </author>
   </authors>
-  <title>Complicatie van lichaamsstructuur met morfologie</title>
+  <title>Idiopathische complicatie van lichaamsstructuur met morfologie</title>
   <description>
-    Dit template kan worden gebruikt om een complicatie van een lichaamsstructuur met gerelateerde morfologie vast te leggen.
+    Dit template kan worden gebruikt om een idiopathische complicatie van een lichaamsstructuur met gerelateerde morfologie vast te leggen. 
   </description>
-  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <stringFormat>[0/0] van [0/1]</stringFormat>
   <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
@@ -18,12 +18,14 @@
     <tag>Complicatie</tag>
   </tags>
   <etl>
-    <![CDATA[
-            116223007 |complicatie (aandoening)| : {
+   <![CDATA[
+           === 116223007 |complicatie (aandoening)| + 41969006 |idiopathische aandoening (aandoening)| : {
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
                     [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
-                [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]]
+                363698007 |locatie van bevinding (attribuut)| =
+                  ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      })
 			}
         ]]>
   </etl>
@@ -35,6 +37,10 @@
     <item name="Locatie">
       <title>Locatie</title>
       <description>Welke lichaamsstructuur?</description>
+    </item>
+	 <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
     </item>
   </items>
 </template>

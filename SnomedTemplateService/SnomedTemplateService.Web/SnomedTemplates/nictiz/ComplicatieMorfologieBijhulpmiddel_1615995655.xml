@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <authors>
+    <author>
+      <name>Elze de Groot</name>
+      <contact>groot@nictiz.nl</contact>
+  </author>
+  </authors>
+  <title>Complicatie met morfologie bij hulpmiddel</title>
+  <description>
+    Dit template kan worden gebruikt om een complicatie bij een hulpmiddel vast te leggen met een morfologie.
+  </description>
+  <snomedVersion>2021-03-31</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
+  <tags>
+    <tag>Complicatie</tag>
+  </tags>
+  <etl>
+    <![CDATA[
+            116223007 |complicatie (aandoening)| : {
+                [[ @Morfologie ]] 260686004 |methode (attribuut)| = 
+                	[[+id (<< 49755003 |morfologische afwijking (afwijkende morfologie)|)]],
+                 363698007 |locatie van bevinding (attribuut)| =  
+                    ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      })
+            }
+            {
+                [[ @Bij ]] 47429007 |bij (attribuut)| = 
+                	[[+id (< 49062001 |hulpmiddel (fysiek object)|)]]
+			}
+			
+        ]]>
+  </etl>
+  <items>
+    <item name="Locatie">
+      <title>Locatie</title>
+      <description>Welke lichaamsstructuur?</description>
+    </item>
+    <item name="Bij">
+      <title>Bij</title>
+      <description>Geassocieerd hulpmiddel (bv drain of katheter etc)</description>
+    </item>
+	<item name="Morfologie">
+      <title>Morfologie</title>
+      <description>Welke morfologie? </description>
+    </item>
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
+    </item>
+  </items>
+</template>

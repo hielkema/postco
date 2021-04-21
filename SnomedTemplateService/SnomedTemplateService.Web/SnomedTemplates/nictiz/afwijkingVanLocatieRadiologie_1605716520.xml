@@ -11,7 +11,7 @@
     Dit template kan worden gebruikt om een afwijking van een lichaamsstructuur vast te leggen, die
     is vastgesteld op basis van een beeldvormende verrichting.
   </description>
-  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <stringFormat>[0/0] van [0/1] vastgesteld met [1/0]</stringFormat>
   <!-- bv. carcinoom van mamma vastgesteld met MRI -->
@@ -25,8 +25,10 @@
             64572001 |aandoening (aandoening)| : {
                 [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| = 
                 	 [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|)]],
-                [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|)]]
+                363698007 |locatie van bevinding (attribuut)| =
+                  ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      })
             } 
             { 
                 [[ @Verrichting ]] 363714003 |interpreteert (attribuut)| = [[+id(< 363679005 |beeldvormende verrichting (verrichting)|)]]
@@ -45,6 +47,10 @@
     <item name="Verrichting">
       <title>Verrichting</title>
       <description>Type beeldvormende verrichting</description>
+    </item>
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
     </item>
   </items>
 </template>

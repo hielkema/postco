@@ -9,10 +9,9 @@
   <title>Beeldvormende verrichting van locatie</title>
   <description>
     Dit template kan worden gebruikt om een beeldvormende verrichting van elke mogelijke lichaamslocatie te specificeren.
-    Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen. Gebruik daarvoor
-    template 'beeldvormendeVerrichtingAanZijde'.
+    Je kunt hierbij locaties kiezen met of zonder lateraliteit en optioneel een zijde toevoegen.
   </description>
-  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <stringFormat>[0/0] van [0/1]</stringFormat>
   <!-- bv. MRI van pols -->
@@ -24,8 +23,10 @@
             363679005 |beeldvormende verrichting (verrichting)| : {
                 [[ @Methode ]] 260686004 |methode (attribuut)| = 
                 [[+id (<< 360037004 |beeldvorming (kwalificatiewaarde)|)]],
-                [[ @Locatie ]] 405813007 |directe locatie van verrichting (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|)]]
+                405813007 |directe locatie van verrichting (attribuut)| =  
+                    ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      })
 			}
         ]]>
   </etl>
@@ -37,6 +38,10 @@
     <item name="Locatie">
       <title>Locatie</title>
       <description>Welke locatie?</description>
+    </item>
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
     </item>
   </items>
 </template>

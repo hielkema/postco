@@ -12,7 +12,7 @@
     of palliatieve intentie te specificeren.
     Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen.
   </description>
-  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <stringFormat>[0/0] van [0/2] van [0/1] met [0/3]</stringFormat>
   <!-- bv. verwijderen van carcinoom van blaas met palliatieve intentie -->
@@ -27,8 +27,10 @@
             71388002 |verrichting (verrichting)| : {
                 [[ @Methode ]] 260686004 |methode (attribuut)| = 
                 	[[+id (<< 129303008 |verwijderen (kwalificatiewaarde)|)]],
-                [[ @Locatie ]] 405813007 |directe locatie van verrichting (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|)]],
+                405813007 |directe locatie van verrichting (attribuut)| =  
+                    ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      }),
                 [[ @Laesie ]] 363700003 |directe morfologie (attribuut)| = 
                 	[[+id (<< 52988006 |afwijkend weefsel (afwijkende morfologie)|)]]
             }
@@ -54,6 +56,10 @@
     <item name="Intentie">
       <title>Intentie</title>
       <description>Palliatief of therapeutisch?</description>
+    </item>
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
     </item>
   </items>
 </template>

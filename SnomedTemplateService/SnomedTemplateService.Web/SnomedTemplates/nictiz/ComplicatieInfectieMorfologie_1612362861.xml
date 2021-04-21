@@ -8,9 +8,9 @@
   </authors>
   <title>Complicatie van infectieuze ontsteking</title>
   <description>
-    Dit template kan worden gebruikt om een complicatie van een infectie van ontsteking vast te leggen, zoals infectieuze bursitis of infectieuze artritis.
+    Dit template kan worden gebruikt om een complicatie van een infectie met morfologie vast te leggen, zoals infectieuze bursitis of infectieuze artritis.
   </description>
-  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <stringFormat>[0/0] van [0/1]</stringFormat>
   <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
@@ -19,13 +19,15 @@
   </tags>
   <etl>
     <![CDATA[
-            116223007 |complicatie (aandoening)| : {
+           === 116223007 |complicatie (aandoening)| : {
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
-                    [[+id (< 409774005 |inflammatoire morfologie (afwijkende morfologie)|) ]],
-                [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
-                    [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]],
+                    [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
+                363698007 |locatie van bevinding (attribuut)| =
+                  ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      }),
                 [[ @Infectie ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
-                    [[+id (< 441862004 |infectieus proces (kwalificatiewaarde)|) ]]
+                    [[+id (<< 441862004 |infectieus proces (kwalificatiewaarde)|) ]]
 			}
         ]]>
   </etl>
@@ -41,6 +43,10 @@
     <item name="Infectie">
       <title>Infectieus proces</title>
       <description>Infectieus of parasitair proces</description>
+    </item>
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
     </item>
   </items>
 </template>
