@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <authors>
+    <author>
+      <name>Feikje Hielkema-Raadsveld</name>
+      <contact>hielkema@nictiz.nl</contact>
+    </author>
+  </authors>
+  <title>Bevinding van gradering vam type tumor, vastgesteld op basis van type monster</title>
+  <description>
+    Dit template kan worden gebruikt om een gradering van een bepaald type tumor vast te leggen, die
+    is vastgesteld op basis van een bepaald type monster.
+  </description>
+  <snomedVersion>2021-04-30</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>bevinding betreffende histologische graad van [0/0], bepaald op [1/0]</stringFormat>
+  <!-- bv. bevinding betreffende histologische graad van ductaal carcinoma in situ, bepaald op biopt -->
+  <tags>
+    <tag>Monster</tag>
+    <tag>Tumorgradering</tag>
+    <tag>Laesie</tag>
+  </tags>
+  <etl>
+    <![CDATA[
+            373372005 |bevinding betreffende histologische graad (bevinding)| : {
+                [[ @Laesie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
+                	 [[+id (< 52988006 |afwijkend weefsel (afwijkende morfologie)|)]]
+            } 
+            { 
+                [[ @Monster ]] 363714003 |interpreteert| = ( 
+					252416005 |Histopathology test|: 116686009 |uitgevoerd in monster| = [[+id(< 123038009 |monster (monster)|)]]
+				)
+            }
+        ]]>
+  </etl>
+  <items>
+    <item name="Tumor">
+      <title>Type tumor</title>
+      <description>Welk type tumor?</description>
+    </item>
+    <item name="Monster">
+      <title>Monster</title>
+      <description>Type monster</description>
+    </item>
+  </items>
+</template>
