@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <authors>
+    <author>
+      <name>Elze de Groot</name>
+      <contact>groot@nictiz.nl</contact>
+    </author>
+  </authors>
+  <title>Complicatie van infectie van wond met optioneel veroorzaker</title>
+  <description>
+    Dit template kan worden gebruikt om een complicatie van een infectie van een (oppervlakkige of diepe) wond vast te leggen. Eventueel kan de veroorzaker toegevoegd worden.
+  </description>
+  <snomedVersion>2021-03-31</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
+  <tags>
+    <tag>Complicatie</tag>
+  </tags>
+  <etl>
+    <![CDATA[
+           === 213286009 |diepe postoperatieve wondinfectie (aandoening)| OR 213287000 |postoperatieve oppervlakkige infectie van verwonding (aandoening)| OR 116223007 |complicatie (aandoening)| : {
+                [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
+                    [[+id (< 112633009 |operatiewond (afwijkende morfologie)|) ]],
+                363698007 |locatie van bevinding (attribuut)| =
+                  ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      }),
+                [[ @Infectie ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
+                    [[+id (< 441862004 |infectieus proces (kwalificatiewaarde)|) ]],
+                [[ @Veroorzaker ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
+                    [[+id (< 410607006 |organisme (organisme)|) ]]
+			}
+        ]]>
+  </etl>
+  <items>
+    <item name="Morfologie">
+      <title>Morfologie</title>
+      <description>Operatiewond</description>
+    </item>
+    <item name="Locatie">
+      <title>Locatie</title>
+      <description>Welke lichaamsstructuur?</description>
+    </item>
+    <item name="Veroorzaker">
+      <title>Veroorzaker</title>
+      <description>Wat is de veroorzaker? (bv een virus of bacterie)</description>
+    </item>
+    <item name="Infectie">
+      <title>Infectieus proces</title>
+      <description>Infectieus proces</description>
+    </item>
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
+    </item>
+  </items>
+</template>
