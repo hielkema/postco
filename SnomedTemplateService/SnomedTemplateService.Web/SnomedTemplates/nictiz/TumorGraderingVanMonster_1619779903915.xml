@@ -19,12 +19,17 @@
     <tag>Monster</tag>
     <tag>Tumorgradering</tag>
     <tag>Laesie</tag>
+    <tag>Locatie</tag>
   </tags>
   <etl>
     <![CDATA[
             373372005 |bevinding betreffende histologische graad (bevinding)| : {
                 [[ @Laesie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
-                	 [[+id (< 52988006 |afwijkend weefsel (afwijkende morfologie)|)]]
+                	 [[+id (< 52988006 |afwijkend weefsel (afwijkende morfologie)|)]],
+                363698007 |locatie van bevinding (attribuut)| =
+                  ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      })
             } 
             { 
                 [[ @Monster ]] 363714003 |interpreteert| = ( 
@@ -41,6 +46,14 @@
     <item name="Monster">
       <title>Monster</title>
       <description>Type monster</description>
+    </item>
+    <item name="Locatie">
+      <title>Locatie</title>
+      <description>Welke locatie?</description>
+    </item>
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
     </item>
   </items>
 </template>
