@@ -22,6 +22,8 @@
             116223007 |complicatie (aandoening)| : {
                 [[ 0..1 @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
                 	[[+id (<< 49755003 |morfologische afwijking (afwijkende morfologie)|)]],
+				[[ 0..1 @Infectie ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
+                    [[+id ( 441862004 |infectieus proces (kwalificatiewaarde)|) ]],
                  363698007 |locatie van bevinding (attribuut)| =  
                     ([[ @Locatie ]] [[+id (<< 39352004 |structuur van gewricht (lichaamsstructuur)|) ]] : {
                       [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
@@ -43,9 +45,17 @@
       <title>Locatie</title>
       <description>Welke lichaamsstructuur?</description>
     </item>
+	<item name="Infectie">
+      <title>Infectie</title>
+      <description>Infectie van prothese</description>
+    </item>
     <item name="Na">
       <title>Na</title>
       <description>implantatie van gewrichtsprothese</description>
+    </item>
+	<item name="Bij">
+      <title>Bij</title>
+      <description>gewrichtsprothese</description>
     </item>
 	<item name="Morfologie">
       <title>Morfologie</title>
