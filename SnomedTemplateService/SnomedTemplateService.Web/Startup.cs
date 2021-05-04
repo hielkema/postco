@@ -52,8 +52,6 @@ namespace SnomedTemplateService.Web
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseCors();
