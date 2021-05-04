@@ -27,10 +27,10 @@
 			}
             {[[ 0..1 @Verloop ]] 263502005 |klinisch verloop (attribuut)| =  
                     [[+id (< 288524001 |beloop (kwalificatiewaarde)|) ]]}
+					
       ]]>
   </etl>
   <items>
-    </item>
     <item name="Locatie">
       <title>Locatie</title>
       <description>Welke lichaamsstructuur?</description>
