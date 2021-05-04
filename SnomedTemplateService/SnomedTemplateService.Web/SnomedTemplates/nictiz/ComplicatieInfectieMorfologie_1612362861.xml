@@ -27,7 +27,7 @@
                       [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
                       }),
                 [[ @Infectie ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
-                    [[+id (<< 441862004 |infectieus proces (kwalificatiewaarde)|) ]]
+                    [[+id ( 441862004 |infectieus proces (kwalificatiewaarde)|) ]]
 			}
         ]]>
   </etl>
