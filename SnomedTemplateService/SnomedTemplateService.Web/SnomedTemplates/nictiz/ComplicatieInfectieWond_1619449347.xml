@@ -19,7 +19,7 @@
   </tags>
   <etl>
     <![CDATA[
-           === 213286009 |diepe postoperatieve wondinfectie (aandoening)| OR 213287000 |postoperatieve oppervlakkige infectie van verwonding (aandoening)| OR 116223007 |complicatie (aandoening)| : {
+           === 213286009 |diepe postoperatieve wondinfectie (aandoening)| + 213287000 |postoperatieve oppervlakkige infectie van verwonding (aandoening)| + 116223007 |complicatie (aandoening)| : {
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
                     [[+id ( 112633009 |operatiewond (afwijkende morfologie)|) ]],
                 363698007 |locatie van bevinding (attribuut)| =
