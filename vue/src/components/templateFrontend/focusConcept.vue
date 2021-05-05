@@ -8,6 +8,11 @@
                 <tbody>
                   <tr>
                     <td>
+                      <strong>{{focus.title}}</strong>: {{focus.description}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
                       <strong>{{$t("components.focusConcept.row_title")}}</strong> {{focus.constraint}}
                     </td>
                   </tr>
