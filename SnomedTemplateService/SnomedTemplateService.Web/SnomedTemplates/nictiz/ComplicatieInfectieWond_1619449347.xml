@@ -21,13 +21,13 @@
     <![CDATA[
            === 213286009 |diepe postoperatieve wondinfectie (aandoening)| OR 213287000 |postoperatieve oppervlakkige infectie van verwonding (aandoening)| OR 116223007 |complicatie (aandoening)| : {
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
-                    [[+id (< 112633009 |operatiewond (afwijkende morfologie)|) ]],
+                    [[+id ( 112633009 |operatiewond (afwijkende morfologie)|) ]],
                 363698007 |locatie van bevinding (attribuut)| =
                   ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
                       [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
                       }),
                 [[ @Infectie ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
-                    [[+id (< 441862004 |infectieus proces (kwalificatiewaarde)|) ]],
+                    [[+id ( 441862004 |infectieus proces (kwalificatiewaarde)|) ]],
                 [[ @Veroorzaker ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
                     [[+id (< 410607006 |organisme (organisme)|) ]]
 			}
