@@ -18,16 +18,18 @@
     <tag>Complicatie</tag>
   </tags>
   <etl>
-    <![CDATA[
+     <![CDATA[
            === 116223007 |complicatie (aandoening)| : {
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
-                    [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
+                    [[+id ( 112633009 |operatiewond (afwijkende morfologie)|) ]],
                 363698007 |locatie van bevinding (attribuut)| =
                   ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
                       [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
                       }),
                 [[ @Infectie ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
-                    [[+id ( 441862004 |infectieus proces (kwalificatiewaarde)|) ]]
+                    [[+id ( 441862004 |infectieus proces (kwalificatiewaarde)|) ]],
+                [[ 0..1 @Veroorzaker ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
+                    [[+id (< 410607006 |organisme (organisme)|) ]]
 			}
         ]]>
   </etl>
@@ -43,6 +45,10 @@
     <item name="Infectie">
       <title>Infectieus proces</title>
       <description>Infectieus of parasitair proces</description>
+    </item>
+	<item name="Veroorzaker">
+      <title>Veroorzaker</title>
+      <description>Veroorzaker van infectie indien bekend </description>
     </item>
     <item name="Lateraliteit">
       <title>Lateraliteit</title>
