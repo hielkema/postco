@@ -59,7 +59,7 @@
 		"focusConcept" : {
 			"fsn" : "Fully specified name",
 			"id" : "SNOMED Concept ID",
-			"row_title" : "Focus:",
+			"row_title" : "Constraint:",
 			"autocomplete_placeholder" : "Minimaal 3 tekens",
 			"not_supported" : "Er is nog geen ondersteuning voor dit type focusconcept.",
 			"loading_placeholder" : "laden...",
