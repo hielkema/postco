@@ -7,7 +7,7 @@
               <tbody>
                 <tr>
                   <td width="350px">
-                    <strong>Attribuut {{attributeKey+1}} <!-- [{{groupKey}}/{{attributeKey}}] --></strong><br>
+                    <strong>{{translations.attribute}} {{attributeKey+1}} <!-- [{{groupKey}}/{{attributeKey}}] --></strong><br>
                     {{ componentData.title }}: {{ componentData.description }}
                   </td>
                   <td>
@@ -39,8 +39,8 @@ export default {
   name: 'TemplateAttribute',
   data: () => {
     return {
-      attribute: 'laden...',
-      attributeValue: 'laden...',
+      attribute: 'Loading',
+      attributeValue: 'Loading',
       loading: {
         'attribute' : true,
         'attributeValue' : true,
@@ -53,7 +53,7 @@ export default {
       var that = this
       return new Promise((resolve, reject) => {
         var branchVersion = encodeURI(that.requestedTemplate.snomedBranch + '/' + that.requestedTemplate.snomedVersion)
-        that.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
+        that.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid, {headers : {'accept-language' : that.$i18n.locale}})
         .then((response) => {
           that.attribute = {
             'display' : response.data.fsn.term,
@@ -65,7 +65,7 @@ export default {
             'preferred': response.data.pt.term,
           })
         }).catch(() => {
-          that.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributeCompact]')
+          that.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributeCompact]')
           
           reject('Error retrieveAttribute')
         })
@@ -75,7 +75,7 @@ export default {
       var that = this
       return new Promise(function(resolve) {
         var branchVersion = encodeURI(that.requestedTemplate.snomedBranch + '/' + that.requestedTemplate.snomedVersion)
-        that.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
+        that.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid, {headers : {'accept-language' : that.$i18n.locale}})
         .then((response) => {
           that.attributeValue = {
             'display': response.data.fsn.term,
@@ -91,7 +91,7 @@ export default {
           setTimeout(() => {
             that.retrieveAttributeValueTerms (conceptid)
           }, 5000)
-          that.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributePrecoordinated]')
+          that.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
         })
       })
     },
@@ -118,6 +118,9 @@ export default {
     },
     loadingTerms(){
         return this.loading
+    },
+    translations(){
+      return this.$t("components.templateAttributePrecoordinated")
     },
     thisComponent(){
       return this.componentData
@@ -154,10 +157,10 @@ export default {
             }
         })
     ).catch(()=>{
-      this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributePrecoordinated]')
+      this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
       this.retrieveAttributeValueTerms(this.thisComponent.value.conceptId)
     })).catch(()=>{
-      this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributePrecoordinated]')
+      this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
       this.retrieveAttributeTerms(this.thisComponent.attribute)
     })
     this.retrieved = true

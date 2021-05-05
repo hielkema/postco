@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols=2>
         <v-card fill-height>
-          <v-card-title>Groep {{groupKey+1}}</v-card-title>
+          <v-card-title>{{translations.card_title}} {{groupKey+1}}</v-card-title>
         </v-card>
       </v-col>
       <v-col cols=10>
@@ -48,6 +48,9 @@ export default {
     },
     thisGroup(){
       return this.groupData
+    },
+    translations(){
+      return this.$t("components.templateGroup")
     }
   },
   methods: {

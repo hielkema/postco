@@ -4,11 +4,11 @@
         <v-card-text>
           <table>
             <tr>
-              <th>FSN</th>
+              <th>{{translations.fsn}}</th>
               <td>{{ rootFSN }}</td>
             </tr>
             <tr>
-              <th>ID</th>
+              <th>{{translations.id}}</th>
               <td>
                 {{ focus.conceptId }} 
                 <v-btn small target="_blank" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+focus.conceptId">
@@ -29,18 +29,21 @@ export default {
   data: () => {
     return {
       retrieved: false,
-      rootFSN : 'Laden'
+      rootFSN : 'Loading'
     }
   },
   computed: {
     requestedTemplate(){
       return this.$store.state.templates.requestedTemplate
     },
+    translations(){
+      return this.$t("components.focusConceptPrecoordinated")
+    }
   },
   methods: {
     retrieveFSN (conceptid) {
       var branchVersion = encodeURI(this.requestedTemplate.snomedBranch + '/' + this.requestedTemplate.snomedVersion)
-      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
+      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid, {headers : {'accept-language' : this.$i18n.locale}})
       .then((response) => {
         this.rootFSN = response.data.fsn.term
 
@@ -65,7 +68,7 @@ export default {
         setTimeout(() => {
           this.retrieveFSN (conceptid)
         }, 5000)
-        this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [focusConceptPrecoordinated]')
+        this.$store.dispatch('templates/addErrormessage', this.translations.errors.retireve_fsn+' [focusConceptPrecoordinated]')
       })
     },
   },

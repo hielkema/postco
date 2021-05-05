@@ -10,6 +10,8 @@ services:
         environment: 
             - CHOKIDAR_USEPOLLING=true
             - CORS_DEBUG=1
+            - VUE_APP_I18N_LOCALE=nl
+            - VUE_APP_I18N_FALLBACK_LOCALE=en
         ports:
             - '9124:8080'
         networks:

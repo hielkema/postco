@@ -1,0 +1,152 @@
+{
+	"language" : {
+		"language_picker_header" : "Verander de taal voor de interface",
+		"active_language" : "Actieve taal"
+	},
+	"templateList" : {
+		"filter_card" : {
+			"card_title" : "Beschikbare templates",
+			"filters" : {
+				"search" : {
+					"label" : "Zoeken",
+					"hint" : "Zoek op Naam, Titel, Beschrijving of SNOMED versie"
+				},
+				"tags" : {
+					"label" : "Tags",
+					"hint" : ""
+				},
+				"snomed_version" : {
+					"label" : "SNOMED-versie",
+					"hint" : "Filter op SNOMED-editie"
+				},
+				"organization" : {
+					"label" : "Organisatie",
+					"hint" : "Filter op organisatie"
+				}
+			}
+		},
+		"list_card" : {
+			"card_title" : "Templates",
+			"table_headers" : {
+				"entity" : "Organisatie",
+				"id" : "ID",
+				"title" : "Titel",
+				"description" :	"Beschrijving",
+				"authors" : "Auteur",
+				"tags" : "Tags",
+				"snomedVersion" : "SNOMED versie",
+				"time" : "Timestamp versie",
+				"open" : "Open"	
+			}
+		}
+	},
+	"templateDetail" : {
+		"title_card" : {
+			"card_title" : "Postcoördinatie tooling",
+			"back_button" : "Terug naar het overzicht met templates"
+		},
+		"loading_card" : {
+			"card_text" : "De template wordt geladen.. even geduld a.u.b."
+		},
+		"focus_concept_card" : {
+			"card_title" : "Focusconcepten"
+		},
+		"attributes_card" : {
+			"card_title" : "Attributen"
+		}
+	},
+	"components" : {
+		"focusConcept" : {
+			"fsn" : "Fully specified name",
+			"id" : "SNOMED Concept ID",
+			"row_title" : "Focus:",
+			"autocomplete_placeholder" : "Minimaal 3 tekens",
+			"not_supported" : "Er is nog geen ondersteuning voor dit type focusconcept.",
+			"loading_placeholder" : "laden...",
+			"errors" : {
+				"retrieve_ecl" : "Er is een fout opgetreden bij het ophalen van een antwoordlijst."
+			}
+		},
+		"focusConceptPrecoordinated" : {
+			"fsn" : "Fully Specified Name",
+			"id" : "SNOMED Concept ID",
+			"errors" : {
+				"retrieve_fsn" : "Er is een fout opgetreden bij het ophalen van een term."
+			}
+		},
+		"renderDescriptionString" : {
+			"card_title" : "Leesbare titel voor expressie",
+			"template" : "Template",
+			"generated" : "Gegenereerd",
+			"copy_button" : "Kopieer",
+			"identifiers_panel_header" : "[DEBUG] Identifiers voor gebruik in leesbare titel",
+			"unavailable" : "Niet beschikbaar voor deze template."
+		},
+		"renderExpression" : {
+			"card_title" : "Expressie",
+			"loading_placeholder" : "laden...",
+			"copy_button" : "Kopieer"
+		},
+		"templateAttributeCompact" : {
+			"attribute" : "Attribuut",
+			"optional" : "Optioneel",
+			"loading_placeholder" : "laden...",
+			"autocomplete_placeholder" : "Minimaal 3 tekens",
+			"errors" : {
+				"retrieve_fsn" : "Er is een fout opgetreden bij het ophalen van een term.",
+				"retrieve_ecl" : "Er is een fout opgetreden bij het ophalen van een antwoordlijst."
+			}
+		},
+		"templateAttributePrecoordinated" : {
+			"attribute" : "Attribuut",
+			"loading_placeholder" : "laden...",
+			"autocomplete_placeholder" : "Minimaal 3 tekens",
+			"errors" : {
+				"retrieve_fsn" : "Er is een fout opgetreden bij het ophalen van een term.",
+				"retrieve_ecl" : "Er is een fout opgetreden bij het ophalen van een antwoordlijst."
+			}
+		},
+		"templateAuthor" : {
+			"card_title" : "Auteurs"
+		},
+		"templateDescription" : {
+
+		},
+		"templateGroup" : {
+			"card_title" : "Groep"
+		},
+		"templateMetadata" : {
+			"card_title" : "Template details",
+			"snomed_version" : "SNOMED versie",
+			"snomed_branch" : "SNOMED branch",
+			"creation_date" : "Datum aanmaken template"
+		},
+		"templateNestedFocus" : {
+			"row_title" : "Focusconcept",
+			"loading_placeholder" : "laden...",
+			"autocomplete_placeholder" : "Minimaal 3 tekens"
+		},
+		"templateNestedFocusPrecoordinated" : {
+			"row_title" : "Focusconcept",
+			"loading_placeholder" : "laden...",
+			"errors" : {
+				"retrieve_fsn" : "Er is een fout opgetreden bij het ophalen van een term.",
+				"retrieve_ecl" : "Er is een fout opgetreden bij het ophalen van een antwoordlijst."
+			}
+		},
+		"templateNestedGroup" : {
+			"errors" : {
+				"double_nested" : "Dubbel geneste templates worden niet ondersteund."
+			}
+		},
+		"templateNestedPostcoordination" : {
+			"card_title" : "Geneste expressie in Groep",
+			"focus" : "Focus",
+			"attributes" : "Attributen",
+			"group" : "Groep",
+			"errors" : {
+				"multiple_focus" : "Geen ondersteuning voor meerdere focusconcepten in een geneste expressie"
+			}
+		}
+	}
+}

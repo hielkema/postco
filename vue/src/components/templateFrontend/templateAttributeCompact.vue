@@ -7,14 +7,14 @@
               <tbody>
                 <tr>
                   <td width="350px">
-                    <strong>Attribuut {{attributeKey+1}} <!-- [{{groupKey}}/{{attributeKey}}] --></strong>
+                    <strong>{{translations.attribute}} {{attributeKey+1}} <!-- [{{groupKey}}/{{attributeKey}}] --></strong>
                     <v-chip
                       v-if="thisComponent.cardinality.min == '0'"
                       small
                       label
                       class="ma-2"
                       color="primary">
-                      Optioneel
+                      {{translations.optional}}
                     </v-chip><br>
                     {{ thisComponent.title }}: {{ thisComponent.description }}
                     <v-tooltip bottom>
@@ -40,7 +40,7 @@
                       hide-details
                       hide-no-data
                       v-model="select"
-                      placeholder="Minimaal 3 tekens"
+                      :placeholder="translations.autocomplete_placeholder"
                       :auto-select-first="true"
                       :search-input.sync="search"
                       :no-filter="true"
@@ -76,7 +76,7 @@ export default {
   data: () => {
     return {
       select: null,
-      attributeFSN: 'laden...',
+      attributeFSN: 'Loading',
       items: [],
       search: null,
       loading: false,
@@ -86,12 +86,12 @@ export default {
   methods: {
     retrieveFSN (conceptid) {
       var branchVersion = encodeURI(this.requestedTemplate.snomedBranch + '/' + this.requestedTemplate.snomedVersion)
-      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
+      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid, {headers : {'accept-language' : this.$i18n.locale}})
       .then((response) => {
         this.attributeFSN = response.data.fsn.term
         return true;
       }).catch(() => {
-        this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributeCompact]')
+        this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributeCompact]')
         
         setTimeout(() => {
           this.retrieveFSN (conceptid)
@@ -101,12 +101,12 @@ export default {
     retrieveECL (term) {
       this.loading = true;
       var branchVersion = encodeURI(this.requestedTemplate.snomedBranch + '/' + this.requestedTemplate.snomedVersion)
-      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/?term='+ encodeURI(term) +'&offset=0&limit=100&ecl='+encodeURI(this.thisComponent.value.constraint))
+      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/?term='+ encodeURI(term) +'&offset=0&limit=100&ecl='+encodeURI(this.thisComponent.value.constraint), {headers : {'accept-language' : this.$i18n.locale}})
       .then((response) => {
          this.setItems(response.data['items'])
         return true;
       }).catch(() => {
-        this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een antwoordlijst. [templateAttributeCompact]')
+        this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_ecl+' [templateAttributeCompact]')
         
         setTimeout(() => {
           this.retrieveECL (term)
@@ -147,6 +147,9 @@ export default {
   computed: {
     requestedTemplate(){
         return this.$store.state.templates.requestedTemplate
+    },
+    translations(){
+      return this.$t("components.templateAttributeCompact")
     },
     thisComponent(){
       return this.componentData
