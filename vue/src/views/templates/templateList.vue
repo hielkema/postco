@@ -4,53 +4,51 @@
 			<v-col cols=12>
 				<v-card>
 					<v-card-title>
-						Beschikbare templates
+						<!-- Available templates -->
+						{{$t("templateList.filter_card.card_title")}}
 					</v-card-title>
 					<v-card-text>
 						<v-row>	
-							<v-col cols=10>
+							<v-col cols=5>
 								<v-text-field
 									v-model="searchString"
 									append-icon="mdi-magnify"
-									label="Zoeken"
-									hint="Zoek op Naam, Titel, Beschrijving of SNOMED versie"
+									:label="$t('templateList.filter_card.filters.search.label')"
+									:hint="$t('templateList.filter_card.filters.search.hint')"
 									dense
 								></v-text-field>
 							</v-col>
-						</v-row>
-						<v-row>
-							<v-col cols=10>
+							<v-col cols=5>
 								<v-select
 									v-model="filterTag"
 									:items="tagList"
 									attach
 									multiple
 									chips
-									label="Tags"
+									:label="$t('templateList.filter_card.filters.tags.label')"
+									:hint="$t('templateList.filter_card.filters.tags.hint')"
 									dense
 								></v-select>
 							</v-col>
-						</v-row>
-						<v-row>
-							<v-col cols=10>
+							<v-col cols=5>
 								<v-select
 									v-model="filterEdition"
 									:items="editionList"
 									attach
 									chips
-									label="SNOMED versie"
+									:label="$t('templateList.filter_card.filters.snomed_version.label')"
+									:hint="$t('templateList.filter_card.filters.snomed_version.hint')"
 									dense
 								></v-select>
 							</v-col>
-						</v-row>
-						<v-row>
-							<v-col cols=10>
+							<v-col cols=5>
 								<v-select
 									v-model="filterOrganization"
 									:items="organizationList"
 									attach
 									chips
-									label="Organisatie"
+									:label="$t('templateList.filter_card.filters.organization.label')"
+									:hint="$t('templateList.filter_card.filters.organization.hint')"
 									dense
 								></v-select>
 							</v-col>
@@ -61,14 +59,15 @@
 		</v-row>
 
 		<v-row>
-			<v-col cols=12><v-row>ss{{filterTag}}</v-row></v-col>
-		</v-row>
-		<v-row>
 			<v-col cols=12>
 				<v-card>
 					<v-card-title>
+						<!-- Title of the card that contains templates in the filter -->
+						{{$t("templateList.list_card.card_title")}}
+					</v-card-title>
+					<v-card-text>
 						<v-data-table
-							:headers="headers"
+							:headers="tableHeaders"
 							:items="templates_filtered"
 							:items-per-page="15"
 							:loading="loading"
@@ -129,7 +128,7 @@
 								</v-chip>
 							</template>
 						</v-data-table>
-					</v-card-title>
+					</v-card-text>
 				</v-card>
 			</v-col>
 		</v-row>
@@ -138,20 +137,9 @@
 
 <script>
 
-export default {
+export default {	
     data() {
         return {
-            headers: [
-                { text: 'Organisatie', value: 'entity', sortable: false },
-                // { text: 'Naam', value: 'id' },
-                { text: 'Titel', value: 'title' },
-                // { text: 'Beschrijving', value: 'description' },
-                { text: 'Tags', value: 'tags', sortable: false },
-                { text: 'SNOMED versie', value: 'snomedVersion', width: "160px" },
-				{ text: 'Auteurs', value: 'authors', width: "220px" },
-				{ text: 'Timestamp versie', value: 'time' },
-				{ text: 'Open', value: 'open', sortable: false },
-            ],
 			searchString: '',
 			filterTag: [],
 			filterEdition: '',
@@ -159,7 +147,6 @@ export default {
 		}
     },
 	components: {
-		
 	},
 	methods: {
 		openTemplate(id){
@@ -169,6 +156,19 @@ export default {
 		}
 	},
 	computed: {
+		tableHeaders(){
+			return [
+				{ text: this.$t("templateList.list_card.table_headers.entity"), value: 'entity', sortable: false },
+				// { text: this.$t("templateList.list_card.table_headers.id"), value: 'id' },
+				{ text: this.$t("templateList.list_card.table_headers.title"), value: 'title' },
+				// { text: this.$t("templateList.list_card.table_headers.description"), value: 'description' },
+				{ text: this.$t("templateList.list_card.table_headers.tags"), value: 'tags', sortable: false },
+				{ text: this.$t("templateList.list_card.table_headers.snomedVersion"), value: 'snomedVersion', width: "160px" },
+				{ text: this.$t("templateList.list_card.table_headers.authors"), value: 'authors', width: "220px" },
+				{ text: this.$t("templateList.list_card.table_headers.time"), value: 'time' },
+				{ text: this.$t("templateList.list_card.table_headers.open"), value: 'open', sortable: false },
+			]
+		},
 		templates(){
 			return this.$store.state.templates.availableTemplates
 		},

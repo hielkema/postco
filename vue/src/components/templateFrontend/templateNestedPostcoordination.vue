@@ -3,26 +3,26 @@
     <v-row>
       <v-col cols=12>
         <v-card>
-          <v-card-title>Geneste expressie in Groep {{groupKey+1}}</v-card-title>
+          <v-card-title>{{translations.card_title}} {{groupKey+1}}</v-card-title>
           <v-card-subtitle>
             {{template.title}}: {{template.description}}<br>
           </v-card-subtitle>
           <v-card-text v-if="template.template.focus.length <= 1">
               <div v-if="template.template.focus[0].type == 'precoordinatedConcept'">
-                Focus <templateNestedFocusPrecoordinated v-bind:attributeKey="attributeKey" v-bind:groupKey="groupKey" v-bind:templateData="template" />
+                {{translations.focus}} <templateNestedFocusPrecoordinated v-bind:attributeKey="attributeKey" v-bind:groupKey="groupKey" v-bind:templateData="template" />
               </div>
               <div v-else>
-                Focus <templateNestedFocus v-bind:attributeKey="attributeKey" v-bind:groupKey="groupKey" v-bind:templateData="template" />
+                {{translations.focus}} <templateNestedFocus v-bind:attributeKey="attributeKey" v-bind:groupKey="groupKey" v-bind:templateData="template" />
               </div>
 
-              Attributen 
+              {{translations.attributes}} 
               <div v-for="(group, key) in template.template.groups" :key="key">
-                Groep {{key+1}}
+                {{translations.group}} {{key+1}}
                 <templateNestedGroup  v-bind:groupData="group" v-bind:groupParents="groupKey+'/'+attributeKey+'/'+key" v-bind:groupKey="key" />
               </div>
           </v-card-text>
           <v-card-text v-else>
-              Geen ondersteuning voor meerdere focusconcepten in een geneste expressie
+              {{translations.errors.multiple_focus}}
           </v-card-text>
         </v-card>
       </v-col>
@@ -53,6 +53,9 @@ export default {
     requestedTemplate(){
         return this.$store.state.templates.requestedTemplate
     },
+    translations(){
+      return this.$t("components.templateNestedPostcoordination")
+    }
   }
 }
 </script>

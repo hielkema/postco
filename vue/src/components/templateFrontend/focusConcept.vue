@@ -8,7 +8,7 @@
                 <tbody>
                   <tr>
                     <td>
-                      <strong>Focus:</strong> {{focus.constraint}}
+                      <strong>{{$t("components.focusConcept.row_title")}}</strong> {{focus.constraint}}
                     </td>
                   </tr>
                   <tr>
@@ -27,7 +27,7 @@
                         :search-input.sync="search"
                         :no-filter="true"
                         :loading="loading"
-                        placeholder="Minimaal 3 tekens"
+                        :placeholder="$t('components.focusConcept.autocomplete_placeholder')"
                         @change="$store.dispatch('templates/saveAttribute', {'groupKey':'focus', 'attributeKey': focusKey, 'attribute' : {'id': 'focus', 'display': 'focus'}, 'concept': select})"
                         >
                       </v-autocomplete>
@@ -51,7 +51,7 @@
             </v-simple-table>
           </div>
           <div v-else>
-            Er is nog geen ondersteuning voor dit type focusconcept.
+            {{$t("components.focusConcept.not_supported")}}
           </div>
         </v-card-text>
     </v-card>
@@ -65,7 +65,7 @@ export default {
   data: () => {
     return {
       select: null,
-      attributeFSN: 'laden...',
+      attributeFSN: "Loading",
       items: [],
       search: null,
       loading: false,
@@ -76,6 +76,9 @@ export default {
     requestedTemplate(){
       return this.$store.state.templates.requestedTemplate
     },
+    translations(){
+      return this.$t("components.focusConcept")
+    }
   },
   watch: {
     search (val) {
@@ -88,7 +91,7 @@ export default {
   methods: {
     retrieveFSN (conceptid) {
       var branchVersion = encodeURI(this.requestedTemplate.snomedBranch + '/' + this.requestedTemplate.snomedVersion)
-      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
+      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid, {headers : {'accept-language' : this.$i18n.locale}})
       .then((response) => {
         this.rootFSN = response.data.fsn.term
         return true;
@@ -103,12 +106,12 @@ export default {
     retrieveECL (term) {
       this.loading = true;
       var branchVersion = encodeURI(this.requestedTemplate.snomedBranch + '/' + this.requestedTemplate.snomedVersion)
-      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/?term='+ encodeURI(term) +'&offset=0&limit=100&ecl='+encodeURI(this.focus.constraint))
+      this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/?term='+ encodeURI(term) +'&offset=0&limit=100&ecl='+encodeURI(this.focus.constraint), {headers : {'accept-language' : this.$i18n.locale}})
       .then((response) => {
          this.setItems(response.data['items'])
         return true;
       }).catch(() => {
-        this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een antwoordlijst. [focusConcept]')
+        this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_ecl+' [focusConcept]')
         
         setTimeout(() => {
           this.retrieveECL (term)
