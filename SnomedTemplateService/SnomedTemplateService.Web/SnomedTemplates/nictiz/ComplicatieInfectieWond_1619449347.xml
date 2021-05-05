@@ -19,7 +19,7 @@
   </tags>
   <etl>
     <![CDATA[
-           === [[+id(213286009 OR 213287000 OR 116223007) ]] : {
+           === [[ @Focus ]] [[+id(213286009 |diepe postoperatieve wondinfectie (aandoening)| OR 213287000 |postoperatieve oppervlakkige infectie van verwonding (aandoening)| OR 116223007 |complicatie (aandoening)|) ]] : {
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
                     [[+id ( 112633009 |operatiewond (afwijkende morfologie)|) ]],
                 363698007 |locatie van bevinding (attribuut)| =
@@ -49,6 +49,10 @@
     <item name="Infectie">
       <title>Infectieus proces</title>
       <description>Infectieus proces</description>
+    </item>
+	 <item name="Focus">
+      <title>Wanneer welk focusconcept gebruiken?</title>
+      <description>Gebruik 213286009 bij een diepe wondinfectie, 213287000 bij een oppervlakkige wondinfectie en 116223007 wanneer je niet wilt specificeren naar diep of oppervlakkig  </description>
     </item>
     <item name="Lateraliteit">
       <title>Lateraliteit</title>
