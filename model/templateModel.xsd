@@ -75,6 +75,7 @@
           </xs:complexType>
         </xs:element>
       </xs:all>
+      <xs:attribute name="defaultLang" type="nonEmptyString" use="required" />
     </xs:complexType>
   </xs:element>
   <xs:simpleType name="nonEmptyString">

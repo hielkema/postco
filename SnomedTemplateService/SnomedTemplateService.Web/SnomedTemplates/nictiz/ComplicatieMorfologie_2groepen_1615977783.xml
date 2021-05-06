@@ -1,30 +1,24 @@
 <?xml version="1.0"?>
-<template>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>Elze de Groot</name>
-      <contact>groot@nictiz.nl</contact>
-    </author>
+<contact>groot@nictiz.nl</contact>
+</author>
   </authors>
-  <title>
-    <txt lang="nl">Complicatie van lichaamsstructuur met morfologie - 2 groepen</txt>
-  </title>
-  <description>
-    <txt lang="nl">
+  <title><txt lang="nl">Complicatie van lichaamsstructuur met morfologie - 2 groepen</txt></title>
+  <description><txt lang="nl">
     Dit template kan worden gebruikt om een complicatie van een lichaamsstructuur met gerelateerde morfologie vast te leggen in twee groepen. Optioneel kan worden vastgelegd wat het klinisch verloop is.
-  </txt>
-  </description>
+  </txt></description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>
-    <txt lang="nl">[0/0] van [0/1]</txt>
-  </stringFormat>
+  <stringFormat><txt lang="nl">[0/0] van [0/1]</txt></stringFormat>
   <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
   <tags>
     <tag id="Complicatie"/>
   </tags>
-  <etl>
-    <![CDATA[
+  <etl><![CDATA[
+    
            === 116223007 |complicatie (aandoening)| : {
                 [[ @Morfologie1 ]] 116676008 |gerelateerde morfologie (attribuut)| = 
                     [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
@@ -43,56 +37,32 @@
 			}
             {[[ 0..1 @Verloop ]] 263502005 |klinisch verloop (attribuut)| =  
                     [[+id (< 288524001 |beloop (kwalificatiewaarde)|) ]]}
-      ]]>
-  </etl>
+      
+  ]]></etl>
   <items>
     <item name="Morfologie1">
-      <title>
-        <txt lang="nl">Morfologie</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke morfologie groep 1?</txt>
-      </description>
+      <title><txt lang="nl">Morfologie</txt></title>
+      <description><txt lang="nl">Welke morfologie groep 1?</txt></description>
     </item>
     <item name="Locatie1">
-      <title>
-        <txt lang="nl">Locatie</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke lichaamsstructuur groep 1?</txt>
-      </description>
+      <title><txt lang="nl">Locatie</txt></title>
+      <description><txt lang="nl">Welke lichaamsstructuur groep 1?</txt></description>
     </item>
     <item name="Morfologie2">
-      <title>
-        <txt lang="nl">Morfologie</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke morfologie groep 2?</txt>
-      </description>
+      <title><txt lang="nl">Morfologie</txt></title>
+      <description><txt lang="nl">Welke morfologie groep 2?</txt></description>
     </item>
     <item name="Locatie2">
-      <title>
-        <txt lang="nl">Locatie</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke lichaamsstructuur groep 2?</txt>
-      </description>
+      <title><txt lang="nl">Locatie</txt></title>
+      <description><txt lang="nl">Welke lichaamsstructuur groep 2?</txt></description>
     </item>
-    <item name="Verloop">
-      <title>
-        <txt lang="nl">Verloop</txt>
-      </title>
-      <description>
-        <txt lang="nl">Wat is het klinisch verloop? (bv acuut, chronisch, recidief etc) </txt>
-      </description>
+	  <item name="Verloop">
+      <title><txt lang="nl">Verloop</txt></title>
+      <description><txt lang="nl">Wat is het klinisch verloop? (bv acuut, chronisch, recidief etc) </txt></description>
     </item>
     <item name="Lateraliteit">
-      <title>
-        <txt lang="nl">Lateraliteit</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke zijde?</txt>
-      </description>
+      <title><txt lang="nl">Lateraliteit</txt></title>
+      <description><txt lang="nl">Welke zijde?</txt></description>
     </item>
   </items>
 </template>

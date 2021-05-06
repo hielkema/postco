@@ -1,30 +1,24 @@
 <?xml version="1.0"?>
-<template>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>Feikje Hielkema-Raadsveld</name>
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>
-    <txt lang="nl">MammaCarcinoom</txt>
-  </title>
-  <description>
-    <txt lang="nl">
+  <title><txt lang="nl">MammaCarcinoom</txt></title>
+  <description><txt lang="nl">
     Dit template kan worden gebruikt om een type carcinoom van een specifieke locatie in de mammma vast te leggen.
-  </txt>
-  </description>
+  </txt></description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>
-    <txt lang="nl">[0/0] van [0/1]</txt>
-  </stringFormat>
+  <stringFormat><txt lang="nl">[0/0] van [0/1]</txt></stringFormat>
   <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
   <tags>
     <tag id="Mammacarcinoom"/>
   </tags>
-  <etl>
-    <![CDATA[
+  <etl><![CDATA[
+    
             64572001 |aandoening (aandoening)| : {
                 [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| = 
                     [[+id (< 68453008 |carcinoom - geen subtype (afwijkende morfologie)|) ]],
@@ -33,32 +27,20 @@
                       [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
                       })
 			}
-        ]]>
-  </etl>
+        
+  ]]></etl>
   <items>
     <item name="Afwijking">
-      <title>
-        <txt lang="nl">Afwijking</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke type carcinoom?</txt>
-      </description>
+      <title><txt lang="nl">Afwijking</txt></title>
+      <description><txt lang="nl">Welke type carcinoom?</txt></description>
     </item>
     <item name="Locatie">
-      <title>
-        <txt lang="nl">Locatie</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welk kwadrant?</txt>
-      </description>
+      <title><txt lang="nl">Locatie</txt></title>
+      <description><txt lang="nl">Welk kwadrant?</txt></description>
     </item>
     <item name="Lateraliteit">
-      <title>
-        <txt lang="nl">Lateraliteit</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke zijde?</txt>
-      </description>
+      <title><txt lang="nl">Lateraliteit</txt></title>
+      <description><txt lang="nl">Welke zijde?</txt></description>
     </item>
   </items>
 </template>

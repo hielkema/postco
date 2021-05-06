@@ -1,33 +1,27 @@
 <?xml version="1.0"?>
-<template>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>Feikje Hielkema-Raadsveld</name>
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>
-    <txt lang="nl">Afwijking van anatomische locatie vastgesteld met analyse van monster</txt>
-  </title>
-  <description>
-    <txt lang="nl">
+  <title><txt lang="nl">Afwijking van anatomische locatie vastgesteld met analyse van monster</txt></title>
+  <description><txt lang="nl">
     Dit template kan worden gebruikt om een afwijking van een lichaamsstructuur vast te leggen, die
     is vastgesteld op basis van een bepaald type monster, bv. een biopt, FNAB of aspiraat.
-  </txt>
-  </description>
+  </txt></description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>
-    <txt lang="nl">[0/0] van [0/1] vastgesteld met analyse van [1/0]</txt>
-  </stringFormat>
+  <stringFormat><txt lang="nl">[0/0] van [0/1] vastgesteld met analyse van [1/0]</txt></stringFormat>
   <!-- bv. carcinoom van mamma vastgesteld met analyse van biopt -->
   <tags>
     <tag id="Monster"/>
     <tag id="Laesie"/>
     <tag id="Locatie"/>
   </tags>
-  <etl>
-    <![CDATA[
+  <etl><![CDATA[
+    
               64572001 |aandoening (aandoening)| : {
                 [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| =
                     [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
@@ -42,61 +36,35 @@
                     { [[ @Methode ]] 260686004 |methode (attribuut)| = 129265001 |evaluatie (kwalificatiewaarde)| }
                     )
             }
-        ]]>
-  </etl>
+        
+  ]]></etl>
   <items>
     <item name="Afwijking">
-      <title>
-        <txt lang="nl">Afwijking</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke morfologische afwijking?</txt>
-      </description>
+      <title><txt lang="nl">Afwijking</txt></title>
+      <description><txt lang="nl">Welke morfologische afwijking?</txt></description>
     </item>
     <item name="Locatie">
-      <title>
-        <txt lang="nl">Locatie</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke locatie?</txt>
-      </description>
+      <title><txt lang="nl">Locatie</txt></title>
+      <description><txt lang="nl">Welke locatie?</txt></description>
     </item>
     <item name="Lateraliteit">
-      <title>
-        <txt lang="nl">Lateraliteit</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke zijde?</txt>
-      </description>
+      <title><txt lang="nl">Lateraliteit</txt></title>
+      <description><txt lang="nl">Welke zijde?</txt></description>
     </item>
     <item name="Monster">
-      <title>
-        <txt lang="nl">Monster</txt>
-      </title>
-      <description>
-        <txt lang="nl">Biopt, aspiraat, FNAB?</txt>
-      </description>
+      <title><txt lang="nl">Monster</txt></title>
+      <description><txt lang="nl">Biopt, aspiraat, FNAB?</txt></description>
     </item>
     <item name="Methode">
-      <title>
-        <txt lang="nl">Methode</txt>
-      </title>
-      <description>
-        <txt lang="nl">Methode is altijd evaluatie</txt>
-      </description>
+      <title><txt lang="nl">Methode</txt></title>
+      <description><txt lang="nl">Methode is altijd evaluatie</txt></description>
     </item>
     <item name="Interpretatie">
-      <title>
-        <txt lang="nl">Interpretatie</txt>
-      </title>
-      <description>
-        <txt lang="nl">Interpretatie is altijd beoordeling</txt>
-      </description>
+      <title><txt lang="nl">Interpretatie</txt></title>
+      <description><txt lang="nl">Interpretatie is altijd beoordeling</txt></description>
     </item>
     <item name="InterpretatieFocus">
-      <title>
-        <txt lang="nl">Uitgevoerde verrichting</txt>
-      </title>
+      <title><txt lang="nl">Uitgevoerde verrichting</txt></title>
     </item>
   </items>
 </template>

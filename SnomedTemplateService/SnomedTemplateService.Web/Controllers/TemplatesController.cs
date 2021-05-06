@@ -7,7 +7,7 @@ using SnomedTemplateService.Core.Domain.Etl;
 using SnomedTemplateService.Util;
 using SnomedTemplateService.Core.Domain;
 using Microsoft.AspNetCore.Cors;
-using SnomedTemplateService.Core.Interfaces;
+using SnomedTemplateService.Core.Service;
 
 namespace SnomedTemplateService.Web.Controllers
 {
@@ -36,8 +36,8 @@ namespace SnomedTemplateService.Web.Controllers
         {
             try
             {
-                var templateData = templateRepository.GetById(id);
-
+                var templateData = templateRepository.GetTemplateById(id);
+                
                 if (templateData == null)
                 {
                     return NotFound();
@@ -54,7 +54,9 @@ namespace SnomedTemplateService.Web.Controllers
                     );
 
                 var result = TemplateMetadataToJson(templateData, lang);
-                var templateJson = EtlSubexpressionToJson(rootExpression, templateData.ItemData, lang, true);
+                var templateLang = GetTemplateLanguage(templateData, lang);
+
+                var templateJson = EtlSubexpressionToJson(rootExpression, templateData.ItemData, templateLang, true);
                 templateJson["definitionStatus"] = parseResult.DefinitionStatus.Handle(
                     lit => lit == DefinitionStatusEnum.subtypeOf ? "<<<" : "===",
                     slot => "slot");
@@ -73,22 +75,21 @@ namespace SnomedTemplateService.Web.Controllers
         [HttpGet("")]
         public IEnumerable<object> List(string tag, string lang = "nl")
         {
-            return templateRepository.GetTemplates().Select(t => TemplateMetadataToJson(t, lang, tag)).Where(m => m != null).ToList();
+            var filterTagId = templateRepository.GetTagId(tag, lang);
+            return templateRepository.GetTemplates()
+                .Select(t => TemplateMetadataToJson(t, lang, filterTagId))
+                .Where(m => m != null).ToList();
         }
 
-        private IDictionary<string, object> TemplateMetadataToJson(TemplateData templateData, string lang, string filterTag = null)
+        private IDictionary<string, object> TemplateMetadataToJson(TemplateData templateData, string preferredLang, string filterTagId = null)
         {
-            lang = lang?.Trim() ?? "";
+            var templateLang = GetTemplateLanguage(templateData, preferredLang); 
 
-            if (lang.Length == 0)
-            {
-                throw new ArgumentNullException(nameof(lang));
-            }
-            if (filterTag != null && !templateData.Tags.Select(t=>t[lang]).Contains(filterTag, StringComparer.InvariantCultureIgnoreCase))
+            if (filterTagId != null && !templateData.TagIds.Contains(filterTagId))
             {
                 return null;
             }
-            
+
             var result = new Dictionary<string, object>
             {
                 ["id"] = templateData.Id,
@@ -98,19 +99,26 @@ namespace SnomedTemplateService.Web.Controllers
             {
                 result["authors"] = templateData.Authors.Select(a => !string.IsNullOrEmpty(a.Contact) ? (object)new { name = a.Name, contact = a.Contact } : new { name = a.Name }).ToArray();
             }
-            result["title"] = templateData.Title[lang];
-            if (!string.IsNullOrEmpty(templateData.Description[lang]))
+            result["supportedLanguages"] = templateData.SupportedLanguages;
+            result["currentLanguage"] = templateLang;
+            result["title"] = templateData.Title[templateLang];
+            if (!string.IsNullOrEmpty(templateData.Description[templateLang]))
             {
-                result["description"] = templateData.Description[lang];
+                result["description"] = templateData.Description[templateLang];
             }
             result["snomedVersion"] = templateData.SnomedVersion;
             result["snomedBranch"] = templateData.SnomedBranch;
-            result["tags"] = templateData.Tags.Select(t=>t[lang]).Where(t=>!string.IsNullOrEmpty(t)).ToList();
-            if (!string.IsNullOrEmpty(templateData.StringFormat[lang]))
+            result["tags"] = templateData.TagIds.Select(tagId=>templateRepository.GetTagName(tagId, preferredLang)).Where(t=>!string.IsNullOrEmpty(t)).ToList();
+            if (!string.IsNullOrEmpty(templateData.StringFormat[templateLang]))
             {
-                result["stringFormat"] = templateData.StringFormat[lang];
+                result["stringFormat"] = templateData.StringFormat[templateLang];
             }
             return result;
+        }
+
+        private string GetTemplateLanguage(TemplateData templateData, string preferredLang)
+        {
+            return templateData.SupportedLanguages.Contains(preferredLang) ? preferredLang : templateData.DefaultLanguage;
         }
 
         private IDictionary<string, object> EtlSubexpressionToJson(

@@ -1,36 +1,32 @@
 <?xml version="1.0"?>
-<template>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>Alice</name>
-      <contact />
+      <contact/>
     </author>
     <author>
       <name>John Doe</name>
       <contact>j.doe@example.org</contact>
     </author>
   </authors>
-  <title>
-    <txt lang="nl">CT-geleide operatie van lichaamsstructuur</txt>
-  </title>
-  <description>
-  </description>
-  <stringFormat>
-  </stringFormat>
-  <snomedVersion>2021-03-31</snomedVersion>
+  <title><txt lang="nl">CT-geleide operatie van lichaamsstructuur</txt></title>
+  
+  
+    <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <tags>
-    <tag id="Tag1"/>
-    <tag id="Tag2"/>
+    <tag id="Tag_1"/>
+    <tag id="Tag_2"/>
   </tags>
-  <etl>
-    <![CDATA[
+  <etl><![CDATA[
+    
 [[+tok (=== <<<)]] 71388002 |Procedure (procedure)| :
         [[1..1]] {  260686004 |Method (attribute)|   =  312251004 |Computed tomography imaging - action (qualifier value)|,
                       405813007 |Procedure site - Direct (attribute)|   =  [[+id (< 442083009 |Anatomical or acquired body structure (body structure)|  )]],
 363703001 |Has intent (attribute)| = 429892002 |Guidance intent (qualifier value)|  }
 [[1..1]] { 260686004 |Method (attribute)| = [[+id (<< 129284003 |Surgical action (qualifier value)| )]],
 405813007 |Procedure site - Direct (attribute)|  = [[+id (< 442083009 |Anatomical or acquired body structure (body structure)| )]] }
-      ]]>
-  </etl>
+      
+  ]]></etl>
 </template>

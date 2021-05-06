@@ -10,7 +10,7 @@ namespace SnomedTemplateService.Core.Domain
     {
         private ImmutableList<Author> authors;
         private ImmutableDictionary<string, Item> items;
-        private ImmutableList<MultiLanguageString> tags;
+        private ImmutableList<string> tagIds;
         private MultiLanguageString description;
         private MultiLanguageString title;
         private MultiLanguageString stringFormat;
@@ -20,6 +20,7 @@ namespace SnomedTemplateService.Core.Domain
             string timestamp,
             string snomedVersion,
             string snomedBranch,
+            string defaultLanguage,
             MultiLanguageString title,
             string etl
             )
@@ -28,22 +29,29 @@ namespace SnomedTemplateService.Core.Domain
             {
                 throw new ArgumentException($"'{nameof(snomedVersion)}' cannot be null or empty", nameof(snomedVersion));
             }
-
             if (string.IsNullOrEmpty(snomedBranch))
             {
                 throw new ArgumentException($"'{nameof(snomedBranch)}' cannot be null or empty", nameof(snomedBranch));
             }
-
+            if (string.IsNullOrEmpty(defaultLanguage))
+            {
+                throw new ArgumentException($"'{nameof(defaultLanguage)}' cannot be null or empty", nameof(defaultLanguage));
+            }
             if (string.IsNullOrEmpty(etl))
             {
                 throw new ArgumentException($"'{nameof(etl)}' cannot be null or empty", nameof(etl));
             }
-
-            tags = ImmutableList.Create<MultiLanguageString>();
-            
+            if (title == null)
+            {
+                throw new ArgumentNullException(nameof(title));
+            }
+            if (!title.IsTranslatedFor(defaultLanguage))
+            {
+                throw new ArgumentException($"'{nameof(title)}' should be translated for the default language.");
+            }
             Id = id;
-            Title = title ?? throw new ArgumentNullException(nameof(title));
-            Description = new MultiLanguageString();
+            DefaultLanguage = defaultLanguage;
+            Title = title;
             TimeStamp = timestamp;
             SnomedVersion = snomedVersion.Trim();
             SnomedBranch = snomedBranch.Trim();
@@ -55,6 +63,11 @@ namespace SnomedTemplateService.Core.Domain
         {
             get => authors;
             set => authors = value.ToImmutableList() ?? throw new ArgumentNullException(nameof(Authors));
+        }
+
+        public string DefaultLanguage
+        {
+            get;
         }
         public MultiLanguageString Title
         {
@@ -98,19 +111,19 @@ namespace SnomedTemplateService.Core.Domain
             };
         }
         public string Etl { get; }
-        public IList<MultiLanguageString> Tags
+        public IList<string> TagIds
         {
             get {
-                tags ??= ImmutableList.Create<MultiLanguageString>();
-                return tags;
+                tagIds ??= ImmutableList.Create<string>();
+                return tagIds;
             }
-            set => tags = value switch
+            set => tagIds = value switch
             {
-                null => throw new ArgumentNullException(nameof(Tags)),
-                var tags => tags.Select((tag, i) => tag switch
+                null => throw new ArgumentNullException(nameof(TagIds)),
+                var tagIds => tagIds.Select((tagId, i) => tagId switch
                 {
-                    null => throw new ArgumentNullException($"{nameof(Tags)}[{i}]"),
-                    var t => t
+                    null => throw new ArgumentNullException($"{nameof(TagIds)}[{i}]"),
+                    var id => id
                 }
                 ).ToImmutableList()
             };
@@ -127,18 +140,34 @@ namespace SnomedTemplateService.Core.Domain
                 null => throw new ArgumentNullException(nameof(ItemData)),
                 var items => items.Select(kv => kv.Value switch
                 {
-                    null => throw new ArgumentNullException($"{nameof(Tags)}[{kv.Key}]"),
+                    null => throw new ArgumentNullException($"{nameof(ItemData)}[{kv.Key}]"),
                     var t => kv
                 }).ToImmutableDictionary(kv => kv.Key, kv => kv.Value)
             };
+        }
+
+        public bool RequiredPropertiesAreTranslated(string lang)
+        {
+            return !string.IsNullOrWhiteSpace(title[lang]) &&
+                items.All(kv => !string.IsNullOrWhiteSpace(kv.Value.Title[lang]));
+        }
+
+        public ICollection<string> SupportedLanguages
+        {
+            get
+            {
+                return title.LanguagesForWhichStringIsTranslated.Where(
+                    l => RequiredPropertiesAreTranslated(l)
+                    ).ToList();
+            }
         }
 
         public class Item
         {
             public Item(MultiLanguageString title, MultiLanguageString description)
             {
-                Title = title;
-                Description = description;
+                Title = title ?? throw new ArgumentNullException(nameof(title));
+                Description = description ?? new MultiLanguageString();
             }
             public MultiLanguageString Title { get; }
             public MultiLanguageString Description { get; }
@@ -149,7 +178,8 @@ namespace SnomedTemplateService.Core.Domain
             public string Name { get; }
             public Author(string name)
             {
-                Name = name;
+                
+                Name = name ?? throw new ArgumentNullException(nameof(name));
             }
             public string Contact { get; set; }
         }

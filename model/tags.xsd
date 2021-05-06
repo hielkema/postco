@@ -17,6 +17,7 @@
           </xs:unique>
         </xs:element>
       </xs:sequence>
+      <xs:attribute name="defaultLang" type="nonEmptyString" use="required" />
     </xs:complexType>
     <xs:unique name="uniqueId">
       <xs:selector xpath="tag" />

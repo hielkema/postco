@@ -1,52 +1,38 @@
 <?xml version="1.0"?>
-<template>
-  <title>
-    <txt lang="nl">Congenitale/verworven misvorming van lichaamsstructuur</txt>
-  </title>
-  <description>
-  </description>
-  <stringFormat>
-  </stringFormat>
+<template defaultLang="nl">
+  <title><txt lang="nl">Congenitale/verworven misvorming van lichaamsstructuur</txt></title>
+  
+  
   <authors>
-    <author>
+    <author>  
       <name>Richard Roe</name>
-      <contact />
+      <contact/>
     </author>
   </authors>    
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <tags>
-    <tag id="Tag2"/>
+    <tag id="Tag_2"/>
   </tags>
-  <etl>
-    <![CDATA[
+  <etl><![CDATA[
+    
 [[+tok (=== <<<)]]  64572001 |Disease| :
          {  [[ @Site ]] 363698007 |Finding site|   =  [[+id (< 442083009 |Anatomical or acquired body structure (body structure)| )]],
             [[ @Morphology ]] 116676008 |Associated morphology|   =  [[+id (<<  6081001 |deformiteit (afwijkende morfologie)| )]],
 246454002 |levensperiode (attribuut)| = 767023003 |levensperiode tussen geboorte en dood (kwalificatiewaarde)| }
-      ]]>
-  </etl>
+      
+  ]]></etl>
   <items>
     <item name="Site">
-      <title>
-        <txt lang="nl">SiteTitle</txt>
-      </title>
-      <description>
-        <txt lang="nl">SiteDescription</txt>
-      </description>
+      <title><txt lang="nl">SiteTitle</txt></title>
+      <description><txt lang="nl">SiteDescription</txt></description>
     </item>
     <item name="Morphology">
-      <title>
-        <txt lang="nl">TitleNoDesc</txt>
-      </title>
+      <title><txt lang="nl">TitleNoDesc</txt></title>
     </item>
     <item name="NoMatch">
-      <title>
-        <txt lang="nl">NoMatch</txt>
-      </title>
-      <description>
-        <txt lang="nl">NoMatch</txt>
-      </description>
+      <title><txt lang="nl">NoMatch</txt></title>
+      <description><txt lang="nl">NoMatch</txt></description>
     </item>
   </items>
 </template>

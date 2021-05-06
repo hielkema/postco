@@ -1,33 +1,27 @@
 <?xml version="1.0"?>
-<template>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>Feikje Hielkema-Raadsveld</name>
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>
-    <txt lang="nl">Proliferatieve massa van anatomische locatie</txt>
-  </title>
-  <description>
-    <txt lang="nl">
+  <title><txt lang="nl">Proliferatieve massa van anatomische locatie</txt></title>
+  <description><txt lang="nl">
     Dit template kan worden gebruikt om een type proliferatieve massa (zoals een carcinoom) van elke mogelijke lichaamslocatie te specificeren.
     Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen. Gebruik daarvoor
     template 'afwijkingVanLocatieAanZijde'.
-  </txt>
-  </description>
+  </txt></description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>
-    <txt lang="nl">[0/0] van [0/1]</txt>
-  </stringFormat>
+  <stringFormat><txt lang="nl">[0/0] van [0/1]</txt></stringFormat>
   <!-- bv. benigne neoplasma van huid -->
   <tags>
     <tag id="Proliferatieve_massa"/>
     <tag id="Locatie"/>
   </tags>
-  <etl>
-    <![CDATA[
+  <etl><![CDATA[
+    
             64572001 |aandoening (aandoening)| : {
                 [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| = 
                 	[[+id (<< 416939005 |proliferatieve massa (afwijkende morfologie)|)]],
@@ -36,32 +30,20 @@
                       [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
                       })
 			}
-        ]]>
-  </etl>
+        
+  ]]></etl>
   <items>
     <item name="Afwijking">
-      <title>
-        <txt lang="nl">Afwijking</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welk type proliferatieve massa?</txt>
-      </description>
+      <title><txt lang="nl">Afwijking</txt></title>
+      <description><txt lang="nl">Welk type proliferatieve massa?</txt></description>
     </item>
     <item name="Locatie">
-      <title>
-        <txt lang="nl">Procedure site</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke locatie?</txt>
-      </description>
+      <title><txt lang="nl">Procedure site</txt></title>
+      <description><txt lang="nl">Welke locatie?</txt></description>
     </item>
     <item name="Lateraliteit">
-      <title>
-        <txt lang="nl">Lateraliteit</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke zijde?</txt>
-      </description>
+      <title><txt lang="nl">Lateraliteit</txt></title>
+      <description><txt lang="nl">Welke zijde?</txt></description>
     </item>
   </items>
 </template>

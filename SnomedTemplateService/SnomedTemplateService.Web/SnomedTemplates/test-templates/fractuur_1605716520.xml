@@ -1,45 +1,36 @@
 <?xml version="1.0"?>
-<template>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>Alice</name>
-      <contact />
+      <contact/>
     </author>
     <author>
       <name>Bob</name>
       <contact>bob@example.org</contact>
     </author>
   </authors>
-  <title>
-    <txt lang="nl">Fractuur</txt>
-  </title>
-  <description>
-    <txt lang="nl">Beschrijving Fractuur Template</txt>
-  </description>
-  <stringFormat>
-  </stringFormat>
+  <title><txt lang="nl">Fractuur</txt></title>
+  <description><txt lang="nl">Beschrijving Fractuur Template</txt></description>
+  
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <tags>
-    <tag id="Tag2"/>
+    <tag id="Tag_2"/>
   </tags>
-  <etl>
-    <![CDATA[
+  <etl><![CDATA[
+    
 [[+tok (=== <<<)]] 64572001 |Disease| :
         {  [[ @Site ]] 363698007 |Finding site|   =  [[+id (<<  272673000 |Bone structure| )]],
            [[ @FractureType ]] 116676008 |Associated morphology|   =  [[+id (<<  72704001 |Fracture|  )]] }
-      ]]>
-  </etl>
+      
+  ]]></etl>
   <items>
     <item name="Site">
-      <title>
-        <txt lang="nl">site</txt>
-      </title>
+      <title><txt lang="nl">site</txt></title>
     </item>
     <item name="FractureType">
-      <title>
-        <txt lang="nl">fracture type</txt>
-      </title>
+      <title><txt lang="nl">fracture type</txt></title>  
     </item>
   </items>
 </template>

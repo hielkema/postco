@@ -1,30 +1,24 @@
 <?xml version="1.0"?>
-<template>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>Elze de Groot</name>
       <contact>groot@nictiz.nl</contact>
-    </author>
+  </author>
   </authors>
-  <title>
-    <txt lang="nl">Complicatie met morfologie bij hulpmiddel</txt>
-  </title>
-  <description>
-    <txt lang="nl">
+  <title><txt lang="nl">Complicatie met morfologie bij hulpmiddel</txt></title>
+  <description><txt lang="nl">
     Dit template kan worden gebruikt om een complicatie bij een hulpmiddel vast te leggen met een morfologie.
-  </txt>
-  </description>
+  </txt></description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>
-    <txt lang="nl">[0/0] van [0/1]</txt>
-  </stringFormat>
+  <stringFormat><txt lang="nl">[0/0] van [0/1]</txt></stringFormat>
   <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
   <tags>
     <tag id="Complicatie"/>
   </tags>
-  <etl>
-    <![CDATA[
+  <etl><![CDATA[
+    
             116223007 |complicatie (aandoening)| : {
                 [[ @Morfologie ]] 260686004 |methode (attribuut)| = 
                 	[[+id (<< 49755003 |morfologische afwijking (afwijkende morfologie)|)]],
@@ -38,40 +32,24 @@
                 	[[+id (< 49062001 |hulpmiddel (fysiek object)|)]]
 			}
 			
-        ]]>
-  </etl>
+        
+  ]]></etl>
   <items>
     <item name="Locatie">
-      <title>
-        <txt lang="nl">Locatie</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke lichaamsstructuur?</txt>
-      </description>
+      <title><txt lang="nl">Locatie</txt></title>
+      <description><txt lang="nl">Welke lichaamsstructuur?</txt></description>
     </item>
     <item name="Bij">
-      <title>
-        <txt lang="nl">Bij</txt>
-      </title>
-      <description>
-        <txt lang="nl">Geassocieerd hulpmiddel (bv drain of katheter etc)</txt>
-      </description>
+      <title><txt lang="nl">Bij</txt></title>
+      <description><txt lang="nl">Geassocieerd hulpmiddel (bv drain of katheter etc)</txt></description>
     </item>
-    <item name="Morfologie">
-      <title>
-        <txt lang="nl">Morfologie</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke morfologie? </txt>
-      </description>
+	<item name="Morfologie">
+      <title><txt lang="nl">Morfologie</txt></title>
+      <description><txt lang="nl">Welke morfologie? </txt></description>
     </item>
     <item name="Lateraliteit">
-      <title>
-        <txt lang="nl">Lateraliteit</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke zijde?</txt>
-      </description>
+      <title><txt lang="nl">Lateraliteit</txt></title>
+      <description><txt lang="nl">Welke zijde?</txt></description>
     </item>
   </items>
 </template>

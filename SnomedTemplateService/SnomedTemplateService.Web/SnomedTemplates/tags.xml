@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<tags>
+<tags defaultLang="nl">
   <tag id="Laesie">
     <txt lang="nl">Laesie</txt>
   </tag>
@@ -45,10 +45,10 @@
   <tag id="MRCM_Template">
     <txt lang="nl">MRCM Template</txt>
   </tag>
-  <tag id="Tag1">
+  <tag id="Tag_1">
     <txt lang="nl">Tag 1</txt>
   </tag>
-  <tag id="Tag2">
+  <tag id="Tag_2">
     <txt lang="nl">Tag 2</txt>
   </tag>
 </tags>

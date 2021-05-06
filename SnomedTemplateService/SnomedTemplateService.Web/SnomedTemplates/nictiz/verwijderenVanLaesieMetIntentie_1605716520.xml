@@ -1,26 +1,20 @@
 <?xml version="1.0"?>
-<template>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>Feikje Hielkema-Raadsveld</name>
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>
-    <txt lang="nl">Verwijderen van laesie met intentie</txt>
-  </title>
-  <description>
-    <txt lang="nl">
+  <title><txt lang="nl">Verwijderen van laesie met intentie</txt></title>
+  <description><txt lang="nl">
     Dit template kan worden gebruikt om een verwijdering van een type laesie van een lichaamsstructuur met therapeutische
     of palliatieve intentie te specificeren.
     Je kunt hierbij locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen.
-  </txt>
-  </description>
+  </txt></description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>
-    <txt lang="nl">[0/0] van [0/2] van [0/1] met [0/3]</txt>
-  </stringFormat>
+  <stringFormat><txt lang="nl">[0/0] van [0/2] van [0/1] met [0/3]</txt></stringFormat>
   <!-- bv. verwijderen van carcinoom van blaas met palliatieve intentie -->
   <tags>
     <tag id="Verwijderen"/>
@@ -28,8 +22,8 @@
     <tag id="Intentie"/>
     <tag id="Locatie"/>
   </tags>
-  <etl>
-    <![CDATA[
+  <etl><![CDATA[
+    
             71388002 |verrichting (verrichting)| : {
                 [[ @Methode ]] 260686004 |methode (attribuut)| = 
                 	[[+id (<< 129303008 |verwijderen (kwalificatiewaarde)|)]],
@@ -44,48 +38,28 @@
                 [[ @Intentie ]] 363703001 |doel (attribuut)| = 
                 	[[+id (< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|)]]
 			}
-        ]]>
-  </etl>
+        
+  ]]></etl>
   <items>
     <item name="Methode">
-      <title>
-        <txt lang="nl">Methode</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke methode van verwijderen?</txt>
-      </description>
+      <title><txt lang="nl">Methode</txt></title>
+      <description><txt lang="nl">Welke methode van verwijderen?</txt></description>
     </item>
     <item name="Locatie">
-      <title>
-        <txt lang="nl">Locatie</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke locatie?</txt>
-      </description>
+      <title><txt lang="nl">Locatie</txt></title>
+      <description><txt lang="nl">Welke locatie?</txt></description>
     </item>
     <item name="Laesie">
-      <title>
-        <txt lang="nl">Laesie</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welk type laesie?</txt>
-      </description>
+      <title><txt lang="nl">Laesie</txt></title>
+      <description><txt lang="nl">Welk type laesie?</txt></description>
     </item>
     <item name="Intentie">
-      <title>
-        <txt lang="nl">Intentie</txt>
-      </title>
-      <description>
-        <txt lang="nl">Palliatief of therapeutisch?</txt>
-      </description>
+      <title><txt lang="nl">Intentie</txt></title>
+      <description><txt lang="nl">Palliatief of therapeutisch?</txt></description>
     </item>
     <item name="Lateraliteit">
-      <title>
-        <txt lang="nl">Lateraliteit</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke zijde?</txt>
-      </description>
+      <title><txt lang="nl">Lateraliteit</txt></title>
+      <description><txt lang="nl">Welke zijde?</txt></description>
     </item>
   </items>
 </template>

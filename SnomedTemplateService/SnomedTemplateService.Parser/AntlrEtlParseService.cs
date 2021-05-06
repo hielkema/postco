@@ -2,7 +2,7 @@
 using Antlr4.Runtime.Tree;
 using SnomedTemplateService.Core.Domain.Etl;
 using SnomedTemplateService.Core.Exceptions;
-using SnomedTemplateService.Core.Interfaces;
+using SnomedTemplateService.Core.Service;
 using SnomedTemplateService.Parser.Generated;
 using SnomedTemplateService.Util;
 using System;

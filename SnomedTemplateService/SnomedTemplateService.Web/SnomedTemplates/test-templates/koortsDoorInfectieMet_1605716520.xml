@@ -1,55 +1,41 @@
 <?xml version="1.0"?>
-<template>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>Feikje Hielkema</name>
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>
-    <txt lang="nl">Koorts door infectie met ziekteverwekker</txt>
-  </title>
-  <description>
-    <txt lang="nl">
+  <title><txt lang="nl">Koorts door infectie met ziekteverwekker</txt></title>
+  <description><txt lang="nl">
     Dit template kan worden gebruikt om vast te leggen dat de patiënt een infectieuze koorts heeft en
     welke ziekteverwekker die infectie veroorzaakt. Het concept heeft twee focusconcepten: koorts en (omdat koorts
     enkel een bevinding is) aandoening.
-  </txt>
-  </description>
+  </txt></description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>
-    <txt lang="nl">[0/0] van [0/1]</txt>
-  </stringFormat>
+  <stringFormat><txt lang="nl">[0/0] van [0/1]</txt></stringFormat>
   <!-- bv. fractuur van ulna -->
   <tags>
-    <tag id="Tag2"/>
+    <tag id="Tag_2"/>
   </tags>
-  <etl>
-    <![CDATA[
+  <etl><![CDATA[
+    
 			[[+tok (=== <<<) @DefStatus]] 386661006 |koorts (bevinding)| + 64572001 |aandoening (aandoening)|: 
             { 
             	[[ @Organism ]] 246075003 |Causative agent (attribute)| = [[+id (< 410607006 |organisme (organisme)| ) ]], 
               370135005 |pathologisch proces (attribuut)| = 441862004 |infectieus proces (kwalificatiewaarde)| 
             }
-        ]]>
-  </etl>
+        
+  ]]></etl>
   <items>
     <item name="DefStatus">
-      <title>
-        <txt lang="nl">Definitiestatus</txt>
-      </title>
-      <description>
-        <txt lang="nl">Voldoende of onvoldoende gedefinieerd?</txt>
-      </description>
+      <title><txt lang="nl">Definitiestatus</txt></title>
+      <description><txt lang="nl">Voldoende of onvoldoende gedefinieerd?</txt></description>
     </item>
     <item name="Organism">
-      <title>
-        <txt lang="nl">Ziekteverwekker</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke ziekteverwekker?</txt>
-      </description>
+      <title><txt lang="nl">Ziekteverwekker</txt></title>
+      <description><txt lang="nl">Welke ziekteverwekker?</txt></description>
     </item>
   </items>
 </template>

@@ -1,31 +1,25 @@
 <?xml version="1.0"?>
-<template>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>Feikje Hielkema-Raadsveld</name>
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>
-    <txt lang="nl">Voorbeeld kardinaliteit</txt>
-  </title>
-  <description>
-    <txt lang="nl">
+  <title><txt lang="nl">Voorbeeld kardinaliteit</txt></title>
+  <description><txt lang="nl">
     Een voorbeeld van een template waarin de kardinaliteit van een attribuut (in dit geval het attribuut Lateraliteit) gespecificeerd is.
     (afgeleid van 'Afwijking van anatomische locatie aan zijde (aandoening)')
-  </txt>
-  </description>
+  </txt></description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>
-    <txt lang="nl">[0/0] van [0/1] [0/1/0/0]</txt>
-  </stringFormat>
+  <stringFormat><txt lang="nl">[0/0] van [0/1] [0/1/0/0]</txt></stringFormat>
   <tags>
     <tag id="Laesie"/>
     <tag id="Locatie"/>
   </tags>
-  <etl>
-    <![CDATA[
+  <etl><![CDATA[
+    
             64572001 |aandoening (aandoening)| : {
                 [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| = [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|)]],
                 [[ @LocatieAttr ]] 363698007 |locatie van bevinding (attribuut)| =  
@@ -34,48 +28,28 @@
 			    [[ 0..1 @Lateraliteit2 ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
                             })
 			}
-        ]]>
-  </etl>
+        
+  ]]></etl>
   <items>
     <item name="Afwijking">
-      <title>
-        <txt lang="nl">Afwijking</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke morfologische afwijking?</txt>
-      </description>
+      <title><txt lang="nl">Afwijking</txt></title>
+      <description><txt lang="nl">Welke morfologische afwijking?</txt></description>
     </item>
     <item name="LocatieFocus">
-      <title>
-        <txt lang="nl">Locatie</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke locatie?</txt>
-      </description>
+      <title><txt lang="nl">Locatie</txt></title>
+      <description><txt lang="nl">Welke locatie?</txt></description>
     </item>
     <item name="LocatieAttr">
-      <title>
-        <txt lang="nl">Locatie</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke locatie?</txt>
-      </description>
+      <title><txt lang="nl">Locatie</txt></title>
+      <description><txt lang="nl">Welke locatie?</txt></description>
     </item>
     <item name="Lateraliteit">
-      <title>
-        <txt lang="nl">Lateraliteit</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke zijde?</txt>
-      </description>
+      <title><txt lang="nl">Lateraliteit</txt></title>
+      <description><txt lang="nl">Welke zijde?</txt></description>
     </item>
     <item name="Lateraliteit2">
-      <title>
-        <txt lang="nl">Tweede lateraliteit</txt>
-      </title>
-      <description>
-        <txt lang="nl">Welke tweede zijde?</txt>
-      </description>
+      <title><txt lang="nl">Tweede lateraliteit</txt></title>
+      <description><txt lang="nl">Welke tweede zijde?</txt></description>
     </item>
   </items>
 </template>
