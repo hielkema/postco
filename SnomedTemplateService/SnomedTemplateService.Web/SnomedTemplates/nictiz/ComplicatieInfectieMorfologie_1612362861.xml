@@ -12,7 +12,7 @@
   <description>
     <txt lang="nl">
     Dit template kan worden gebruikt om een complicatie van een infectie met morfologie vast te leggen, zoals infectieuze bursitis of infectieuze artritis.
-  </txt>
+    </txt>
   </description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
@@ -65,8 +65,14 @@
       </description>
     </item>
 	<item name="Veroorzaker">
-      <title>Veroorzaker</title>
-      <description>Veroorzaker van infectie indien bekend </description>
+      <title>
+        <txt lang="nl">Veroorzaker</txt>
+      </title>
+      <description>
+        <txt lang="nl">
+          Veroorzaker van infectie indien bekend
+        </txt>
+      </description>
     </item>
     <item name="Lateraliteit">
       <title>

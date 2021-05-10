@@ -6,16 +6,18 @@
 <contact>groot@nictiz.nl</contact>
 </author>
   </authors>
-  <title>Complicatie van lichaamsstructuur </title>
+  <title><txt lang="nl">Complicatie van lichaamsstructuur</txt></title>
   <description>
-    Dit template kan worden gebruikt om een complicatie met alleen een lichaamsstructuur als relatie vast te leggen. 
+    <txt lang="nl">
+      Dit template kan worden gebruikt om een complicatie met alleen een lichaamsstructuur als relatie vast te leggen.
+    </txt>
   </description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <stringFormat><txt lang="nl">[0/0] van [0/1]</txt></stringFormat>
   <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
   <tags>
-    <tag>Complicatie</tag>
+    <tag id="Complicatie"/>
   </tags>
   <etl>
     <![CDATA[
@@ -32,16 +34,16 @@
   </etl>
   <items>
     <item name="Locatie">
-      <title>Locatie</title>
-      <description>Welke lichaamsstructuur?</description>
+      <title><txt lang="nl">Locatie</txt></title>
+      <description><txt lang="nl">Welke lichaamsstructuur?</txt></description>
     </item>
 	  <item name="Verloop">
-      <title>Verloop</title>
-      <description>Wat is het klinisch verloop? (bv acuut, chronisch, recidief etc) </description>
+      <title><txt lang="nl">Verloop</txt></title>
+      <description><txt lang="nl">Wat is het klinisch verloop? (bv acuut, chronisch, recidief etc)</txt></description>
     </item>
     <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title><txt lang="nl">Lateraliteit</txt></title>
+      <description><txt lang="nl">Welke zijde?</txt></description>
     </item>
   </items>
 </template>

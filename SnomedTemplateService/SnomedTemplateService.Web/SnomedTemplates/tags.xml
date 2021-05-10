@@ -45,6 +45,9 @@
   <tag id="MRCM_Template">
     <txt lang="nl">MRCM Template</txt>
   </tag>
+  <tag id="Tumorgradering">
+    <txt lang="nl">Tumorgradering</txt>
+  </tag>
   <tag id="Tag1">
     <txt lang="nl">Tag 1</txt>
   </tag>

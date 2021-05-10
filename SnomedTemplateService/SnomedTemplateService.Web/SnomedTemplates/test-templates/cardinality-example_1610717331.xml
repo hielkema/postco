@@ -13,7 +13,10 @@
     <txt lang="nl">
     Een voorbeeld van een template waarin de kardinaliteit van een attribuut (in dit geval het attribuut Lateraliteit) gespecificeerd is.
     (afgeleid van 'Afwijking van anatomische locatie aan zijde (aandoening)')
-  </txt>
+    </txt>
+    <txt lang="en">
+    Testvertaling Engels
+    </txt>
   </description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
