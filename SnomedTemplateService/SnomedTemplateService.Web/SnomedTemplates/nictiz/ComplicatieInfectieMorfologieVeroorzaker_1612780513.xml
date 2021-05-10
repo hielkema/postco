@@ -34,7 +34,7 @@
                       }),
                 [[ @Infectie ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
                     [[+id (< 441862004 |infectieus proces (kwalificatiewaarde)|) ]],
-                [[ @Veroorzaker ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
+                [[ @Veroorzaker ]] 246075003 |veroorzaker (attribuut)| =  
                     [[+id (< 410607006 |organisme (organisme)|) ]]
 			}
         ]]>

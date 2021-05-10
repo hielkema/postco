@@ -2,11 +2,11 @@
   <div>
     <v-card color="grey lighten-3">
         <v-card-title>
-            Expressie
+            {{ translations.card_title }}
         </v-card-title>
         <v-card-text>
             <pre>{{formatted}}</pre>
-            <v-btn @click="copyText()">Copy</v-btn>
+            <v-btn @click="copyText()">{{ translations.copy_button }}</v-btn>
         </v-card-text>
     </v-card>
   </div>
@@ -18,7 +18,7 @@ export default {
   data: () => {
     return {
       retrieved: false,
-      expressie : 'Laden...',
+      expressie : "Loading",
       snowstorm: {
           focusConcepts: []
       }
@@ -30,6 +30,9 @@ export default {
     },
     postcoData(){
         return this.$store.state.templates.expressionParts
+    },
+    translations(){
+      return this.$t("components.renderExpression")
     },
     formatted(){
         var data = this.postcoData

@@ -8,7 +8,7 @@
         <templateAttributePrecoordinated v-bind:attributeKey="key" v-bind:groupKey="groupParents" v-bind:componentData="attribute" />
       </div>
       <div v-if="attribute.hasOwnProperty('template')">
-        Dubbel geneste templates worden niet ondersteund.
+        {{translations.errors.double_nested}}
       </div>
     </div>
   </div>
@@ -35,6 +35,9 @@ export default {
     },
     thisGroup(){
       return this.groupData
+    },
+    translations(){
+      return this.$t("components.templateNestedGroup")
     }
   }
 }

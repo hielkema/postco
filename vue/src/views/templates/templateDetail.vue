@@ -7,9 +7,10 @@
 
 		<v-row>
 			<v-col cols=12>
+				<!-- Title card -->
 				<v-card>
 					<v-card-title>
-						<strong>Postcoördinatie tooling</strong>
+						<strong>{{ $t('templateDetail.title_card.card_title') }}</strong>
 						<v-spacer />
 						{{$route.params.templateID}}
 						<v-spacer />
@@ -18,7 +19,8 @@
 					</v-card-title>
 				</v-card>
 				<v-card-text>
-					<v-btn @click="backToList()">Terug naar het overzicht met templates</v-btn>
+					<!-- Button for navigating back to template list -->
+					<v-btn @click="backToList()">{{ $t('templateDetail.title_card.back_button') }}</v-btn>
 				</v-card-text>
 			</v-col>
 		</v-row>
@@ -32,15 +34,17 @@
 			</v-col>
 		</v-row>
 		
+		<!-- Loading message -->
 		<v-row v-if="loading.template">
 			<v-col cols=12>
 				<v-card>
 					<v-card-text>
-						De template wordt geladen.. even geduld.
+						{{ $t('templateDetail.loading_card.card_text') }}
 					</v-card-text>
 				</v-card>
 			</v-col>
 		</v-row>
+
 		<v-row v-if="!loading.template">
 			<v-col cols=4>
 				<v-row>
@@ -55,7 +59,7 @@
 						class="mb-1"
 						>
 							<v-card-title>
-								Focusconcepten
+								{{ $t('templateDetail.focus_concept_card.card_title') }}
 							</v-card-title>
 						</v-card>
 						<div v-for="(focus, key) in selectedTemplate.template.focus" :key="key">
@@ -78,11 +82,13 @@
 				</v-row>
 			</v-col>
 		</v-row>
+
+		<!-- Attribute card -->
 		<v-row v-if="!loading.template">
 			<v-col cols=12>
 				<v-card>
 					<v-card-title>
-						Attributen
+						{{ $t('templateDetail.attributes_card.card_title') }}
 					</v-card-title>
 					<v-card-text>
 						<templateGroup v-for="(group, key) in selectedTemplate.template.groups" :key="key" v-bind:groupData="group" v-bind:groupKey="key" />
@@ -90,11 +96,15 @@
 				</v-card>
 			</v-col>
 		</v-row>
+
+		<!-- Expression card -->
 		<v-row v-if="!loading.template">
 			<v-col cols=12>
 				<renderExpression />
 			</v-col>
 		</v-row>
+
+		<!-- Human readable string card -->
 		<v-row v-if="!loading.template">
 			<v-col cols=12>
 				<renderDescriptionString />
