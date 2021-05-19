@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <authors>
+    <author>
+      <name>Elze de Groot</name>
+      <contact>groot@nictiz.nl</contact>
+  </author>
+  </authors>
+  <title><txt lang="nl">Complicatie met morfologie na implantatie van gewrichtsprothese</txt></title>
+  <description>
+    <txt lang="nl">
+      Dit template kan worden gebruikt om een complicatie eventueel met morfologie na implantatie van gewrichtsprothese vast te leggen.
+    </txt>
+  </description>
+  <snomedVersion>2021-03-31</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat><txt lang="nl">[0/0] van [0/1]</txt></stringFormat>
+  <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
+  <tags>
+    <tag id="Complicatie"/>
+  </tags>
+  <etl>
+    <![CDATA[
+            116223007 |complicatie (aandoening)| : {
+                [[ 0..1 @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
+                	[[+id (<< 49755003 |morfologische afwijking (afwijkende morfologie)|)]],
+				[[ 0..1 @Infectie ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
+                    [[+id ( 441862004 |infectieus proces (kwalificatiewaarde)|) ]],
+                 363698007 |locatie van bevinding (attribuut)| =  
+                    ([[ @Locatie ]] [[+id (<< 39352004 |structuur van gewricht (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      })
+            }
+            {
+                [[ @Na ]] 255234002 |na (attribuut)| = 
+                	[[+id (<< 61557004 |implantatie van gewrichtsprothese (verrichting)|)]]
+					}
+					{
+				[[ @Bij ]] 47429007 |bij (attribuut)| = 
+                	[[+id (<< 15447007 |prothese van gewricht (fysiek object)|)]]
+			}
+			
+        ]]>
+  </etl>
+  <items>
+    <item name="Locatie">
+      <title><txt lang="nl">Locatie</txt></title>
+      <description><txt lang="nl">Welke lichaamsstructuur?</txt></description>
+    </item>
+	<item name="Infectie">
+      <title><txt lang="nl">Infectie</txt></title>
+      <description><txt lang="nl">Infectie van prothese</txt></description>
+    </item>
+    <item name="Na">
+      <title><txt lang="nl">Na</txt></title>
+      <description><txt lang="nl">implantatie van gewrichtsprothese</txt></description>
+    </item>
+	<item name="Bij">
+      <title><txt lang="nl">Bij</txt></title>
+      <description><txt lang="nl">gewrichtsprothese</txt></description>
+    </item>
+	<item name="Morfologie">
+      <title><txt lang="nl">Morfologie</txt></title>
+      <description><txt lang="nl">Welke morfologie?</txt></description>
+    </item>
+    <item name="Lateraliteit">
+      <title><txt lang="nl">Lateraliteit</txt></title>
+      <description><txt lang="nl">Welke zijde?</txt></description>
+    </item>
+  </items>
+</template>

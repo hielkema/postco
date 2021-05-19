@@ -7,7 +7,7 @@
               <tbody>
                 <tr>
                   <td width="350px">
-                    <strong>Focusconcept <!-- [{{groupKey}}/{{attributeKey}}] --></strong><br>
+                    <strong>{{translations.row_title}} <!-- [{{groupKey}}/{{attributeKey}}] --></strong><br>
                     {{ templateData.template.focus[0].title }}: {{templateData.template.focus[0].display}}
                   </td>
                   <td>
@@ -40,8 +40,8 @@ export default {
   data: () => {
     return {
       select: null,
-      attribute: 'laden...',
-      attributeValue: 'laden...',
+      attribute: 'Loading',
+      attributeValue: 'Loading',
       items: [],
       search: null,
       loading: {
@@ -56,7 +56,7 @@ export default {
       var that = this
       return new Promise((resolve, reject) => {
         var branchVersion = encodeURI(that.requestedTemplate.snomedBranch + '/' + that.requestedTemplate.snomedVersion)
-        that.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
+        that.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid, {headers : {'accept-language' : that.$i18n.locale}})
         .then((response) => {
           that.attribute = {
             'display' : response.data.fsn.term,
@@ -68,7 +68,7 @@ export default {
             'preferred': response.data.pt.term,
           })
         }).catch((error) => {
-          that.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateNestedFocusPrecoordinated] ['+error+']')
+          that.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateNestedFocusPrecoordinated] ['+error+']')
           
           reject('Error retrieveAttribute')
         })
@@ -78,7 +78,7 @@ export default {
       var that = this
       return new Promise(function(resolve) {
         var branchVersion = encodeURI(that.requestedTemplate.snomedBranch + '/' + that.requestedTemplate.snomedVersion)
-        that.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid)
+        that.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid, {headers : {'accept-language' : that.$i18n.locale}})
         .then((response) => {
           that.attributeValue = {
             'display': response.data.fsn.term,
@@ -94,7 +94,7 @@ export default {
           setTimeout(() => {
             that.retrieveAttributeValueTerms (conceptid)
           }, 5000)
-          that.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributePrecoordinated]')
+          that.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
         })
       })
     },
@@ -122,6 +122,9 @@ export default {
     },
     thisComponent(){
       return this.componentData
+    },
+    translations(){
+      return this.$t("components.templateNestedFocusPrecoordinated")
     }
   },
   mounted: function(){
@@ -152,10 +155,10 @@ export default {
             }
         })
     ).catch(()=>{
-      this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributePrecoordinated]')
+      this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
       this.retrieveAttributeValueTerms(this.templateData.template.focus[0].conceptId)
     })).catch(()=>{
-      this.$store.dispatch('templates/addErrormessage', 'Er is een fout opgetreden bij het ophalen van een term. [templateAttributePrecoordinated]')
+      this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
       this.retrieveAttributeTerms(this.templateData.attribute)
     })
     this.retrieved = true

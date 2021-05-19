@@ -3,42 +3,39 @@
     <v-app>
       <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
       <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
-      <!-- <v-navigation-drawer
-        v-model="drawer"
-        app
-        clipped
-      >
-        <v-list dense>
-          <v-list-item link>
-            <v-list-item-action>
-              <v-icon>mdi-account-key</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>test</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item link>
-            <v-list-item-action>
-              <v-icon>view-dashboard</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Home</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-navigation-drawer>
-
-      <v-app-bar
-        app
-        clipped-left
-      >
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-        <v-toolbar-title>Application</v-toolbar-title>
-      </v-app-bar> -->
-
+      
       <v-main>
         <v-container fluid>
-          <router-view/>
+          <v-row>
+            <v-col cols=5>
+              <v-card>
+                <v-card-title>
+                  <!-- Choose active language -->
+                  {{$t("language.language_picker_header")}}
+                </v-card-title>
+                <v-card-text>
+                  <!-- Component that creates the picklist and sets the active language -->
+                  <LocaleSwitcher />
+                </v-card-text>
+              </v-card>
+            </v-col>
+            <v-col cols=5>
+              <v-card>
+                <v-card-title>
+                  <!-- Choose active language -->
+                  {{$t("language.active_language")}}
+                </v-card-title>
+                <v-card-text>
+                  {{ $i18n.locale }}
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols=12>
+              <router-view/>
+            </v-col>
+          </v-row>
         </v-container>
       </v-main>
 
@@ -51,6 +48,7 @@
 </template>
 
 <script>
+import LocaleSwitcher from "@/components/templateFrontend/localeSwitcher"
 
 export default {
   name: 'App',
@@ -61,6 +59,7 @@ export default {
     drawer: null
   }),
   components: {
+		LocaleSwitcher
   },
   created () {
     this.$vuetify.theme.dark = false;

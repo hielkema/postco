@@ -1,15 +1,17 @@
-<?xml version="1.0"?>
-<template defaultLang="nl">
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
   <authors>
     <author>
       <name>Elze de Groot</name>
       <contact>groot@nictiz.nl</contact>
     </author>
   </authors>
-  <title><txt lang="nl">Complicatie van infectie met morfologie met optioneel veroorzaker</txt></title>
-  <description><txt lang="nl">
-    Dit template kan worden gebruikt om een complicatie van een infectie met morfologie vast te leggen. Eventueel kan de veroorzaker toegevoegd worden.
-  </txt></description>
+  <title><txt lang="nl">Complicatie van infectie van wond met optioneel veroorzaker</txt></title>
+  <description>
+    <txt lang="nl">
+      Dit template kan worden gebruikt om een complicatie van een infectie van een (oppervlakkige of diepe) wond vast te leggen. Eventueel kan de veroorzaker toegevoegd worden.
+    </txt>
+  </description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <stringFormat><txt lang="nl">[0/0] van [0/1]</txt></stringFormat>
@@ -17,26 +19,26 @@
   <tags>
     <tag id="Complicatie"/>
   </tags>
-  <etl><![CDATA[
-    
-           === 116223007 |complicatie (aandoening)| : {
+  <etl>
+    <![CDATA[
+           === [[ @Focus ]] [[+id(213286009 |diepe postoperatieve wondinfectie (aandoening)| OR 213287000 |postoperatieve oppervlakkige infectie van verwonding (aandoening)| OR 116223007 |complicatie (aandoening)|) ]] : {
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
-                    [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|) ]],
+                    [[+id ( 112633009 |operatiewond (afwijkende morfologie)|) ]],
                 363698007 |locatie van bevinding (attribuut)| =
                   ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
                       [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
                       }),
                 [[ @Infectie ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
-                    [[+id (< 441862004 |infectieus proces (kwalificatiewaarde)|) ]],
-                [[ @Veroorzaker ]] 246075003 |veroorzaker (attribuut)| =  
+                    [[+id ( 441862004 |infectieus proces (kwalificatiewaarde)|) ]],
+                [[ 0..1 @Veroorzaker ]] 308489006 |pathologisch proces (kwalificatiewaarde)| =  
                     [[+id (< 410607006 |organisme (organisme)|) ]]
 			}
-        
-  ]]></etl>
+        ]]>
+  </etl>
   <items>
     <item name="Morfologie">
       <title><txt lang="nl">Morfologie</txt></title>
-      <description><txt lang="nl">Welke morfologie?</txt></description>
+      <description><txt lang="nl">Operatiewond</txt></description>
     </item>
     <item name="Locatie">
       <title><txt lang="nl">Locatie</txt></title>
@@ -49,6 +51,10 @@
     <item name="Infectie">
       <title><txt lang="nl">Infectieus proces</txt></title>
       <description><txt lang="nl">Infectieus proces</txt></description>
+    </item>
+	 <item name="Focus">
+      <title><txt lang="nl">Wanneer welk focusconcept gebruiken?</txt></title>
+      <description><txt lang="nl">Gebruik 213286009 bij een diepe wondinfectie, 213287000 bij een oppervlakkige wondinfectie en 116223007 wanneer je niet wilt specificeren naar diep of oppervlakkig  </txt></description>
     </item>
     <item name="Lateraliteit">
       <title><txt lang="nl">Lateraliteit</txt></title>
