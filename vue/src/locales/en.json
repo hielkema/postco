@@ -58,6 +58,10 @@
 		},
 		"attributes_card" : {
 			"card_title" : "Attributes"
+		},
+		"errors" : {
+			"multiple" : "Multiple errors have occurred. Most likely the Snowstorm server is down or unreachable. Please contact the administrator.",
+			"language_not_available" : "The chosen template is not available in the selected language. The tool will function, but not all text may be in English."
 		}
 	},
 	"components" : {

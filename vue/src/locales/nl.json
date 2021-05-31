@@ -9,7 +9,7 @@
 			"filters" : {
 				"search" : {
 					"label" : "Zoeken",
-					"hint" : "Zoek op Naam, Titel, Beschrijving of SNOMED versie"
+					"hint" : "Zoek op Naam, Titel, Beschrijving of SNOMED-versie"
 				},
 				"tags" : {
 					"label" : "Tags",
@@ -39,7 +39,7 @@
 				"authors" : "Auteur",
 				"languages" : "Talen",
 				"tags" : "Tags",
-				"snomedVersion" : "SNOMED versie",
+				"snomedVersion" : "SNOMED-versie",
 				"time" : "Timestamp versie",
 				"open" : "Open"	
 			}
@@ -58,6 +58,10 @@
 		},
 		"attributes_card" : {
 			"card_title" : "Attributen"
+		},
+		"errors" : {
+			"multiple" : "Er zijn meerdere fouten opgetreden. Waarschijnlijk is de Snowstorm server niet bereikbaar. Neem contact op met de beheerder.",
+			"language_not_available" : "Deze template is niet beschikbaar in de gekozen taal. De tool werkt wel, maar niet alle tekst zal beschikbaar zijn in het Nederlands."
 		}
 	},
 	"components" : {
@@ -123,7 +127,7 @@
 		"templateMetadata" : {
 			"card_title" : "Template details",
 			"template_id" : "Template ID",
-			"snomed_version" : "SNOMED versie",
+			"snomed_version" : "SNOMED-versie",
 			"snomed_branch" : "SNOMED branch",
 			"creation_date" : "Datum aanmaken template"
 		},

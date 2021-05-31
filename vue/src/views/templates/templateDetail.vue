@@ -2,11 +2,6 @@
 	<div>
 		<v-row>
 			<v-col cols=12>
-			</v-col>
-		</v-row>
-
-		<v-row>
-			<v-col cols=12>
 				<!-- Title card -->
 				<v-card>
 					<v-card-title>
@@ -24,12 +19,23 @@
 				</v-card-text>
 			</v-col>
 		</v-row>
-		
-		<v-row>
+		<v-row v-if="!selectedTemplate.supportedLanguages.includes($i18n.locale)">
 			<v-col cols=12>
+				<v-alert type="info">
+					{{ $t('templateDetail.errors.language_not_available') }}
+				</v-alert>
+			</v-col>
+		</v-row>
+		<v-row>
+			<v-col cols=12 v-if="error.list.length <= 5">
 				<v-alert type="error"
 					v-for="(message, key) in error.list" :key="key">
 					{{message}} <v-spacer/> <v-btn text @click="removeError(key)">Verberg</v-btn>
+				</v-alert>
+			</v-col>
+			<v-col cols=12 v-if="error.list.length > 5">
+				<v-alert type="error">
+					{{ $t('templateDetail.errors.multiple') }}
 				</v-alert>
 			</v-col>
 		</v-row>
