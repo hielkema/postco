@@ -9,7 +9,7 @@
 					</v-card-title>
 					<v-card-text>
 						<v-row>	
-							<v-col cols=5>
+							<v-col cols=12>
 								<v-text-field
 									v-model="searchString"
 									append-icon="mdi-magnify"
@@ -18,7 +18,7 @@
 									dense
 								></v-text-field>
 							</v-col>
-							<v-col cols=5>
+							<v-col cols=3>
 								<v-select
 									v-model="filterTag"
 									:items="tagList"
@@ -30,7 +30,7 @@
 									dense
 								></v-select>
 							</v-col>
-							<v-col cols=5>
+							<v-col cols=3>
 								<v-select
 									v-model="filterEdition"
 									:items="editionList"
@@ -41,7 +41,7 @@
 									dense
 								></v-select>
 							</v-col>
-							<v-col cols=5>
+							<v-col cols=3>
 								<v-select
 									v-model="filterOrganization"
 									:items="organizationList"
@@ -49,6 +49,17 @@
 									chips
 									:label="$t('templateList.filter_card.filters.organization.label')"
 									:hint="$t('templateList.filter_card.filters.organization.hint')"
+									dense
+								></v-select>
+							</v-col>
+							<v-col cols=3>
+								<v-select
+									v-model="filterLanguage"
+									:items="languageList"
+									attach
+									chips
+									:label="$t('templateList.filter_card.filters.language.label')"
+									:hint="$t('templateList.filter_card.filters.language.hint')"
 									dense
 								></v-select>
 							</v-col>
@@ -81,9 +92,6 @@
 								items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
 							</template>
 							<template v-slot:item.title="{ item }"><br>
-								<!-- {{item.title}}<br>
-								<i><small>{{item.id}}</small></i> -->
-
 								<v-tooltip bottom>
 									<template v-slot:activator="{ on, attrs }">
 										<span
@@ -127,6 +135,14 @@
 								{{tag}}
 								</v-chip>
 							</template>
+							<template v-slot:item.supportedLanguages="{ item }"><br>
+								<v-chip
+									class="ma-2"
+									v-for="(tag, key) in item.supportedLanguages" :key="key"
+								>
+								{{tag}}
+								</v-chip>
+							</template>
 						</v-data-table>
 					</v-card-text>
 				</v-card>
@@ -144,6 +160,7 @@ export default {
 			filterTag: [],
 			filterEdition: '',
 			filterOrganization: '',
+			filterLanguage : '',
 		}
     },
 	components: {
@@ -162,6 +179,7 @@ export default {
 				// { text: this.$t("templateList.list_card.table_headers.id"), value: 'id' },
 				{ text: this.$t("templateList.list_card.table_headers.title"), value: 'title' },
 				// { text: this.$t("templateList.list_card.table_headers.description"), value: 'description' },
+				{ text: this.$t("templateList.list_card.table_headers.languages"), value: 'supportedLanguages', sortable: false },
 				{ text: this.$t("templateList.list_card.table_headers.tags"), value: 'tags', sortable: false },
 				{ text: this.$t("templateList.list_card.table_headers.snomedVersion"), value: 'snomedVersion', width: "160px" },
 				{ text: this.$t("templateList.list_card.table_headers.authors"), value: 'authors', width: "220px" },
@@ -178,12 +196,14 @@ export default {
 		templates_filtered(){
 			var that = this
 			let filterTag = this.filterTag
+			let filterLanguage = this.filterLanguage
 			let filterEdition = this.filterEdition.toString()
 			let filterOrganization = this.filterOrganization.toString()
 			
             return this.$store.state.templates.availableTemplates.filter(function(item){
                 let filtered = true
 				
+				// Filter on tags
 				let singleTag = true
 				for(var tag of filterTag){
 					if(that.filterTag && filterTag && (filterTag.length > 0)){
@@ -195,11 +215,19 @@ export default {
 				}
 				filtered = singleTag
 				
+				// Filter on snomed edition
                 if(filtered){
                     if(that.filterEdition && filterEdition && filterEdition.length > 0){
                         filtered = item.snomedVersion == filterEdition
                     }
                 }
+				// Filter on language
+                if(filtered){
+                    if(that.filterLanguage && filterLanguage && filterLanguage.length > 0){
+                        filtered = filterLanguage.includes(item.supportedLanguages)
+                    }
+                }
+				// Filter on organization
                 if(filtered){
                     if(that.filterOrganization && filterOrganization && filterOrganization.length > 0){
                         filtered = item.id.split("_")[0] == filterOrganization
@@ -224,6 +252,15 @@ export default {
 				editions.push(template.snomedVersion)
 			}
 			return [...new Set(editions)]
+		},
+		languageList(){
+			var languages = []
+			for(var template of this.templates){
+				for(var language of template.supportedLanguages){
+					languages.push(language)
+				}
+			}
+			return [...new Set(languages)]
 		},
 		organizationList(){
 			var organizations = []

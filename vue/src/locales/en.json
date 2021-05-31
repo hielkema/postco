@@ -22,6 +22,10 @@
 				"organization" : {
 					"label" : "Organisation",
 					"hint" : "Filter on organisation"
+				},
+				"language" : {
+					"label" : "Language",
+					"hint" : "Filter on template language"
 				}
 			}
 		},
@@ -34,6 +38,7 @@
 				"description" :	"Description",
 				"authors" : "Author",
 				"tags" : "Tags",
+				"languages" : "Languages",
 				"snomedVersion" : "SNOMED version",
 				"time" : "Timestamp version",
 				"open" : "Open"	
@@ -117,6 +122,7 @@
 		},
 		"templateMetadata" : {
 			"card_title" : "Template details",
+			"template_id" : "Template ID",
 			"snomed_version" : "SNOMED version",
 			"snomed_branch" : "SNOMED branch",
 			"creation_date" : "Template creation date"

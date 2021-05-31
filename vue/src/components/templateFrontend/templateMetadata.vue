@@ -9,6 +9,12 @@
         <v-card-text class="text-left">
           <table>
             <tr>
+              <th>{{translations.template_id}}</th>
+              <td>
+                {{ requestedTemplate.id }}
+              </td>
+            </tr>
+            <tr>
               <th>{{translations.snomed_version}}</th>
               <td>
                 {{ requestedTemplate.snomedVersion }}

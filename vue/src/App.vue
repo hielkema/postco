@@ -19,17 +19,6 @@
                 </v-card-text>
               </v-card>
             </v-col>
-            <v-col cols=5>
-              <v-card>
-                <v-card-title>
-                  <!-- Choose active language -->
-                  {{$t("language.active_language")}}
-                </v-card-title>
-                <v-card-text>
-                  {{ $i18n.locale }}
-                </v-card-text>
-              </v-card>
-            </v-col>
           </v-row>
           <v-row>
             <v-col cols=12>
@@ -40,7 +29,7 @@
       </v-main>
 
       <v-footer app>
-        <span>&copy; 2020</span>
+        <span>&copy; 2021</span>
       </v-footer>
     </v-app>
   </div>

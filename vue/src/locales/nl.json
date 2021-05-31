@@ -22,6 +22,10 @@
 				"organization" : {
 					"label" : "Organisatie",
 					"hint" : "Filter op organisatie"
+				},
+				"language" : {
+					"label" : "Taal",
+					"hint" : "Filter op taal"
 				}
 			}
 		},
@@ -33,6 +37,7 @@
 				"title" : "Titel",
 				"description" :	"Beschrijving",
 				"authors" : "Auteur",
+				"languages" : "Talen",
 				"tags" : "Tags",
 				"snomedVersion" : "SNOMED versie",
 				"time" : "Timestamp versie",
@@ -117,6 +122,7 @@
 		},
 		"templateMetadata" : {
 			"card_title" : "Template details",
+			"template_id" : "Template ID",
 			"snomed_version" : "SNOMED versie",
 			"snomed_branch" : "SNOMED branch",
 			"creation_date" : "Datum aanmaken template"
