@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { bus } from '@/main';
 export default {
   name: 'RootconceptComponent',
   props: ['focus', 'focusKey'],
@@ -75,6 +76,12 @@ export default {
   mounted: function(){
     this.retrieveFSN(this.focus.conceptId)
     this.retrieved = true
+  },
+  created (){
+    bus.$on('changeIt', (data) => {
+      console.log(data)
+      this.retrieveFSN(this.focus.conceptId)
+    })
   }
   
 }

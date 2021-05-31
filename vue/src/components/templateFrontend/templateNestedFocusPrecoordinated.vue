@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { bus } from '@/main';
 export default {
   name: 'TemplateAttribute',
   data: () => {
@@ -112,6 +113,44 @@ export default {
       this.items = output
       this.loading = false
       return true;
+    },
+    saveBlankExpression(){
+      this.$store.dispatch('templates/saveAttribute', 
+      {
+        'groupKey':this.groupKey, 
+        'attributeKey': this.attributeKey, 
+        'attribute' : {
+          'id':'....', 
+          'display':'....',
+          }, 
+        'concept': {
+          'id' : '.....',
+          'display' : '....',
+        },
+      })
+    },
+    fetchDisplayTermsExpression(){
+      this.retrieveAttributeTerms(this.templateData.attribute).then((attribute)=>(
+        this.retrieveAttributeValueTerms(this.templateData.template.focus[0].conceptId)).then((attributeValue)=>
+          this.$store.dispatch('templates/saveAttribute', {
+            'groupKey':this.groupKey, 'attributeKey': this.attributeKey, 'attribute' : {
+                'id':this.templateData.attribute,
+                'display': attribute.preferred,
+                'preferred': attribute.preferred,
+              }, 'concept': {
+                'id': this.templateData.template.focus[0].conceptId,
+                'display': attributeValue.preferred,
+                'preferred': attributeValue.preferred,
+              }
+          })
+      ).catch(()=>{
+        this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
+        this.retrieveAttributeValueTerms(this.templateData.template.focus[0].conceptId)
+      })).catch(()=>{
+        this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
+        this.retrieveAttributeTerms(this.templateData.attribute)
+      })
+      this.retrieved = true
     }
   },
   watch: {
@@ -128,40 +167,14 @@ export default {
     }
   },
   mounted: function(){
-    this.$store.dispatch('templates/saveAttribute', 
-      {
-        'groupKey':this.groupKey, 
-        'attributeKey': this.attributeKey, 
-        'attribute' : {
-          'id':'....', 
-          'display':'....',
-          }, 
-        'concept': {
-          'id' : '.....',
-          'display' : '....',
-        },
-      })
-    this.retrieveAttributeTerms(this.templateData.attribute).then((attribute)=>(
-      this.retrieveAttributeValueTerms(this.templateData.template.focus[0].conceptId)).then((attributeValue)=>
-        this.$store.dispatch('templates/saveAttribute', {
-          'groupKey':this.groupKey, 'attributeKey': this.attributeKey, 'attribute' : {
-              'id':this.templateData.attribute,
-              'display': attribute.preferred,
-              'preferred': attribute.preferred,
-            }, 'concept': {
-              'id': this.templateData.template.focus[0].conceptId,
-              'display': attributeValue.preferred,
-              'preferred': attributeValue.preferred,
-            }
-        })
-    ).catch(()=>{
-      this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
-      this.retrieveAttributeValueTerms(this.templateData.template.focus[0].conceptId)
-    })).catch(()=>{
-      this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
-      this.retrieveAttributeTerms(this.templateData.attribute)
+    this.saveBlankExpression()
+    this.fetchDisplayTermsExpression()
+  },
+  created (){
+    bus.$on('changeIt', (data) => {
+      console.log(data)
+      this.fetchDisplayTermsExpression()
     })
-    this.retrieved = true
   }
 }
 </script>

@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import { bus } from '@/main';
 export default {
   name: 'TemplateAttribute',
   data: () => {
@@ -134,6 +135,23 @@ export default {
       this._timerId = setTimeout(() => {
         this.retrieveECL(this.search)
       }, 500)
+    },
+    saveBlankExpression(){
+      this.$store.dispatch('templates/saveAttribute', 
+        {
+          'groupKey':this.groupKey, 
+          'attributeKey': this.attributeKey, 
+          'attribute' : {
+            'id':'....', 
+            'display':'....',
+            'preferred':'....',
+            }, 
+          'concept': {
+            'id' : '.....',
+            'display' : '....',
+            'preferred':'....',
+          },
+        })
     }
   },
   watch: {
@@ -157,24 +175,16 @@ export default {
   },
   mounted: function(){
     if(this.thisComponent.cardinality.min == 1){
-      this.$store.dispatch('templates/saveAttribute', 
-        {
-          'groupKey':this.groupKey, 
-          'attributeKey': this.attributeKey, 
-          'attribute' : {
-            'id':'....', 
-            'display':'....',
-            'preferred':'....',
-            }, 
-          'concept': {
-            'id' : '.....',
-            'display' : '....',
-            'preferred':'....',
-          },
-        })
+      this.saveBlankExpression()
     }
     this.retrieveFSN(this.thisComponent.attribute)
     this.retrieved = true
+  },
+  created (){
+    bus.$on('changeIt', (data) => {
+      console.log(data)
+      this.retrieveFSN(this.thisComponent.attribute)
+    })
   }
 }
 </script>

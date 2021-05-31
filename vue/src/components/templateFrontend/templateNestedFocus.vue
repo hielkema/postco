@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import { bus } from '@/main';
 export default {
   name: 'TemplateAttribute',
   data: () => {
@@ -114,6 +115,21 @@ export default {
       this._timerId = setTimeout(() => {
         this.retrieveECL(this.search)
       }, 500)
+    },
+    saveBlankExpression() {
+      this.$store.dispatch('templates/saveAttribute', 
+      {
+        'groupKey':this.groupKey, 
+        'attributeKey': this.attributeKey, 
+        'attribute' : {
+          'id':'....', 
+          'display':'....',
+          }, 
+        'concept': {
+          'id' : '.....',
+          'display' : '....',
+        },
+      })
     }
   },
   watch: {
@@ -136,21 +152,15 @@ export default {
     }
   },
   mounted: function(){
-    this.$store.dispatch('templates/saveAttribute', 
-      {
-        'groupKey':this.groupKey, 
-        'attributeKey': this.attributeKey, 
-        'attribute' : {
-          'id':'....', 
-          'display':'....',
-          }, 
-        'concept': {
-          'id' : '.....',
-          'display' : '....',
-        },
-      })
+    this.saveBlankExpression()
     this.retrieveFSN(this.templateData.attribute)
     this.retrieved = true
+  },
+  created (){
+    bus.$on('changeIt', (data) => {
+      console.log(data)
+      this.retrieveFSN(this.templateData.attribute)
+    })
   }
 }
 </script>
