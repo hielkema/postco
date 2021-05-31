@@ -33,6 +33,8 @@ Vue.prototype.$snowstorm.interceptors.response.use((response) => {
     }, 5000)
 });
 
+export const bus = new Vue();
+
 new Vue({
   router,
   axios,
