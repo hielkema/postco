@@ -50,7 +50,11 @@ export default {
   },
   props: ['componentData', 'attributeKey', 'groupKey'],
   methods: {
-    retrieveAttributeTerms (conceptid) {
+    retrieveAttributeTerms (conceptid, retries) {
+      if(!retries){ retries = 0 }
+      if(retries > 0){
+        console.log("Snowstorm request failed. Trying again. Retries until now: "+retries)
+      }
       var that = this
       return new Promise((resolve, reject) => {
         var branchVersion = encodeURI(that.requestedTemplate.snomedBranch + '/' + that.requestedTemplate.snomedVersion)
@@ -66,13 +70,23 @@ export default {
             'preferred': response.data.pt.term,
           })
         }).catch(() => {
-          that.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributeCompact]')
-          
-          reject('Error retrieveAttribute')
+          if(retries < 1){
+            setTimeout(() => {
+              retries = retries + 1
+              this.retrieveAttributeTerms (conceptid, retries)
+            }, 5000)
+          }else{
+            that.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributeCompact SCTID '+conceptid+']')
+            reject('Error retrieveAttribute')
+          }
         })
       })
     },
-    retrieveAttributeValueTerms (conceptid) {
+    retrieveAttributeValueTerms (conceptid, retries) {
+      if(!retries){ retries = 0 }
+      if(retries > 0){
+        console.log("Snowstorm request failed. Trying again. Retries until now: "+retries)
+      }
       var that = this
       return new Promise(function(resolve) {
         var branchVersion = encodeURI(that.requestedTemplate.snomedBranch + '/' + that.requestedTemplate.snomedVersion)
@@ -89,10 +103,14 @@ export default {
           })
         })
         .catch(() => {
-          setTimeout(() => {
-            that.retrieveAttributeValueTerms (conceptid)
-          }, 5000)
-          that.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
+          if(retries < 1){
+            setTimeout(() => {
+              that.retrieveAttributeValueTerms (conceptid, retries)
+            }, 5000)
+          }else{
+            console.log("Snowstorm request failed. Tried "+retries+" times, giving up and displaying error.")
+            that.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated SCTID '+conceptid+']')
+          }
         })
       })
     },

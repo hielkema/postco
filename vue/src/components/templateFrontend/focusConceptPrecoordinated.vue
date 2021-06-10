@@ -42,7 +42,11 @@ export default {
     }
   },
   methods: {
-    retrieveFSN (conceptid) {
+    retrieveFSN (conceptid, retries) {
+      if(!retries){ retries = 0 }
+      if(retries > 0){
+        console.log("Snowstorm request failed. Trying again. Retries until now: "+retries)
+      }
       var branchVersion = encodeURI(this.requestedTemplate.snomedBranch + '/' + this.requestedTemplate.snomedVersion)
       this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid, {headers : {'accept-language' : this.$i18n.locale}})
       .then((response) => {
@@ -66,10 +70,15 @@ export default {
 
         return true;
       }).catch(() => {
-        setTimeout(() => {
-          this.retrieveFSN (conceptid)
-        }, 5000)
-        this.$store.dispatch('templates/addErrormessage', this.translations.errors.retireve_fsn+' [focusConceptPrecoordinated]')
+        if(retries < 1){
+          setTimeout(() => {
+            retries = retries + 1
+            this.retrieveFSN (conceptid, retries)
+          }, 5000)
+        }else{
+          console.log("Snowstorm request failed. Tried "+retries+" times, giving up and displaying error.")
+          this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [focusConceptPrecoordinated SCTID '+conceptid+']')
+        }
       })
     },
   },

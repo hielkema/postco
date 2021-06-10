@@ -134,7 +134,11 @@
 		"templateNestedFocus" : {
 			"row_title" : "Focusconcept",
 			"loading_placeholder" : "Loading...",
-			"autocomplete_placeholder" : "At least 3 characters"
+			"autocomplete_placeholder" : "At least 3 characters",
+			"errors" : {
+				"retrieve_fsn" : "An error occurred while retrieving a term.",
+				"retrieve_ecl" : "An error occurred while retrieving the ECL results."
+			}
 		},
 		"templateNestedFocusPrecoordinated" : {
 			"row_title" : "Focusconcept",

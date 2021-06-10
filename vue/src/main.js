@@ -22,15 +22,17 @@ Vue.prototype.$snowstorm.interceptors.response.use((response) => {
     console.log(response.status + ' ' + response.config.url)
     return response;
   }, (error) => {
-    console.log('AXIOS ERROR ' + ' ' + error.response + ' ' + error.config.url + '\n' + error)
+    console.log('AXIOS ERROR ' + ' ' + error.config.method + ' ' + error.config.url + '\n' + error)
     // return axios.request(error.config);
-    setTimeout(() => {
-      return Vue.prototype.$snowstorm.request({
-        method: error.config.method,          
-        url: error.config.url,          
-        params: error.config.params,          
-      })
-    }, 5000)
+    // DISABLE RETRY - HANDLED IN VUEX STORE
+    // setTimeout(() => {
+    //   var req = Vue.prototype.$snowstorm.request({
+    //     method: error.config.method,
+    //     url: error.config.url,
+    //     params: error.config.params,
+    //   })
+    //   return req
+    // }, 5000)
 });
 
 export const bus = new Vue();

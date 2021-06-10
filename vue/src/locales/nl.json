@@ -134,7 +134,11 @@
 		"templateNestedFocus" : {
 			"row_title" : "Focusconcept",
 			"loading_placeholder" : "laden...",
-			"autocomplete_placeholder" : "Minimaal 3 tekens"
+			"autocomplete_placeholder" : "Minimaal 3 tekens",
+			"errors" : {
+				"retrieve_fsn" : "Er is een fout opgetreden bij het ophalen van een term.",
+				"retrieve_ecl" : "Er is een fout opgetreden bij het ophalen van een antwoordlijst."
+			}
 		},
 		"templateNestedFocusPrecoordinated" : {
 			"row_title" : "Focusconcept",
