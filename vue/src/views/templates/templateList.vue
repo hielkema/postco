@@ -217,19 +217,25 @@ export default {
 				
 				// Filter on snomed edition
                 if(filtered){
-                    if(that.filterEdition && filterEdition && filterEdition.length > 0){
+                    if(that.filterEdition == '*'){
+						filtered = true
+					}else if(that.filterEdition && filterEdition && filterEdition.length > 0){
                         filtered = item.snomedVersion == filterEdition
                     }
                 }
 				// Filter on language
                 if(filtered){
-                    if(that.filterLanguage && filterLanguage && filterLanguage.length > 0){
+					if(that.filterLanguage == '*'){
+						filtered = true
+					}else if(that.filterLanguage && filterLanguage && filterLanguage.length > 0){
                         filtered = item.supportedLanguages.includes(filterLanguage)
                     }
                 }
 				// Filter on organization
                 if(filtered){
-                    if(that.filterOrganization && filterOrganization && filterOrganization.length > 0){
+                    if(that.filterOrganization == '*'){
+						filtered = true
+					}else if(that.filterOrganization && filterOrganization && filterOrganization.length > 0){
                         filtered = item.id.split("_")[0] == filterOrganization
                     }
                 }
@@ -251,7 +257,7 @@ export default {
 			for(var template of this.templates){
 				editions.push(template.snomedVersion)
 			}
-			return [...new Set(editions)]
+			return ['*',...new Set(editions)]
 		},
 		languageList(){
 			var languages = []
@@ -260,7 +266,7 @@ export default {
 					languages.push(language)
 				}
 			}
-			return [...new Set(languages)]
+			return ['*',...new Set(languages)]
 		},
 		organizationList(){
 			var organizations = []
@@ -268,7 +274,7 @@ export default {
 				var organization = template.id.split("_")[0]
 				organizations.push(organization)
 			}
-			return [...new Set(organizations)]
+			return ['*',...new Set(organizations)]
 		},
 	},
 	mounted() {
