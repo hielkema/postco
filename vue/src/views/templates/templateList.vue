@@ -224,7 +224,7 @@ export default {
 				// Filter on language
                 if(filtered){
                     if(that.filterLanguage && filterLanguage && filterLanguage.length > 0){
-                        filtered = filterLanguage.includes(item.supportedLanguages)
+                        filtered = item.supportedLanguages.includes(filterLanguage)
                     }
                 }
 				// Filter on organization
