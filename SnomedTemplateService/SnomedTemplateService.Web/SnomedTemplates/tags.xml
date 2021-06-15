@@ -1,57 +1,75 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tags defaultLang="nl">
-  <tag id="Laesie">
+  <tag id="Lesion">
     <txt lang="nl">Laesie</txt>
+    <txt lang="en">Lesion</txt>
   </tag>
-  <tag id="Locatie">
+  <tag id="Location">
     <txt lang="nl">Locatie</txt>
+    <txt lang="en">Location</txt>
   </tag>
-  <tag id="Monster">
+  <tag id="Specimen">
     <txt lang="nl">Monster</txt>
+    <txt lang="en">Specimen</txt>
   </tag>
-  <tag id="Beeldvorming">
+  <tag id="Imaging">
     <txt lang="nl">Beeldvorming</txt>
+    <txt lang="en">Imaging</txt>
   </tag>
-  <tag id="Lateraliteit">
+  <tag id="Laterality">
     <txt lang="nl">Lateraliteit</txt>
+    <txt lang="en">Laterality</txt>
   </tag>
-  <tag id="Complicatie">
+  <tag id="Complication">
     <txt lang="nl">Complicatie</txt>
+    <txt lang="en">Complication</txt>
   </tag>
-  <tag id="Endoscopisch_verwijderen">
+  <tag id="Endoscopic_removal">
     <txt lang="nl">Endoscopisch verwijderen</txt>
+    <txt lang="en">Endoscopic removal</txt>
   </tag>
-  <tag id="Mammacarcinoom">
+  <tag id="Breast_Cancer">
     <txt lang="nl">Mammacarcinoom</txt>
+    <txt lang="en">Breast cancer</txt>
   </tag>
-  <tag id="Proliferatieve_massa">
+  <tag id="Proliferative_mass">
     <txt lang="nl">Proliferatieve massa</txt>
+    <txt lang="en">Proliferative mass</txt>
   </tag>
-  <tag id="Radiotherapie">
+  <tag id="Radiotherapy">
     <txt lang="nl">Radiotherapie</txt>
+    <txt lang="en">Radiotherapy</txt>
   </tag>
-  <tag id="Scintigrafie">
+  <tag id="Scintigraphy">
     <txt lang="nl">Scintigrafie</txt>
+    <txt lang="en">Scintigraphy</txt>
   </tag>
-  <tag id="Isotoop">
+  <tag id="Isotope">
     <txt lang="nl">Isotoop</txt>
+    <txt lang="en">Isotope</txt>
   </tag>
-  <tag id="Verwijderen">
+  <tag id="Removing">
     <txt lang="nl">Verwijderen</txt>
+    <txt lang="en">Removing</txt>
   </tag>
-  <tag id="Intentie">
+  <tag id="Intention">
     <txt lang="nl">Intentie</txt>
+    <txt lang="en">Intention</txt>
   </tag>
   <tag id="MRCM_Template">
     <txt lang="nl">MRCM Template</txt>
+    <txt lang="en">MRCM Template</txt>
   </tag>
-  <tag id="Tumorgradering">
+  <tag id="Tumor_grade">
     <txt lang="nl">Tumorgradering</txt>
+    <txt lang="en">Tumor grade</txt>
   </tag>
   <tag id="Tag_1">
     <txt lang="nl">Tag 1</txt>
+    <txt lang="en">Tag 1</txt>
   </tag>
   <tag id="Tag_2">
     <txt lang="nl">Tag 2</txt>
+    <txt lang="en">Tag 2</txt>
   </tag>
 </tags>

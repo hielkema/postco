@@ -24,8 +24,8 @@
     <txt lang="nl">[0/0] van [0/1] [0/1/0/0]</txt>
   </stringFormat>
   <tags>
-    <tag id="Laesie"/>
-    <tag id="Locatie"/>
+    <tag id="Lesion"/>
+    <tag id="Location"/>
   </tags>
   <etl>
     <![CDATA[

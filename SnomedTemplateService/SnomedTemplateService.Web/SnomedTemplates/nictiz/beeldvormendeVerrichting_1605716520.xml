@@ -16,7 +16,7 @@
   <stringFormat><txt lang="nl">[0/0] van [0/1]</txt></stringFormat>
   <!-- bv. MRI van pols -->
   <tags>
-    <tag id="Beeldvorming"/>
+    <tag id="Imaging"/>
   </tags>
   <etl><![CDATA[
     

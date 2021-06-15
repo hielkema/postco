@@ -18,10 +18,10 @@
   <stringFormat><txt lang="nl">bevinding betreffende histologische graad van [0/0], bepaald op [1/0]</txt></stringFormat>
   <!-- bv. bevinding betreffende histologische graad van ductaal carcinoma in situ, bepaald op biopt -->
   <tags>
-    <tag id="Monster"/>
-    <tag id="Tumorgradering"/>
-    <tag id="Laesie"/>
-    <tag id="Locatie"/>
+    <tag id="Specimen"/>
+    <tag id="Tumor_grade"/>
+    <tag id="Lesion"/>
+    <tag id="Location"/>
   </tags>
   <etl>
     <![CDATA[

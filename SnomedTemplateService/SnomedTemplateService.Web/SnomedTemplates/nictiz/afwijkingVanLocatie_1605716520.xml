@@ -16,8 +16,8 @@
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <stringFormat><txt lang="nl">[0/0] van [0/1] [1/0]</txt></stringFormat>  <!-- Natural language representation, e.g. deformity of foot -->
   <tags>
-    <tag id="Laesie"/>
-    <tag id="Locatie"/>
+    <tag id="Lesion"/>
+    <tag id="Location"/>
   </tags>
   <!-- bv. fractuur van ulna -->
   <etl><![CDATA[

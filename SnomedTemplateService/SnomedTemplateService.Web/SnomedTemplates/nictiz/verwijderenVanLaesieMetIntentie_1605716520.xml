@@ -17,10 +17,10 @@
   <stringFormat><txt lang="nl">[0/0] van [0/2] van [0/1] met [0/3]</txt></stringFormat>
   <!-- bv. verwijderen van carcinoom van blaas met palliatieve intentie -->
   <tags>
-    <tag id="Verwijderen"/>
-    <tag id="Laesie"/>
-    <tag id="Intentie"/>
-    <tag id="Locatie"/>
+    <tag id="Removing"/>
+    <tag id="Lesion"/>
+    <tag id="Intention"/>
+    <tag id="Location"/>
   </tags>
   <etl><![CDATA[
     

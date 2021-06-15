@@ -16,9 +16,9 @@
   <stringFormat><txt lang="nl">[0/0] van [0/1] vastgesteld met analyse van [1/0]</txt></stringFormat>
   <!-- bv. carcinoom van mamma vastgesteld met analyse van biopt -->
   <tags>
-    <tag id="Monster"/>
-    <tag id="Laesie"/>
-    <tag id="Locatie"/>
+    <tag id="Specimen"/>
+    <tag id="Lesion"/>
+    <tag id="Location"/>
   </tags>
   <etl><![CDATA[
     

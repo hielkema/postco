@@ -18,8 +18,8 @@
   <stringFormat><txt lang="nl">[0/0] van [1/0] met [2/0]</txt></stringFormat>
   <!-- bv. geven van 'boost'-bestraling van hals met therapeutische intentie-->
   <tags>
-    <tag id="Radiotherapie"/>
-    <tag id="Locatie"/>
+    <tag id="Radiotherapy"/>
+    <tag id="Location"/>
   </tags>
   <etl><![CDATA[
     

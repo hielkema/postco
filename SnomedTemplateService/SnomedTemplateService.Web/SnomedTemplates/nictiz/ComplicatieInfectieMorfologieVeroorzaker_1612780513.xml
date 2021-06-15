@@ -15,7 +15,7 @@
   <stringFormat><txt lang="nl">[0/0] van [0/1]</txt></stringFormat>
   <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
   <tags>
-    <tag id="Complicatie"/>
+    <tag id="Complication"/>
   </tags>
   <etl><![CDATA[
     
