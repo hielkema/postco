@@ -1,5 +1,6 @@
 import axios from 'axios'
 // import Vue from 'vue'
+import i18n from '@/i18n.js' 
 
 const state = {
     loading: {
@@ -103,7 +104,7 @@ const state = {
     retrieveTemplate: (context, templateID) => {
       console.log('Actions/retrieveTemplate')
       axios
-      .get(context.rootState.baseUrlTemplateservice+'templates/'+templateID)
+      .get(context.rootState.baseUrlTemplateservice+'templates/'+templateID+'?lang='+i18n.locale)
       .then((response) => {
         context.commit('setTemplate', response)
       }).catch(()=>{
@@ -113,7 +114,7 @@ const state = {
     retrieveTemplateList: (context) => {
       console.log('Actions/retrieveTemplateList')
       axios
-      .get(context.rootState.baseUrlTemplateservice+'templates/')
+      .get(context.rootState.baseUrlTemplateservice+'templates/'+'?lang='+i18n.locale)
       .then((response) => {
         context.commit('setTemplateList', response)
       }).catch(()=>{

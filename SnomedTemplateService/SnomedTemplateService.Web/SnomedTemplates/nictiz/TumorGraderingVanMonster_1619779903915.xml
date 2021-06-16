@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<template>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>Feikje Hielkema-Raadsveld</name>
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>Bevinding van gradering vam type tumor, vastgesteld op basis van type monster</title>
+  <title><txt lang="nl">Bevinding van gradering vam type tumor, vastgesteld op basis van type monster</txt></title>
   <description>
-    Dit template kan worden gebruikt om een gradering van een bepaald type tumor vast te leggen, die
-    is vastgesteld op basis van een bepaald type monster.
+    <txt lang="nl">
+      Dit template kan worden gebruikt om een gradering van een bepaald type tumor vast te leggen, die
+      is vastgesteld op basis van een bepaald type monster.
+      </txt>
   </description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>bevinding betreffende histologische graad van [0/0], bepaald op [1/0]</stringFormat>
+  <stringFormat><txt lang="nl">bevinding betreffende histologische graad van [0/0], bepaald op [1/0]</txt></stringFormat>
   <!-- bv. bevinding betreffende histologische graad van ductaal carcinoma in situ, bepaald op biopt -->
   <tags>
-    <tag>Monster</tag>
-    <tag>Tumorgradering</tag>
-    <tag>Laesie</tag>
-    <tag>Locatie</tag>
+    <tag id="Specimen"/>
+    <tag id="Tumor_grade"/>
+    <tag id="Lesion"/>
+    <tag id="Location"/>
   </tags>
   <etl>
     <![CDATA[
@@ -40,20 +42,20 @@
   </etl>
   <items>
     <item name="Tumor">
-      <title>Type tumor</title>
-      <description>Welk type tumor?</description>
+      <title><txt lang="nl">Type tumor</txt></title>
+      <description><txt lang="nl">Welk type tumor?</txt></description>
     </item>
     <item name="Monster">
-      <title>Monster</title>
-      <description>Type monster</description>
+      <title><txt lang="nl">Monster</txt></title>
+      <description><txt lang="nl">Type monster</txt></description>
     </item>
     <item name="Locatie">
-      <title>Locatie</title>
-      <description>Welke locatie?</description>
+      <title><txt lang="nl">Locatie</txt></title>
+      <description><txt lang="nl">Welke locatie?</txt></description>
     </item>
     <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title><txt lang="nl">Lateraliteit</txt></title>
+      <description><txt lang="nl">Welke zijde?</txt></description>
     </item>
   </items>
 </template>

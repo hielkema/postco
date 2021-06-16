@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<template>
+<?xml version="1.0"?>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>Elze de Groot</name>
       <contact>groot@nictiz.nl</contact>
   </author>
   </authors>
-  <title>Complicatie allergische reactie</title>
-  <description>
+  <title><txt lang="nl">Complicatie allergische reactie</txt></title>
+  <description><txt lang="nl">
     Dit template kan worden gebruikt om een complicatie van een allergische reactie vast te leggen.
-  </description>
+  </txt></description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <stringFormat><txt lang="nl">[0/0] van [0/1]</txt></stringFormat>
   <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
   <tags>
-    <tag>Complicatie</tag>
+    <tag id="Complication"/>
   </tags>
-  <etl>
-    <![CDATA[
+  <etl><![CDATA[
+    
            === 116223007 |complicatie (aandoening)| : {
                 363698007 |locatie van bevinding (attribuut)| =
                   ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
@@ -29,24 +29,24 @@
 				[[ 0..1 @Veroorzaker ]] 246075003 |veroorzaker (attribuut)| =  
                     [[+id (< 410607006 |organisme (organisme)|) ]]	
 			}
-        ]]>
-  </etl>
+        
+  ]]></etl>
   <items>
     <item name="Locatie">
-      <title>Locatie</title>
-      <description>Welke lichaamsstructuur?</description>
+      <title><txt lang="nl">Locatie</txt></title>
+      <description><txt lang="nl">Welke lichaamsstructuur?</txt></description>
     </item>
     <item name="Infectie">
-      <title>Infectieus proces</title>
-      <description>Allergisch proces</description>
+      <title><txt lang="nl">Infectieus proces</txt></title>
+      <description><txt lang="nl">Allergisch proces</txt></description>
     </item>
 	<item name="Veroorzaker">
-      <title>Veroorzaker</title>
-      <description>Welk organisme is de veroorzaker van de infectie? </description>
+      <title><txt lang="nl">Veroorzaker</txt></title>
+      <description><txt lang="nl">Welk organisme is de veroorzaker van de infectie? </txt></description>
     </item>
     <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title><txt lang="nl">Lateraliteit</txt></title>
+      <description><txt lang="nl">Welke zijde?</txt></description>
     </item>
   </items>
 </template>

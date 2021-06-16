@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<template>
+<?xml version="1.0"?>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>John Doe</name>
@@ -10,19 +10,19 @@
       <contact>richard@example.net</contact>
     </author>
   </authors>
-  <title>Allergische reactie door substantie</title>
-  <description></description>
-  <stringFormat>[0/1] veroorzaakt door [0/0]</stringFormat>
+  <title><txt lang="nl">Allergische reactie door substantie</txt></title>
+  
+  <stringFormat><txt lang="nl">[0/1] veroorzaakt door [0/0]</txt></stringFormat>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
   <tags>
-    <tag>Tag 1</tag>
+    <tag id="Tag_1"/>
   </tags>
-  <etl>
-    <![CDATA[
+  <etl><![CDATA[
+    
 [[+tok (=== <<<)]]  281647001 |Adverse reaction (disorder)| :
         {             246075003 |Causative agent (attribute)|   =  [[+id (< 105590001 |Substance (substance)| )]],
                       370135005 |Pathological process (attribute)|   =  472964009 |Allergic process (qualifier value)| }
-      ]]>
-  </etl>
+      
+  ]]></etl>
 </template>

@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<template>
+<?xml version="1.0"?>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>Test Test</name>
       <contact>test@test.nl</contact>
     </author>
   </authors>
-  <title>Beeldvormende verrichting</title>
-  <description>
+  <title><txt lang="nl">Beeldvormende verrichting</txt></title>
+  <description><txt lang="nl">
     Bedoeld om te testen. Usecase: Coderen van beeldvormende verrichtingen op een lichaamsstructuur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla mattis lorem id mi venenatis, sed commodo neque tristique. Aliquam eget turpis placerat, aliquet dolor sed, vehicula est. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras sit amet erat semper, hendrerit odio a, molestie lacus. Sed rhoncus sapien leo, nec luctus dolor pretium a. Integer mauris dui, viverra placerat vehicula id, egestas vel elit. Aenean posuere enim eget diam cursus, vel egestas tellus scelerisque. Quisque cursus porta dictum. Donec vel metus libero. Phasellus sollicitudin vel felis in venenatis.
-  </description>
+  </txt></description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/1] met [1/0]</stringFormat>
+  <stringFormat><txt lang="nl">[0/0] van [0/1] met [1/0]</txt></stringFormat>
   <tags>
-    <tag>Tag 1</tag>
-    <tag>Tag 2</tag>
+    <tag id="Tag_1"/>
+    <tag id="Tag_2"/>
   </tags>
-  <etl>
-    <![CDATA[
+  <etl><![CDATA[
+    
             71388002 |Procedure (procedure)| : {
                 [[ @Methode ]] 260686004 |Method| = [[+id (< 360037004 |beeldvorming (kwalificatiewaarde)|)]],
                 [[ @LocatieAttr ]] 405813007 |Procedure site - Direct| = 
@@ -28,36 +28,36 @@
                         {   [[ @Lat3 ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|)]]    }),
                 [[ @Doel ]] 363703001 |Has intent| = [[+id (< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|)]]
             }
-        ]]>
-  </etl>
+        
+  ]]></etl>
   <items>
     <item name="Methode">
-      <title>Methode</title>
-      <description>Welke methode wordt er gebruikt?</description>
+      <title><txt lang="nl">Methode</txt></title>
+      <description><txt lang="nl">Welke methode wordt er gebruikt?</txt></description>
     </item>
     <item name="LocatieAttr">
-      <title>Procedure site</title>
-      <description>Welke locatie?</description>
+      <title><txt lang="nl">Procedure site</txt></title>
+      <description><txt lang="nl">Welke locatie?</txt></description>
     </item>
     <item name="LocatieFocus">
-      <title>Procedure site</title>
-      <description>Welke locatie?</description>
+      <title><txt lang="nl">Procedure site</txt></title>
+      <description><txt lang="nl">Welke locatie?</txt></description>
     </item>
     <item name="Lat1">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title><txt lang="nl">Lateraliteit</txt></title>
+      <description><txt lang="nl">Welke zijde?</txt></description>
     </item>
     <item name="Lat2">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title><txt lang="nl">Lateraliteit</txt></title>
+      <description><txt lang="nl">Welke zijde?</txt></description>
     </item>
     <item name="Lat3">
-      <title>Lateraliteit 2</title>
-      <description>Welke zijde?</description>
+      <title><txt lang="nl">Lateraliteit 2</txt></title>
+      <description><txt lang="nl">Welke zijde?</txt></description>
     </item>
     <item name="Doel">
-      <title>Doel</title>
-      <description>Welke intentie heeft de beeldvormende verrichting?</description>
+      <title><txt lang="nl">Doel</txt></title>
+      <description><txt lang="nl">Welke intentie heeft de beeldvormende verrichting?</txt></description>
     </item>
   </items>
 </template>

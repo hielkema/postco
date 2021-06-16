@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { bus } from '@/main';
 export default {
   name: 'TemplateAttribute',
   data: () => {
@@ -52,7 +53,11 @@ export default {
   },
   props: ['templateData', 'attributeKey', 'groupKey'],
   methods: {
-    retrieveAttributeTerms (conceptid) {
+    retrieveAttributeTerms (conceptid, retries) {
+      if(!retries){ retries = 0 }
+      if(retries > 0){
+        console.log("Snowstorm request failed. Trying again. Retries until now: "+retries)
+      }
       var that = this
       return new Promise((resolve, reject) => {
         var branchVersion = encodeURI(that.requestedTemplate.snomedBranch + '/' + that.requestedTemplate.snomedVersion)
@@ -68,13 +73,24 @@ export default {
             'preferred': response.data.pt.term,
           })
         }).catch((error) => {
-          that.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateNestedFocusPrecoordinated] ['+error+']')
-          
-          reject('Error retrieveAttribute')
+          if(retries < 1){
+            setTimeout(() => {
+            retries = retries + 1
+            this.retrieveAttributeTerms (conceptid, retries)
+          }, 5000)
+          }else{
+            console.log("Snowstorm request failed. Tried "+retries+" times, giving up and displaying error.")
+            that.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateNestedFocusPrecoordinated] ['+error+']')
+            reject('Error retrieveAttribute')
+          }
         })
       })
     },
-    retrieveAttributeValueTerms (conceptid) {
+    retrieveAttributeValueTerms (conceptid, retries) {
+      if(!retries){ retries = 0 }
+      if(retries > 0){
+        console.log("Snowstorm request failed. Trying again. Retries until now: "+retries)
+      }
       var that = this
       return new Promise(function(resolve) {
         var branchVersion = encodeURI(that.requestedTemplate.snomedBranch + '/' + that.requestedTemplate.snomedVersion)
@@ -91,10 +107,15 @@ export default {
           })
         })
         .catch(() => {
-          setTimeout(() => {
-            that.retrieveAttributeValueTerms (conceptid)
-          }, 5000)
-          that.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
+          if(retries < 1){
+            setTimeout(() => {
+              retries = retries + 1
+              that.retrieveAttributeValueTerms (conceptid, retries)
+            }, 5000)
+          }else{
+            console.log("Snowstorm request failed. Tried "+retries+" times, giving up and displaying error.")
+            that.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
+          }
         })
       })
     },
@@ -112,6 +133,44 @@ export default {
       this.items = output
       this.loading = false
       return true;
+    },
+    saveBlankExpression(){
+      this.$store.dispatch('templates/saveAttribute', 
+      {
+        'groupKey':this.groupKey, 
+        'attributeKey': this.attributeKey, 
+        'attribute' : {
+          'id':'....', 
+          'display':'....',
+          }, 
+        'concept': {
+          'id' : '.....',
+          'display' : '....',
+        },
+      })
+    },
+    fetchDisplayTermsExpression(){
+      this.retrieveAttributeTerms(this.templateData.attribute).then((attribute)=>(
+        this.retrieveAttributeValueTerms(this.templateData.template.focus[0].conceptId)).then((attributeValue)=>
+          this.$store.dispatch('templates/saveAttribute', {
+            'groupKey':this.groupKey, 'attributeKey': this.attributeKey, 'attribute' : {
+                'id':this.templateData.attribute,
+                'display': attribute.preferred,
+                'preferred': attribute.preferred,
+              }, 'concept': {
+                'id': this.templateData.template.focus[0].conceptId,
+                'display': attributeValue.preferred,
+                'preferred': attributeValue.preferred,
+              }
+          })
+      ).catch(()=>{
+        this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
+        this.retrieveAttributeValueTerms(this.templateData.template.focus[0].conceptId)
+      })).catch(()=>{
+        this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
+        this.retrieveAttributeTerms(this.templateData.attribute)
+      })
+      this.retrieved = true
     }
   },
   watch: {
@@ -128,40 +187,14 @@ export default {
     }
   },
   mounted: function(){
-    this.$store.dispatch('templates/saveAttribute', 
-      {
-        'groupKey':this.groupKey, 
-        'attributeKey': this.attributeKey, 
-        'attribute' : {
-          'id':'....', 
-          'display':'....',
-          }, 
-        'concept': {
-          'id' : '.....',
-          'display' : '....',
-        },
-      })
-    this.retrieveAttributeTerms(this.templateData.attribute).then((attribute)=>(
-      this.retrieveAttributeValueTerms(this.templateData.template.focus[0].conceptId)).then((attributeValue)=>
-        this.$store.dispatch('templates/saveAttribute', {
-          'groupKey':this.groupKey, 'attributeKey': this.attributeKey, 'attribute' : {
-              'id':this.templateData.attribute,
-              'display': attribute.preferred,
-              'preferred': attribute.preferred,
-            }, 'concept': {
-              'id': this.templateData.template.focus[0].conceptId,
-              'display': attributeValue.preferred,
-              'preferred': attributeValue.preferred,
-            }
-        })
-    ).catch(()=>{
-      this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
-      this.retrieveAttributeValueTerms(this.templateData.template.focus[0].conceptId)
-    })).catch(()=>{
-      this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributePrecoordinated]')
-      this.retrieveAttributeTerms(this.templateData.attribute)
+    this.saveBlankExpression()
+    this.fetchDisplayTermsExpression()
+  },
+  created (){
+    bus.$on('changeIt', (data) => {
+      console.log(data)
+      this.fetchDisplayTermsExpression()
     })
-    this.retrieved = true
   }
 }
 </script>

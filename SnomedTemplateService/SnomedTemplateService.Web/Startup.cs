@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using SnomedTemplateService.Core.Interfaces;
+using SnomedTemplateService.Core.Service;
 using SnomedTemplateService.Data;
 using SnomedTemplateService.Parser;
 using System;
@@ -35,7 +35,7 @@ namespace SnomedTemplateService.Web
             services.AddControllers()
                 .AddNewtonsoftJson(options => options.SerializerSettings.Formatting = Formatting.Indented);
             services.AddMemoryCache();
-            services.AddScoped<ITemplateRepository, XmlFileTemplateRepository>();
+            services.AddScoped<ITemplateRepository, CachedTemplateRepository>();
             services.AddScoped<IEtlParseService, AntlrEtlParseService>();
         }
 
@@ -44,7 +44,6 @@ namespace SnomedTemplateService.Web
             IApplicationBuilder app,
             IWebHostEnvironment env,
             IHostApplicationLifetime applicationLifeTime,
-            ILogger<Startup> logger,
             ITemplateRepository templateRepository)
         {
             if (env.IsDevelopment())
