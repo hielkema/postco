@@ -1,0 +1,170 @@
+{
+	"language" : {
+		"language_picker_header" : "Change the interface language",
+		"active_language" : "Active interface language"
+	},
+	"templateList" : {
+		"filter_card" : {
+			"card_title" : "Available templates",
+			"filters" : {
+				"search" : {
+					"label" : "Search",
+					"hint" : "Search on Name, Title, Description or SNOMED version"
+				},
+				"tags" : {
+					"label" : "Tags",
+					"hint" : ""
+				},
+				"snomed_version" : {
+					"label" : "SNOMED version",
+					"hint" : "Filter on SNOMED version"
+				},
+				"organization" : {
+					"label" : "Organisation",
+					"hint" : "Filter on organisation"
+				},
+				"language" : {
+					"label" : "Language",
+					"hint" : "Filter on template language"
+				}
+			}
+		},
+		"list_card" : {
+			"card_title" : "Templates",
+			"table_headers" : {
+				"entity" : "Organisation",
+				"id" : "ID",
+				"title" : "Title",
+				"description" :	"Description",
+				"authors" : "Author",
+				"tags" : "Tags",
+				"languages" : "Languages",
+				"snomedVersion" : "SNOMED version",
+				"time" : "Timestamp version",
+				"open" : "Open"	
+			}
+		}
+	},
+	"templateDetail" : {
+		"title_card" : {
+			"card_title" : "Postcoordination tooling",
+			"back_button" : "Back to the list of templates"
+		},
+		"loading_card" : {
+			"card_text" : "Template is loading.. please wait."
+		},
+		"focus_concept_card" : {
+			"card_title" : "Focusconcepts"
+		},
+		"attributes_card" : {
+			"card_title" : "Attributes"
+		},
+		"errors" : {
+			"multiple" : "Multiple errors have occurred. Most likely the Snowstorm server is down or unreachable. Please contact the administrator.",
+			"language_not_available" : "The chosen template is not available in the selected language. The tool will function, but not all text may be in English."
+		}
+	},
+	"components" : {
+		"focusConcept" : {
+			"fsn" : "Fully Specified Name",
+			"id" : "SNOMED Concept ID",
+			"row_title" : "Constraint:",
+			"autocomplete_placeholder" : "At least 3 characters",
+			"not_supported" : "There is no support for this type of focus concept - yet.",
+			"loading_placeholder" : "Loading...",
+			"errors" : {
+				"retrieve_ecl" : "An error occurred while retrieving the ECL results."
+			}
+		},
+		"focusConceptPrecoordinated" : {
+			"fsn" : "Fully Specified Name",
+			"id" : "SNOMED Concept ID",
+			"errors" : {
+				"retrieve_fsn" : "An error occurred while retrieving a term."
+			}
+		},
+		"renderDescriptionString" : {
+			"card_title" : "Readable string for expression",
+			"template" : "Template",
+			"generated" : "Generated",
+			"copy_button" : "Copy",
+			"identifiers_panel_header" : "[DEBUG] Identifiers for use in generated string",
+			"unavailable" : "Not available for this template."
+		},
+		"renderExpression" : {
+			"card_title_verbose" : "Expression with display text",
+			"card_title_compact" : "Compact expression",
+			"loading_placeholder" : "Loading...",
+			"copy_button" : "Copy",
+			"error" : {
+				"slot" : "The frontend does not support definitionStatus 'slot' (yet). The generated syntax is not valid."
+			}
+		},
+		"templateAttributeCompact" : {
+			"attribute" : "Attribute",
+			"optional" : "Optional",
+			"loading_placeholder" : "Loading...",
+			"autocomplete_placeholder" : "At least 3 characters",
+			"errors" : {
+				"retrieve_fsn" : "An error occurred while retrieving a term.",
+				"retrieve_ecl" : "An error occurred while retrieving the ECL results."
+			}
+		},
+		"templateAttributePrecoordinated" : {
+			"attribute" : "Attribute",
+			"loading_placeholder" : "Loading...",
+			"autocomplete_placeholder" : "At least 3 characters",
+			"errors" : {
+				"retrieve_fsn" : "An error occurred while retrieving a term.",
+				"retrieve_ecl" : "An error occurred while retrieving the ECL results."
+			}
+		},
+		"templateAuthor" : {
+			"card_title" : "Authors"
+		},
+		"templateDescription" : {
+
+		},
+		"templateGroup" : {
+			"card_title" : "Group"
+		},
+		"templateMetadata" : {
+			"card_title" : "Template details",
+			"template_id" : "Template ID",
+			"snomed_version" : "SNOMED version",
+			"snomed_branch" : "SNOMED branch",
+			"creation_date" : "Template creation date"
+		},
+		"templateNestedFocus" : {
+			"row_title" : "Focusconcept",
+			"loading_placeholder" : "Loading...",
+			"autocomplete_placeholder" : "At least 3 characters",
+			"errors" : {
+				"retrieve_fsn" : "An error occurred while retrieving a term.",
+				"retrieve_ecl" : "An error occurred while retrieving the ECL results."
+			}
+		},
+		"templateNestedFocusPrecoordinated" : {
+			"row_title" : "Focusconcept",
+			"loading_placeholder" : "Loading...",
+			"errors" : {
+				"retrieve_fsn" : "An error occurred while retrieving a term.",
+				"retrieve_ecl" : "An error occurred while retrieving the ECL results."
+			}
+		},
+		"templateNestedGroup" : {
+			"errors" : {
+				"double_nested" : "Double nested templates are not supported - yet."
+			}
+		},
+		"templateNestedPostcoordination" : {
+			"card_title" : "Nested expression in group",
+			"focus" : "Focus",
+			"attributes" : "Attributes",
+			"group" : "Group",
+			"errors" : {
+				"multiple_focus" : "Multiple focus concepts in a nested expression are not supported - yet."
+			}
+		}
+	}
+}

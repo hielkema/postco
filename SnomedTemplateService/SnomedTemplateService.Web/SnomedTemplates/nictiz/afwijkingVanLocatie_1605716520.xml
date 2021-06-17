@@ -1,28 +1,27 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<template>
+<?xml version="1.0"?>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>Feikje Hielkema-Raadsveld</name>
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>Afwijking van anatomische locatie (aandoening)</title>
-  <description>
+  <title><txt lang="nl">Afwijking van anatomische locatie (aandoening)</txt></title>
+  <description><txt lang="nl">
     Dit template kan worden gebruikt om elke mogelijke morfologische afwijking van elke mogelijke lichaamslocatie te specificeren.
     Je kunt hierbij locaties kiezen en optioneel een lateraliteit toevoegen.
     Het focusconcept is aandoening: voor bevindingen met een morfologie zou een apart template nodig zijn.
-  </description>
+  </txt></description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/1] [1/0]</stringFormat>  <!-- Natural language representation, e.g. deformity of foot -->
+  <stringFormat><txt lang="nl">[0/0] van [0/1] [1/0]</txt></stringFormat>  <!-- Natural language representation, e.g. deformity of foot -->
   <tags>
-    <tag>Laesie</tag>
-    <tag>Locatie</tag>
+    <tag id="Lesion"/>
+    <tag id="Location"/>
   </tags>
-  <stringFormat>[0/0] van [0/1]</stringFormat>
   <!-- bv. fractuur van ulna -->
-  <etl>
-    <![CDATA[
+  <etl><![CDATA[
+    
         64572001 |aandoening (aandoening)| : {
           [[ @Afwijking ]] 116676008 |gerelateerde morfologie (attribuut)| = [[+id (< 49755003 |morfologische afwijking (afwijkende morfologie)|)]],
           [[ @Locatie ]] 363698007 |locatie van bevinding (attribuut)| =  
@@ -30,24 +29,24 @@
                       [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
                       })
         }
-        ]]>
-  </etl>
+        
+  ]]></etl>
   <items>
     <item name="LocatieFocus">
-      <title>Locatie</title>
-      <description>Welke locatie?</description>
+      <title><txt lang="nl">Locatie</txt></title>
+      <description><txt lang="nl">Welke locatie?</txt></description>
     </item>
     <item name="Afwijking">
-      <title>Afwijking</title>
-      <description>Welke morfologische afwijking?</description>
+      <title><txt lang="nl">Afwijking</txt></title>
+      <description><txt lang="nl">Welke morfologische afwijking?</txt></description>
     </item>
     <item name="Locatie">
-      <title>Locatie</title>
-      <description>Welke locatie?</description>
+      <title><txt lang="nl">Locatie</txt></title>
+      <description><txt lang="nl">Welke locatie?</txt></description>
     </item>
     <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title><txt lang="nl">Lateraliteit</txt></title>
+      <description><txt lang="nl">Welke zijde?</txt></description>
     </item>
   </items>
 </template>

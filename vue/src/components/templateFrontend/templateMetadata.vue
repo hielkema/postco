@@ -4,19 +4,25 @@
       color="grey lighten-3"
       >
         <v-card-title>
-            Template details
+            {{translations.card_title}}
         </v-card-title>
         <v-card-text class="text-left">
           <table>
             <tr>
-              <th>SNOMED versie</th>
+              <th>{{translations.template_id}}</th>
+              <td>
+                {{ requestedTemplate.id }}
+              </td>
+            </tr>
+            <tr>
+              <th>{{translations.snomed_version}}</th>
               <td>
                 {{ requestedTemplate.snomedVersion }}
               </td>
             </tr>
             <tr>
               <th>
-                SNOMED branch
+                {{translations.snomed_branch}}
               </th>
               <td>
                 {{requestedTemplate.snomedBranch}}
@@ -24,7 +30,7 @@
             </tr>
             <tr>
               <th>
-                Tijd aanmaken template
+                {{translations.creation_date}}
               </th>
               <td>
                 {{new Date(requestedTemplate.time * 1000).toLocaleString('nl-NL', {'dateStyle': 'short'})}}
@@ -49,6 +55,9 @@ export default {
     },
     template(){
       return this.$store.state.templates.template
+    },
+    translations(){
+      return this.$t("components.templateMetadata")
     }
   },
   methods: {

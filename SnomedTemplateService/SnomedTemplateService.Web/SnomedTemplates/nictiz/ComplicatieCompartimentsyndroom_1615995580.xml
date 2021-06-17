@@ -1,52 +1,70 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<template>
+<?xml version="1.0"?>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>Elze de Groot</name>
       <contact>groot@nictiz.nl</contact>
     </author>
   </authors>
-  <title>Complicatie compartimentsyndroom traumatisch</title>
+  <title><txt lang="nl">Complicatie compartimentsyndroom</txt></title>
   <description>
-    Dit template kan worden gebruikt om de complicatie traumatisch compartimentsyndroom vast te leggen.
+    <txt lang="nl">Dit template kan worden gebruikt om de complicatie compartimentsyndroom vast te leggen.</txt>
   </description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <stringFormat>
+    <txt lang="nl">[0/0] van [0/1]</txt>
+  </stringFormat>
   <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
   <tags>
-    <tag>Complicatie</tag>
+    <tag id="Complication"/>
   </tags>
   <etl>
     <![CDATA[
            === 116223007 |complicatie (aandoening)| + 111245009 |compartimentsyndroom (aandoening)| : {
                 [[ @Morfologie ]] 116676008 |gerelateerde morfologie (attribuut)| = 
-                    [[+id (<< 37782003 |beschadiging (afwijkende morfologie)|) ]],
+                    [[+id ( 37782003 |beschadiging (afwijkende morfologie)|) ]],
                 363698007 |locatie van bevinding (attribuut)| =
                   ([[ @Locatie ]] [[+id (<< 118509002 |structuur van fasciaal compartiment (lichaamsstructuur)|) ]] : {
                       [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
                       }),
                 [[ @Veroorzaker ]] 246075003 |veroorzaker (attribuut)| =  
-                    [[+id (<< 285665007 |toename van druk (fysische kracht)|) ]]
+                    [[+id (285665007 |toename van druk (fysische kracht)|) ]]
 			}
         ]]>
   </etl>
   <items>
     <item name="Morfologie">
-      <title>Morfologie</title>
-      <description>Beschadiging</description>
+      <title>
+        <txt lang="nl">Morfologie</txt>
+      </title>
+      <description>
+        <txt lang="nl">Beschadiging</txt>
+      </description>
     </item>
     <item name="Locatie">
-      <title>Locatie</title>
-      <description>Verfijning fasciaal compartiment</description>
+      <title>
+        <txt lang="nl">Locatie</txt>
+      </title>
+      <description>
+        <txt lang="nl">Verfijning fasciaal compartiment</txt>
+      </description>
     </item>
     <item name="Veroorzaker">
-      <title>Veroorzaker</title>
-      <description>Toename van druk</description>
+      <title>
+        <txt lang="nl">Veroorzaker</txt>
+      </title>
+      <description>
+        <txt lang="nl">Toename van druk</txt>
+      </description>
     </item>
     <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title>
+        <txt lang="nl">Lateraliteit</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke zijde?</txt>
+      </description>
     </item>
   </items>
 </template>

@@ -2,12 +2,12 @@
   <div>
     <v-card color="grey lighten-3">
         <v-card-title>
-            Leesbare titel voor expressie
+            {{ translations.card_title }}
         </v-card-title>
         <v-card-text>
-            <pre>Template:    {{selectedTemplate.stringFormat}}</pre>
-            <pre>Gegenereerd: {{formatted}}</pre>
-            <v-btn @click="copyText()">Copy</v-btn>
+            <pre>{{ translations.template }}:    {{selectedTemplate.stringFormat}}</pre>
+            <pre>{{ translations.generated }}: {{formatted}}</pre>
+            <v-btn @click="copyText()">{{ translations.copy_button }}</v-btn>
         </v-card-text>
     </v-card>
     
@@ -17,7 +17,7 @@
       >
         <v-expansion-panel-header
           class="grey lighten-5">
-          <small>[DEBUG] Identifiers voor gebruik in leesbare titel</small>
+          <small>{{ translations.identifiers_panel_header }}</small>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <li v-for="(value, key) in postcoData" :key="key">
@@ -35,7 +35,7 @@ export default {
   data: () => {
     return {
       retrieved: false,
-      expressie : 'Laden...',
+      expressie : 'Loading...',
       snowstorm: {
           focusConcepts: []
       }
@@ -51,11 +51,14 @@ export default {
     debug(){
         return this.$store.state.debug
     },
+    translations(){
+      return this.$t("components.renderDescriptionString")
+    },
     formatted(){
         if(this.selectedTemplate.stringFormat){
           var stringFormat = this.selectedTemplate.stringFormat
         }else{
-          stringFormat = "Niet beschikbaar voor deze template."
+          stringFormat = this.translations.unavailable
         }
 
 

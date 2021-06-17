@@ -3,12 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SnomedTemplateService.Core.Interfaces
+namespace SnomedTemplateService.Core.Service
 {
     public interface ITemplateRepository
     {
-        TemplateData GetById(string id);
+        TemplateData GetTemplateById(string id);
         IList<TemplateData> GetTemplates();
+        string GetTagName(string tagId, string preferredLanguage);
+        string GetTagId(string tagName, string preferredLanguage);
         bool FoundErrorsInTemplates { get; }
     }
 }

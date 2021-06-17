@@ -47,26 +47,26 @@ jobs:
         # By default, queries listed here will override any specified in a config file.
         # Prefix the list here with "+" to use these queries and those in the config file.
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
-
+    
+    - name: Build Templateservice
+      run: |
+        docker-compose -f docker-compose_prod.yml build --no-cache templateservice
+        
     - name: Autobuild
       uses: github/codeql-action/autobuild@v1
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
 
-    - name: Build NodeJS
-      run: |
-        docker-compose -f docker-compose_prod.yml build --no-cache nodejs
-        
-    - name: Build Templateservice
-      run: |
-        docker-compose -f docker-compose_prod.yml build --no-cache templateservice
-        
     - name: Check Template Files
       run: |
         docker network create proxy && docker-compose -f docker-compose_prod.yml up --exit-code-from templateservice templateservice
       env:
         TEMPLSVC_EXITAFTERCHECK: "TRUE"
+
+    - name: Build NodeJS
+      run: |
+        docker-compose -f docker-compose_prod.yml build --no-cache nodejs
 
     - name: Build nginx
       run: |

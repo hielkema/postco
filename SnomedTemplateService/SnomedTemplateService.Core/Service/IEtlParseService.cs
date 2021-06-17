@@ -1,6 +1,6 @@
 ﻿using SnomedTemplateService.Core.Domain.Etl;
 
-namespace SnomedTemplateService.Core.Interfaces
+namespace SnomedTemplateService.Core.Service
 {
     public interface IEtlParseService
     {

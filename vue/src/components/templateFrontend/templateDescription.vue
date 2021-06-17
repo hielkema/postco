@@ -24,6 +24,9 @@ export default {
   computed: {
     requestedTemplate(){
         return this.$store.state.templates.requestedTemplate
+    },
+    translations(){
+      return this.$t("components.templateDescription")
     }
   }
 }

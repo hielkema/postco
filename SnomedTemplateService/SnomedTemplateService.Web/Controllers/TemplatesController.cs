@@ -7,7 +7,7 @@ using SnomedTemplateService.Core.Domain.Etl;
 using SnomedTemplateService.Util;
 using SnomedTemplateService.Core.Domain;
 using Microsoft.AspNetCore.Cors;
-using SnomedTemplateService.Core.Interfaces;
+using SnomedTemplateService.Core.Service;
 
 namespace SnomedTemplateService.Web.Controllers
 {
@@ -32,12 +32,12 @@ namespace SnomedTemplateService.Web.Controllers
         }
 
         [HttpGet("{id}")]
-        public object Get(string id)
+        public object Get(string id, string lang = "nl")
         {
             try
             {
-                var templateData = templateRepository.GetById(id);
-
+                var templateData = templateRepository.GetTemplateById(id);
+                
                 if (templateData == null)
                 {
                     return NotFound();
@@ -53,8 +53,10 @@ namespace SnomedTemplateService.Web.Controllers
                     handleExpressionSlot: s => throw new Exception("slots are not supported for the root expression")
                     );
 
-                var result = TemplateMetadataToJson(templateData);
-                var templateJson = EtlSubexpressionToJson(rootExpression, templateData.ItemTitles, templateData.ItemDescriptions, true);
+                var result = TemplateMetadataToJson(templateData, lang);
+                var templateLang = GetTemplateLanguage(templateData, lang);
+
+                var templateJson = EtlSubexpressionToJson(rootExpression, templateData.ItemData, templateLang, true);
                 templateJson["definitionStatus"] = parseResult.DefinitionStatus.Handle(
                     lit => lit == DefinitionStatusEnum.subtypeOf ? "<<<" : "===",
                     slot => "slot");
@@ -63,7 +65,7 @@ namespace SnomedTemplateService.Web.Controllers
 
                 return result;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError(e, $"An Exception occured in {nameof(TemplatesController.Get)}");
                 throw;
@@ -71,18 +73,23 @@ namespace SnomedTemplateService.Web.Controllers
         }
 
         [HttpGet("")]
-        public IEnumerable<object> List(string tag)
+        public IEnumerable<object> List(string tag, string lang = "nl")
         {
-            return templateRepository.GetTemplates().Select(t => TemplateMetadataToJson(t, tag)).Where(m => m != null).ToList();
+            var filterTagId = templateRepository.GetTagId(tag, lang);
+            return templateRepository.GetTemplates()
+                .Select(t => TemplateMetadataToJson(t, lang, filterTagId))
+                .Where(m => m != null).ToList();
         }
 
-        private IDictionary<string, object> TemplateMetadataToJson(TemplateData templateData, string filterTag = null)
+        private IDictionary<string, object> TemplateMetadataToJson(TemplateData templateData, string preferredLang, string filterTagId = null)
         {
-            if (filterTag != null && !templateData.Tags.Contains(filterTag, StringComparer.InvariantCultureIgnoreCase))
+            var templateLang = GetTemplateLanguage(templateData, preferredLang); 
+
+            if (filterTagId != null && !templateData.TagIds.Contains(filterTagId))
             {
                 return null;
             }
-            
+
             var result = new Dictionary<string, object>
             {
                 ["id"] = templateData.Id,
@@ -92,48 +99,56 @@ namespace SnomedTemplateService.Web.Controllers
             {
                 result["authors"] = templateData.Authors.Select(a => !string.IsNullOrEmpty(a.Contact) ? (object)new { name = a.Name, contact = a.Contact } : new { name = a.Name }).ToArray();
             }
-            result["title"] = templateData.Title;
-            if (!string.IsNullOrEmpty(templateData.Description))
+            result["supportedLanguages"] = templateData.SupportedLanguages;
+            result["currentLanguage"] = templateLang;
+            result["title"] = templateData.Title[templateLang];
+            if (!string.IsNullOrEmpty(templateData.Description[templateLang]))
             {
-                result["description"] = templateData.Description;
+                result["description"] = templateData.Description[templateLang];
             }
             result["snomedVersion"] = templateData.SnomedVersion;
             result["snomedBranch"] = templateData.SnomedBranch;
-            result["tags"] = templateData.Tags;
-            if (!string.IsNullOrEmpty(templateData.StringFormat))
+            result["tags"] = templateData.TagIds.Select(tagId=>templateRepository.GetTagName(tagId, preferredLang)).Where(t=>!string.IsNullOrEmpty(t)).ToList();
+            if (!string.IsNullOrEmpty(templateData.StringFormat[templateLang]))
             {
-                result["stringFormat"] = templateData.StringFormat;
+                result["stringFormat"] = templateData.StringFormat[templateLang];
             }
             return result;
         }
 
+        private string GetTemplateLanguage(TemplateData templateData, string preferredLang)
+        {
+            return templateData.SupportedLanguages.Contains(preferredLang) ? preferredLang : templateData.DefaultLanguage;
+        }
+
         private IDictionary<string, object> EtlSubexpressionToJson(
             Subexpression subexpression,
-            IDictionary<string, string> itemTitles, IDictionary<string, string> itemDescriptions,
+            IDictionary<string, TemplateData.Item> itemData,
+            string lang,
             bool isRootExpression = false)
-        {
-            var focusConceptsJson = new List<object>();
-            foreach (var fc in subexpression.FocusConcepts)
             {
-                var td = GetConceptOrSlotTitleAndDesc(fc.info, fc.focus, itemTitles, itemDescriptions);
-                if (!isRootExpression && td.title == null)
+            var focusConceptsJson = new List<object>();
+            foreach (var (infoSlot, focusExpr) in subexpression.FocusConcepts)
+            {
+                var (title, desc) = GetConceptOrSlotTitleAndDesc(infoSlot, focusExpr, itemData, lang);
+                if (!isRootExpression && title == null)
                 {
                     throw new Exception("Title is not specified for a focus-concept of a nested expression.");
                 }
-                fc.focus.Handle(
+                focusExpr.Handle(
                     handleConceptReference: c =>
                     {
-                        focusConceptsJson.Add(GetPrecoordinatedConceptJson(c.SctId, td.title, td.desc));
+                        focusConceptsJson.Add(GetPrecoordinatedConceptJson(c.SctId, title, desc));
                         return ValueTuple.Create();
                     },
                     handleConceptSlot: s =>
                     {
-                        focusConceptsJson.Add(GetConceptSlotJson(s.ExpressionConstraint, td.title, td.desc));
+                        focusConceptsJson.Add(GetConceptSlotJson(s.ExpressionConstraint, title, desc));
                         return ValueTuple.Create();
                     },
                     handleExpressionSlot: s =>
                     {
-                        focusConceptsJson.Add(GetConceptSlotJson(s.ExpressionConstraint, td.title, td.desc));
+                        focusConceptsJson.Add(GetConceptSlotJson(s.ExpressionConstraint, title, desc));
                         return ValueTuple.Create();
                     }
                 );
@@ -170,11 +185,11 @@ namespace SnomedTemplateService.Web.Controllers
                                 {
                                     ["attribute"] = attrName.SctId
                                 };
-                                var td = GetConceptOrSlotTitleAndDesc(info, attrName, itemTitles, itemDescriptions);
-                                result["title"] = td.title ?? throw new Exception($"No title specified for {attrName.SctId}");
-                                if (td.desc != null)
+                                var (attrTitle, attrDesc) = GetConceptOrSlotTitleAndDesc(info, attrName, itemData, lang);
+                                result["title"] = attrTitle ?? throw new Exception($"No title specified for {attrName.SctId}");
+                                if (attrDesc != null)
                                 {
-                                    result["description"] = td.desc;
+                                    result["description"] = attrDesc;
                                 }
                                 result["cardinality"] = new
                                 {
@@ -188,7 +203,7 @@ namespace SnomedTemplateService.Web.Controllers
                                 }
                                 else
                                 {
-                                    result["template"] = EtlSubexpressionToJson(sub, itemTitles, itemDescriptions);
+                                    result["template"] = EtlSubexpressionToJson(sub, itemData, lang);
                                 }
                                 return result;
                             },
@@ -197,16 +212,16 @@ namespace SnomedTemplateService.Web.Controllers
                                     info,
                                     attrName,
                                     new FirstOf<ConceptReplacementSlot, ExpressionReplacementSlot>(s),
-                                    itemTitles,
-                                    itemDescriptions
+                                    itemData,
+                                    lang
                                     ),
                             handleExpressionSlot: s =>
                                 HandleConceptOrExpressionSlotInAttributeValue(
                                     info,
                                     attrName,
                                     new SecondOf<ConceptReplacementSlot, ExpressionReplacementSlot>(s),
-                                    itemTitles,
-                                    itemDescriptions
+                                    itemData,
+                                    lang
                                     )
                         ),
                         handleStringOrSlot: s => throw new Exception("Concrete slots/values are not supported"),
@@ -228,20 +243,20 @@ namespace SnomedTemplateService.Web.Controllers
             TemplateInformationSlot infoSlot,
             ConceptReference attrName,
             OneOf<ConceptReplacementSlot, ExpressionReplacementSlot> valueSlot,
-            IDictionary<string, string> itemTitles,
-            IDictionary<string, string> itemDescriptions
+            IDictionary<string, TemplateData.Item> itemData,
+            string lang
             )
-        {
-            var td = GetConceptOrSlotTitleAndDesc(infoSlot, attrName, itemTitles, itemDescriptions);
+       {
+            var (attrTitle, attrDesc) = GetConceptOrSlotTitleAndDesc(infoSlot, attrName, itemData, lang);
             var result = new Dictionary<string, object>
             {
                 ["attribute"] = attrName.SctId
             };
             
-            result["title"] = td.title ?? throw new Exception($"No title specified for {attrName.SctId}");
-            if (td.desc != null)
+            result["title"] = attrTitle ?? throw new Exception($"No title specified for {attrName.SctId}");
+            if (attrDesc != null)
             {
-                result["description"] = td.desc;
+                result["description"] = attrDesc;
             }
             result["cardinality"] = new
             {
@@ -251,22 +266,24 @@ namespace SnomedTemplateService.Web.Controllers
             result["value"] = GetConceptSlotJson(valueSlot.Handle(c=>c.ExpressionConstraint, e=>e.ExpressionConstraint));
             return result;
         }
-
         private (string title, string desc) GetConceptOrSlotTitleAndDesc(
             TemplateInformationSlot info, IConceptReferenceOrSlot conceptOrSlot,
-            IDictionary<string, string> titles, IDictionary<string, string> descriptions)
+            IDictionary<string, TemplateData.Item> itemData,
+            string lang)
         {
             var name = info?.SlotName;
-            string desc = null;
-            string title = null;
+            TemplateData.Item currentItem = null;
             if (name != null)
             {
-                titles.TryGetValue(name, out title);
-                descriptions.TryGetValue(name, out desc);
+                itemData.TryGetValue(name, out currentItem);
             }
-            title ??= conceptOrSlot.Handle(c => c.Term, cs => null, es => null);
+
+            var title = currentItem?.Title[lang];
+            var desc = currentItem?.Description[lang];
+            title ??= conceptOrSlot.Handle(c => c?.Term, cs => null, es => null);
             return (title, desc);
         }
+        
 
         private object GetConceptSlotJson(string constraint, string title=null, string description=null)
         {

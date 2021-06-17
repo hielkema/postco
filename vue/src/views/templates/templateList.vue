@@ -4,53 +4,62 @@
 			<v-col cols=12>
 				<v-card>
 					<v-card-title>
-						Beschikbare templates
+						<!-- Available templates -->
+						{{$t("templateList.filter_card.card_title")}}
 					</v-card-title>
 					<v-card-text>
 						<v-row>	
-							<v-col cols=10>
+							<v-col cols=12>
 								<v-text-field
 									v-model="searchString"
 									append-icon="mdi-magnify"
-									label="Zoeken"
-									hint="Zoek op Naam, Titel, Beschrijving of SNOMED versie"
+									:label="$t('templateList.filter_card.filters.search.label')"
+									:hint="$t('templateList.filter_card.filters.search.hint')"
 									dense
 								></v-text-field>
 							</v-col>
-						</v-row>
-						<v-row>
-							<v-col cols=10>
+							<v-col cols=3>
 								<v-select
 									v-model="filterTag"
 									:items="tagList"
 									attach
 									multiple
 									chips
-									label="Tags"
+									:label="$t('templateList.filter_card.filters.tags.label')"
+									:hint="$t('templateList.filter_card.filters.tags.hint')"
 									dense
 								></v-select>
 							</v-col>
-						</v-row>
-						<v-row>
-							<v-col cols=10>
+							<v-col cols=3>
 								<v-select
 									v-model="filterEdition"
 									:items="editionList"
 									attach
 									chips
-									label="SNOMED versie"
+									:label="$t('templateList.filter_card.filters.snomed_version.label')"
+									:hint="$t('templateList.filter_card.filters.snomed_version.hint')"
 									dense
 								></v-select>
 							</v-col>
-						</v-row>
-						<v-row>
-							<v-col cols=10>
+							<v-col cols=3>
 								<v-select
 									v-model="filterOrganization"
 									:items="organizationList"
 									attach
 									chips
-									label="Organisatie"
+									:label="$t('templateList.filter_card.filters.organization.label')"
+									:hint="$t('templateList.filter_card.filters.organization.hint')"
+									dense
+								></v-select>
+							</v-col>
+							<v-col cols=3>
+								<v-select
+									v-model="filterLanguage"
+									:items="languageList"
+									attach
+									chips
+									:label="$t('templateList.filter_card.filters.language.label')"
+									:hint="$t('templateList.filter_card.filters.language.hint')"
 									dense
 								></v-select>
 							</v-col>
@@ -61,14 +70,15 @@
 		</v-row>
 
 		<v-row>
-			<v-col cols=12><v-row>ss{{filterTag}}</v-row></v-col>
-		</v-row>
-		<v-row>
 			<v-col cols=12>
 				<v-card>
 					<v-card-title>
+						<!-- Title of the card that contains templates in the filter -->
+						{{$t("templateList.list_card.card_title")}}
+					</v-card-title>
+					<v-card-text>
 						<v-data-table
-							:headers="headers"
+							:headers="tableHeaders"
 							:items="templates_filtered"
 							:items-per-page="15"
 							:loading="loading"
@@ -82,9 +92,6 @@
 								items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
 							</template>
 							<template v-slot:item.title="{ item }"><br>
-								<!-- {{item.title}}<br>
-								<i><small>{{item.id}}</small></i> -->
-
 								<v-tooltip bottom>
 									<template v-slot:activator="{ on, attrs }">
 										<span
@@ -128,8 +135,16 @@
 								{{tag}}
 								</v-chip>
 							</template>
+							<template v-slot:item.supportedLanguages="{ item }"><br>
+								<v-chip
+									class="ma-2"
+									v-for="(tag, key) in item.supportedLanguages" :key="key"
+								>
+								{{tag}}
+								</v-chip>
+							</template>
 						</v-data-table>
-					</v-card-title>
+					</v-card-text>
 				</v-card>
 			</v-col>
 		</v-row>
@@ -138,28 +153,17 @@
 
 <script>
 
-export default {
+export default {	
     data() {
         return {
-            headers: [
-                { text: 'Organisatie', value: 'entity', sortable: false },
-                // { text: 'Naam', value: 'id' },
-                { text: 'Titel', value: 'title' },
-                // { text: 'Beschrijving', value: 'description' },
-                { text: 'Tags', value: 'tags', sortable: false },
-                { text: 'SNOMED versie', value: 'snomedVersion', width: "160px" },
-				{ text: 'Auteurs', value: 'authors', width: "220px" },
-				{ text: 'Timestamp versie', value: 'time' },
-				{ text: 'Open', value: 'open', sortable: false },
-            ],
 			searchString: '',
 			filterTag: [],
 			filterEdition: '',
 			filterOrganization: '',
+			filterLanguage : '',
 		}
     },
 	components: {
-		
 	},
 	methods: {
 		openTemplate(id){
@@ -169,6 +173,20 @@ export default {
 		}
 	},
 	computed: {
+		tableHeaders(){
+			return [
+				{ text: this.$t("templateList.list_card.table_headers.entity"), value: 'entity', sortable: false },
+				// { text: this.$t("templateList.list_card.table_headers.id"), value: 'id' },
+				{ text: this.$t("templateList.list_card.table_headers.title"), value: 'title' },
+				// { text: this.$t("templateList.list_card.table_headers.description"), value: 'description' },
+				{ text: this.$t("templateList.list_card.table_headers.languages"), value: 'supportedLanguages', sortable: false },
+				{ text: this.$t("templateList.list_card.table_headers.tags"), value: 'tags', sortable: false },
+				{ text: this.$t("templateList.list_card.table_headers.snomedVersion"), value: 'snomedVersion', width: "160px" },
+				{ text: this.$t("templateList.list_card.table_headers.authors"), value: 'authors', width: "220px" },
+				{ text: this.$t("templateList.list_card.table_headers.time"), value: 'time' },
+				{ text: this.$t("templateList.list_card.table_headers.open"), value: 'open', sortable: false },
+			]
+		},
 		templates(){
 			return this.$store.state.templates.availableTemplates
 		},
@@ -178,12 +196,14 @@ export default {
 		templates_filtered(){
 			var that = this
 			let filterTag = this.filterTag
+			let filterLanguage = this.filterLanguage
 			let filterEdition = this.filterEdition.toString()
 			let filterOrganization = this.filterOrganization.toString()
 			
             return this.$store.state.templates.availableTemplates.filter(function(item){
                 let filtered = true
 				
+				// Filter on tags
 				let singleTag = true
 				for(var tag of filterTag){
 					if(that.filterTag && filterTag && (filterTag.length > 0)){
@@ -195,13 +215,27 @@ export default {
 				}
 				filtered = singleTag
 				
+				// Filter on snomed edition
                 if(filtered){
-                    if(that.filterEdition && filterEdition && filterEdition.length > 0){
+                    if(that.filterEdition == '*'){
+						filtered = true
+					}else if(that.filterEdition && filterEdition && filterEdition.length > 0){
                         filtered = item.snomedVersion == filterEdition
                     }
                 }
+				// Filter on language
                 if(filtered){
-                    if(that.filterOrganization && filterOrganization && filterOrganization.length > 0){
+					if(that.filterLanguage == '*'){
+						filtered = true
+					}else if(that.filterLanguage && filterLanguage && filterLanguage.length > 0){
+                        filtered = item.supportedLanguages.includes(filterLanguage)
+                    }
+                }
+				// Filter on organization
+                if(filtered){
+                    if(that.filterOrganization == '*'){
+						filtered = true
+					}else if(that.filterOrganization && filterOrganization && filterOrganization.length > 0){
                         filtered = item.id.split("_")[0] == filterOrganization
                     }
                 }
@@ -223,7 +257,16 @@ export default {
 			for(var template of this.templates){
 				editions.push(template.snomedVersion)
 			}
-			return [...new Set(editions)]
+			return ['*',...new Set(editions)]
+		},
+		languageList(){
+			var languages = []
+			for(var template of this.templates){
+				for(var language of template.supportedLanguages){
+					languages.push(language)
+				}
+			}
+			return ['*',...new Set(languages)]
 		},
 		organizationList(){
 			var organizations = []
@@ -231,7 +274,7 @@ export default {
 				var organization = template.id.split("_")[0]
 				organizations.push(organization)
 			}
-			return [...new Set(organizations)]
+			return ['*',...new Set(organizations)]
 		},
 	},
 	mounted() {
