@@ -92,9 +92,13 @@
 			"unavailable" : "Not available for this template."
 		},
 		"renderExpression" : {
-			"card_title" : "Expression",
+			"card_title_verbose" : "Expression with display text",
+			"card_title_compact" : "Compact expression",
 			"loading_placeholder" : "Loading...",
-			"copy_button" : "Copy"
+			"copy_button" : "Copy",
+			"error" : {
+				"slot" : "The frontend does not support definitionStatus 'slot' (yet). The generated syntax is not valid."
+			}
 		},
 		"templateAttributeCompact" : {
 			"attribute" : "Attribute",

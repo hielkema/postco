@@ -92,9 +92,13 @@
 			"unavailable" : "Niet beschikbaar voor deze template."
 		},
 		"renderExpression" : {
-			"card_title" : "Expressie",
+			"card_title_verbose" : "Expressie met weergavetekst",
+			"card_title_compact" : "Compacte expressie",
 			"loading_placeholder" : "laden...",
-			"copy_button" : "Kopieer"
+			"copy_button" : "Kopieer",
+			"error" : {
+				"slot" : "De frontend heeft nog geen ondersteuning voor definitionStatus 'slot'. De gegenereerde syntax is niet geldig."
+			}
 		},
 		"templateAttributeCompact" : {
 			"attribute" : "Attribuut",
