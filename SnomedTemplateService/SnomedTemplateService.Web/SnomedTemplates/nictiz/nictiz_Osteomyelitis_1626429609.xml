@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <authors>
+    <author>
+      <name>Elze de Groot</name>
+<contact>groot@nictiz.nl</contact>
+</author>
+  </authors>
+  <title>Complicatie van lichaamsstructuur met morfologie - 2 groepen</title>
+  <description>
+    Dit template kan worden gebruikt om osteomyelitis vast te leggen.
+  </description>
+  <snomedVersion>2021-03-31</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
+  <tags>
+    <tag>Osteomyelitis</tag>
+  </tags>
+  <etl>
+    <![CDATA[
+           64572001 |aandoening (aandoening)| : {
+                [[ @Morfologie1 ]] 116676008 |gerelateerde morfologie (attribuut)| = 409774005 |inflammatoire morfologie (afwijkende morfologie)|,
+				[[ @Infectie1 ]] 308489006 |pathologisch proces (kwalificatiewaarde)| = 441862004 |infectieus proces (kwalificatiewaarde)|) ]],
+                363698007 |locatie van bevinding (attribuut)| = 14016003 |structuur van beenmerg (lichaamsstructuur)|
+			}
+ {
+                [[ @Morfologie1 ]] 116676008 |gerelateerde morfologie (attribuut)| = 409774005 |inflammatoire morfologie (afwijkende morfologie)|,
+				[[ @Infectie1 ]] 308489006 |pathologisch proces (kwalificatiewaarde)| = 441862004 |infectieus proces (kwalificatiewaarde)|) ]],
+                363698007 |locatie van bevinding (attribuut)| =
+                  ([[ @Locatie2 ]] [[+id (< 272673000 |botstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      })
+			}
+           
+      ]]>
+  </etl>
+  <items>
+    <item name="Morfologie1">
+      <title>Morfologie</title>
+      <description>morfologie is inflammatoire morfologie</description>
+    </item>
+    <item name="Locatie1">
+      <title>Locatie</title>
+      <description>Locatie groep 1 is beenmerg</description>
+    </item>
+	<item name="Infectie1">
+      <title>Locatie</title>
+      <description>Infectieus proces</description>
+    </item>
+    
+    <item name="Locatie2">
+      <title>Locatie</title>
+      <description>Welke lichaamsstructuur groep 2?</description>
+    
+    <item name="Lateraliteit">
+      <title>Lateraliteit</title>
+      <description>Welke zijde?</description>
+    </item>
+  </items>
+</template>
