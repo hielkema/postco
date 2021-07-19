@@ -2,11 +2,21 @@
   <div>
     <v-card color="grey lighten-3">
         <v-card-title>
-            {{ translations.card_title }}
+            {{ translations.card_title_verbose }}
         </v-card-title>
         <v-card-text>
             <pre>{{formatted}}</pre>
             <v-btn @click="copyText()">{{ translations.copy_button }}</v-btn>
+        </v-card-text>
+    </v-card>
+    <v-divider/>
+    <v-card color="grey lighten-3">
+        <v-card-title>
+            {{ translations.card_title_compact }}
+        </v-card-title>
+        <v-card-text>
+            <pre>{{formatted_compact}}</pre>
+            <v-btn @click="copyTextCompact()">{{ translations.copy_button }}</v-btn>
         </v-card-text>
     </v-card>
   </div>
@@ -148,16 +158,27 @@ export default {
         })
 
         return expression
+    },
+    formatted_compact(){
+      var expression = this.formatted
+      expression = expression.replace(/(\|(.*?)\|)/g, '');
+      expression = expression.replace(/(\n)/g, '');
+      expression = expression.replace(/(\t)/g, '');
+      expression = expression.replace(/( )/g, '');
+      return expression
     }
   },
   methods: {
     copyText() {
       navigator.clipboard.writeText(this.formatted);
-    }
+    },
+    copyTextCompact() {
+      navigator.clipboard.writeText(this.formatted_compact);
+    },
   },
   mounted: function(){
     if(this.selectedTemplate.template.definitionStatus == 'slot'){
-			this.$store.dispatch('templates/addErrormessage', "De frontend heeft nog geen ondersteuning voor definitionStatus 'slot'. De gegenereerde syntax is niet geldig.")
+			this.$store.dispatch('templates/addErrormessage', this.translations.error.slot)
 		}
   }
   

@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import { bus } from '@/main';
 export default {
   name: 'TemplateAttribute',
   data: () => {
@@ -84,21 +85,33 @@ export default {
   },
   props: ['componentData', 'attributeKey', 'groupKey'],
   methods: {
-    retrieveFSN (conceptid) {
+    retrieveFSN (conceptid, retries) {
+      if(!retries){ retries = 0 }
+      if(retries > 0){
+        console.log("Snowstorm request failed. Trying again. Retries until now: "+retries)
+      }
       var branchVersion = encodeURI(this.requestedTemplate.snomedBranch + '/' + this.requestedTemplate.snomedVersion)
       this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/'+conceptid, {headers : {'accept-language' : this.$i18n.locale}})
       .then((response) => {
         this.attributeFSN = response.data.fsn.term
         return true;
       }).catch(() => {
-        this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributeCompact]')
-        
-        setTimeout(() => {
-          this.retrieveFSN (conceptid)
-        }, 5000)
+        if(retries < 1){         
+          setTimeout(() => {
+            retries = retries + 1
+            this.retrieveFSN (conceptid, retries)
+          }, 5000)
+        }else{
+          console.log("Snowstorm request failed. Tried "+retries+" times, giving up and displaying error.")
+          this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_fsn+' [templateAttributeCompact SCTID '+conceptid+']')
+        }
       })
     },
-    retrieveECL (term) {
+    retrieveECL (term, retries) {
+      if(!retries){ retries = 0 }
+      if(retries > 0){
+        console.log("Snowstorm request failed. Trying again. Retries until now: "+retries)
+      }
       this.loading = true;
       var branchVersion = encodeURI(this.requestedTemplate.snomedBranch + '/' + this.requestedTemplate.snomedVersion)
       this.$snowstorm.get('https://snowstorm.test-nictiz.nl/'+ branchVersion +'/concepts/?term='+ encodeURI(term) +'&offset=0&limit=100&ecl='+encodeURI(this.thisComponent.value.constraint), {headers : {'accept-language' : this.$i18n.locale}})
@@ -106,11 +119,15 @@ export default {
          this.setItems(response.data['items'])
         return true;
       }).catch(() => {
-        this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_ecl+' [templateAttributeCompact]')
-        
-        setTimeout(() => {
-          this.retrieveECL (term)
-        }, 5000)
+        if(retries < 1){
+          setTimeout(() => {
+            retries = retries + 1
+            this.retrieveECL (term, retries)
+          }, 5000)
+        }else{
+          console.log("Snowstorm request failed. Tried "+retries+" times, giving up and displaying error.")
+          this.$store.dispatch('templates/addErrormessage', this.translations.errors.retrieve_ecl+' [templateAttributeCompact ECL '+term+']')
+        }
       })
     },
     setItems(response) {
@@ -134,6 +151,23 @@ export default {
       this._timerId = setTimeout(() => {
         this.retrieveECL(this.search)
       }, 500)
+    },
+    saveBlankExpression(){
+      this.$store.dispatch('templates/saveAttribute', 
+        {
+          'groupKey':this.groupKey, 
+          'attributeKey': this.attributeKey, 
+          'attribute' : {
+            'id':'....', 
+            'display':'....',
+            'preferred':'....',
+            }, 
+          'concept': {
+            'id' : '.....',
+            'display' : '....',
+            'preferred':'....',
+          },
+        })
     }
   },
   watch: {
@@ -157,24 +191,16 @@ export default {
   },
   mounted: function(){
     if(this.thisComponent.cardinality.min == 1){
-      this.$store.dispatch('templates/saveAttribute', 
-        {
-          'groupKey':this.groupKey, 
-          'attributeKey': this.attributeKey, 
-          'attribute' : {
-            'id':'....', 
-            'display':'....',
-            'preferred':'....',
-            }, 
-          'concept': {
-            'id' : '.....',
-            'display' : '....',
-            'preferred':'....',
-          },
-        })
+      this.saveBlankExpression()
     }
     this.retrieveFSN(this.thisComponent.attribute)
     this.retrieved = true
+  },
+  created (){
+    bus.$on('changeIt', (data) => {
+      console.log(data)
+      this.retrieveFSN(this.thisComponent.attribute)
+    })
   }
 }
 </script>

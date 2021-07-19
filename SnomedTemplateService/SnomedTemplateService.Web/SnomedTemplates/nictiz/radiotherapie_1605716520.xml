@@ -1,28 +1,28 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<template>
+<?xml version="1.0"?>
+<template defaultLang="nl">
   <authors>
     <author>
       <name>Feikje Hielkema-Raadsveld</name>
       <contact>hielkema@nictiz.nl</contact>
     </author>
   </authors>
-  <title>Radiotherapie</title>
-  <description>
+  <title><txt lang="nl">Radiotherapie</txt></title>
+  <description><txt lang="nl">
     Dit template kan worden gebruikt om type radiotherapie te specificeren. De methode selecteer je hier met
     het focusconcept. Je kunt locaties kiezen met of zonder lateraliteit, maar je kunt niet zelf een zijde toevoegen.
     Let op: kies bij voorkeur een methode waar nog geen locatie of intentie in gespecificeerd is; anders kun je een expressie krijgen met
     twee verschillende locaties en intenties.
-  </description>
+  </txt></description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [1/0] met [2/0]</stringFormat>
+  <stringFormat><txt lang="nl">[0/0] van [1/0] met [2/0]</txt></stringFormat>
   <!-- bv. geven van 'boost'-bestraling van hals met therapeutische intentie-->
   <tags>
-    <tag>Radiotherapie</tag>
-    <tag>Locatie</tag>
+    <tag id="Radiotherapy"/>
+    <tag id="Location"/>
   </tags>
-  <etl>
-    <![CDATA[
+  <etl><![CDATA[
+    
             [[ @Methode ]] [[+id (<< 108290001 |bestraling voor oncologie en/of radiotherapie (verrichting)|)]]: {
                 405813007 |directe locatie van verrichting (attribuut)| =  
                     ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
@@ -33,24 +33,24 @@
                 [[ @Intentie ]] 363703001 |doel (attribuut)| = 
                 	[[+id (< 363675004 |intentie als aard van verrichtingswaarde (kwalificatiewaarde)|)]]
 			}
-        ]]>
-  </etl>
+        
+  ]]></etl>
   <items>
     <item name="Methode">
-      <title>Methode</title>
-      <description>Welk type radiotherapie?</description>
+      <title><txt lang="nl">Methode</txt></title>
+      <description><txt lang="nl">Welk type radiotherapie?</txt></description>
     </item>
     <item name="Locatie">
-      <title>Locatie</title>
-      <description>Welke locatie?</description>
+      <title><txt lang="nl">Locatie</txt></title>
+      <description><txt lang="nl">Welke locatie?</txt></description>
     </item>
     <item name="Intentie">
-      <title>Intentie</title>
-      <description>Palliatief of therapeutisch?</description>
+      <title><txt lang="nl">Intentie</txt></title>
+      <description><txt lang="nl">Palliatief of therapeutisch?</txt></description>
     </item>
     <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title><txt lang="nl">Lateraliteit</txt></title>
+      <description><txt lang="nl">Welke zijde?</txt></description>
     </item>
   </items>
 </template>

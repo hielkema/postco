@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { bus } from '@/main'
 export default {
   data: () => {
     return {
@@ -22,10 +23,15 @@ export default {
   },
   methods: {
     reloadInterface(){
-      this.$router.push({ path: `/` })
+      if(this.$route.params.templateID){
+        this.$store.dispatch('templates/retrieveTemplate', this.$route.params.templateID)
+      }
       this.$store.dispatch('templates/retrieveTemplateList')
-      // TODO - toevoegen language code
+      bus.$emit('changeIt', 'changed locale');
     }
+  },
+  mounted: function(){
+    
   }
 }
 </script>
