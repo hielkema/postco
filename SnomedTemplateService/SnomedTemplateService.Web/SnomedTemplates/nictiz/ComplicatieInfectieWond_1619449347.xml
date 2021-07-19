@@ -14,10 +14,10 @@
   </txt></description>
   <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/1]</stringFormat>
+  <stringFormat><txt lang="nl">[0/0] van [0/1]</txt></stringFormat>
   <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
   <tags>
-    <tag id="Complicatie"></tag>
+    <tag id="Complication"></tag>
   </tags>
   <etl>
     <![CDATA[
