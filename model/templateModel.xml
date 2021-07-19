@@ -1,51 +1,95 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<template>
+<template 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="./templateModel.xsd"
+  defaultLang="nl">
   <authors>
     <author>
       <name>Feikje Hielkema-Raadsveld</name>
       <contact>hielkema@nictiz.nl</contact>
     </author>
+    <author>
+      <name>Bas Harmsen (translation to English)</name>
+      <contact>b.harmsen@example.com</contact>
+    </author>
   </authors>
-  <title>Beeldvormende verrichting van locatie aan zijde</title>
+  <title>
+    <txt lang="nl">Beeldvormende verrichting van locatie</txt>
+    <txt lang="en">Imaging procedure of location</txt>
+  </title>
   <description>
-    Dit template kan worden gebruikt om een beeldvormende verrichting van elke mogelijke lichaamslocatie te specificeren,
-    met daarbij ook een lateraliteit. Je kunt alleen locaties kiezen die lateraliseerbaar zijn; voor overige locaties, gebruik
-    template beeldvormendeVerrichting.
+    <txt lang="nl">
+      Dit template kan worden gebruikt om een beeldvormende verrichting van elke mogelijke lichaamslocatie te specificeren.
+      Je kunt hierbij locaties kiezen met of zonder lateraliteit en optioneel een zijde toevoegen.
+    </txt>
+    <txt lang="en">
+      This template can be used to specify an imaging procedure of any possible body location. 
+      You can choose locations with or without laterality and optionally add a side.
+    </txt>
   </description>
-  <snomedVersion>2020-09-30</snomedVersion>
+  <snomedVersion>2021-03-31</snomedVersion>
   <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
-  <stringFormat>[0/0] van [0/1] [1/0]</stringFormat>  <!-- Natural language representation, e.g. deformity of foot -->
+  <stringFormat>
+    <txt lang="nl">[0/0] van [0/1]</txt><!-- bv. MRI van pols -->
+    <txt lang="en">[0/0] of [0/1]</txt>
+  </stringFormat>
   <tags>
-    <tag>imaging</tag>
+    <tag id="Imaging"/>
+    <tag id="Location"/>
   </tags>
   <etl>
     <![CDATA[
+    
             363679005 |beeldvormende verrichting (verrichting)| : {
                 [[ @Methode ]] 260686004 |methode (attribuut)| = 
-                [[+id (<< 360037004 |beeldvorming (kwalificatiewaarde)|) ]],
-                [[ @Locatie ]] 405813007 |directe locatie van verrichting (attribuut)| =  
-                    ([[ @LocatieFocus ]][[+id (^723264001 |Lateralizable body structure reference set (foundation metadata concept)|) ]] : { 
-                            [[ @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
-                            })
-			}
-        ]]>
+                [[+id (<< 360037004 |beeldvorming (kwalificatiewaarde)|)]],
+                [[ @LocatieAttr ]] 405813007 |directe locatie van verrichting (attribuut)| =  
+                    ([[ @Locatie ]] [[+id (< 442083009 |anatomische of verworven lichaamsstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      })
+			}    
+  ]]>
   </etl>
   <items>
     <item name="Methode">
-      <title>Methode</title>
-      <description>Welk type beeldvorming?</description>
+      <title>
+        <txt lang="nl">Methode</txt>
+        <txt lang="en">Method</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welk type beeldvorming?</txt>
+        <txt lang="en">Which type of imaging?</txt>
+      </description>
+    </item>
+    <item name="LocatieAttr">
+      <title>
+        <txt lang="nl">Locatie</txt>
+        <txt lang="en">Location</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke locatie?</txt>
+        <txt lang="en">Which location?</txt>
+      </description>
     </item>
     <item name="Locatie">
-      <title>Locatie</title>
-      <description>Welke locatie?</description>
-    </item>
-    <item name="LocatieFocus">
-      <title>Titel van focus-concept voor locatie</title>
-      <description>Omschrijving van focus-concept voor locatie</description>
+      <title>
+        <txt lang="nl">Locatie</txt>
+        <txt lang="en">Location</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke locatie?</txt>
+        <txt lang="en">Which location?</txt>
+      </description>
     </item>
     <item name="Lateraliteit">
-      <title>Lateraliteit</title>
-      <description>Welke zijde?</description>
+      <title>
+        <txt lang="nl">Lateraliteit</txt>
+        <txt lang="en">Laterality</txt>
+      </title>
+      <description>
+        <txt lang="nl">Welke zijde?</txt>
+        <txt lang="en">Which side?</txt>
+      </description>
     </item>
   </items>
 </template>

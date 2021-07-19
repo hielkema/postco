@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<template defaultLang="nl">
+  <authors>
+    <author>
+      <name>Elze de Groot</name>
+      <contact>groot@nictiz.nl</contact>
+  </author>
+  </authors>
+  <title><txt lang="nl">Osteomyelitis</txt></title>
+  <description><txt lang="nl">
+    Dit template kan worden gebruikt om osteomyelitis vast te leggen.
+  </txt></description>
+  <snomedVersion>2021-03-31</snomedVersion>
+  <snomedBranch>MAIN/SNOMEDCT-NL</snomedBranch>
+  <stringFormat><txt lang="nl">[0/0] van [0/1]</txt></stringFormat>
+  <!-- bv. 'clinging' intraductaal carcinoom van laterale onderkwadrant van linker mamma -->
+  <tags>
+    <tag id="Complication"/>
+  </tags>
+  <etl>
+    <![CDATA[
+           64572001 |aandoening (aandoening)| : {
+                116676008 |gerelateerde morfologie (attribuut)| = 409774005 |inflammatoire morfologie (afwijkende morfologie)|,
+				308489006 |pathologisch proces (kwalificatiewaarde)| = 441862004 |infectieus proces (kwalificatiewaarde)|,
+                363698007 |locatie van bevinding (attribuut)| = 14016003 |structuur van beenmerg (lichaamsstructuur)|
+			}
+ {
+                116676008 |gerelateerde morfologie (attribuut)| = 409774005 |inflammatoire morfologie (afwijkende morfologie)|,
+				308489006 |pathologisch proces (kwalificatiewaarde)| = 441862004 |infectieus proces (kwalificatiewaarde)|,
+                363698007 |locatie van bevinding (attribuut)| =
+                  ([[ @Locatie ]] [[+id (<< 272673000 |botstructuur (lichaamsstructuur)|) ]] : {
+                      [[ 0..1 @Lateraliteit ]] 272741003 |Laterality| = [[+id(< 182353008 |Side (qualifier value)|) ]]
+                      })
+			}
+           
+      ]]>
+  </etl>
+ <items>
+    <item name="Locatie">
+      <title><txt lang="nl">Locatie</txt></title>
+      <description><txt lang="nl">Welke lichaamsstructuur?</txt></description>
+    </item>
+    
+   
+  </items>
+</template>

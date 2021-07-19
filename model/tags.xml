@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<tags defaultLang="nl">
+  <tag id="Location">
+    <txt lang="nl">Locatie</txt>
+    <txt lang="en">Location</txt>
+  </tag>
+  <tag id="Imaging">
+    <txt lang="nl">Beeldvorming</txt>
+    <txt lang="en">Imaging</txt>
+  </tag>
+</tags>

@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0"?>
-<template defaultLang="nl">
+<template defaultLang="nl"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../model/templateModel.xsd">
   <authors>
     <author>
       <name>Test Test</name>
