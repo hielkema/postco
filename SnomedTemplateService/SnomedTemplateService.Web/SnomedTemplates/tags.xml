@@ -72,4 +72,8 @@
     <txt lang="nl">Tag 2</txt>
     <txt lang="en">Tag 2</txt>
   </tag>
+  <tag id="Allergy">
+    <txt lang="nl">Allergie</txt>
+    <txt lang="en">Allergy</txt>
+  </tag>
 </tags>
