@@ -76,4 +76,8 @@
     <txt lang="nl">Allergie</txt>
     <txt lang="en">Allergy</txt>
   </tag>
+    <tag id="Wound">
+    <txt lang="nl">Wond</txt>
+    <txt lang="en">Wound</txt>
+  </tag>
 </tags>
